@@ -100,7 +100,13 @@
   }
 }
 
-
+/**
+* Site CategoryBox
+*/
+.category_box{
+  float: left;
+  background-color: aqua;
+}
 
 /**
  * Site footer
@@ -177,7 +183,8 @@
  */
 .page-content {
   padding: $spacing-unit 0;
-  flex: 1;
+  // flex: 1;
+  float: left;
 }
 
 .page-heading {
