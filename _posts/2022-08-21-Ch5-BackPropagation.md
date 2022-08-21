@@ -352,7 +352,7 @@ $$
 \begin{align*}{\partial L\over\partial X}=&{\partial L\over\partial Y}{\partial Y\over\partial X}\\{\partial Y\over\partial X}=&{\partial (X\cdot W+B)\over\partial X}={\partial (X^TW)\over\partial X}=W^T\\&(\ \because Y=X\cdot W+B,\ X\mathsf{\ is\ vector,\ }W\ \mathsf{is\ matrix\ },\ B\ \mathsf{is\ constant\ })\\\therefore {\partial L\over\partial X}=&{\partial L\over\partial Y}\cdot W^T\end{align*}
 $$
 
-1. 
+2. 
 
 $$
 \begin{align*}{\partial L\over\partial X}=&
