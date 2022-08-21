@@ -333,7 +333,7 @@ class Sigmoid:
 
 # 5.6 Affine/Softmax 계층 구현
 
-## [*벡터의 미분](http://localhost:4000/math%20note/2022/08/21/벡터의-미분.html)
+## [*벡터의 미분](http://kchanghun.github.io/math%20note/2022/08/21/벡터의-미분.html)
 
 
 ## 5.6.1 Affine 계층
