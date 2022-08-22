@@ -1,4 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-21T15:25:11+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Vector Differential</title><link href="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html" rel="alternate" type="text/html" title="Vector Differential" /><published>2022-08-21T15:08:13+09:00</published><updated>2022-08-21T15:08:13+09:00</updated><id>http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98%20%EB%AF%B8%EB%B6%84</id><content type="html" xml:base="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html"><![CDATA[<h1 id="vector-differential">Vector Differential</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-23T00:25:00+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Recurrent Neural Networks</title><link href="http://localhost:4000/rnn%20note/2022/08/22/RNN.html" rel="alternate" type="text/html" title="Recurrent Neural Networks" /><published>2022-08-22T15:16:15+09:00</published><updated>2022-08-22T15:16:15+09:00</updated><id>http://localhost:4000/rnn%20note/2022/08/22/RNN</id><content type="html" xml:base="http://localhost:4000/rnn%20note/2022/08/22/RNN.html"><![CDATA[<h1 id="overview">Overview</h1>
+
+<h2 id="architecture-of-a-traditional-rnn">Architecture of a traditional RNN</h2>
+<p><strong>RNN</strong>에서는 은닉층에서 활성화 함수를 통해 결과를 내보내는 역할을 하는 노드를 <strong>cell</strong>(메모리 셀, RNN 셀) 이라고 한다.</p>
+
+<p>regular feed-forward network에서 hidden layer라고 부르던 뉴런은</p>
+
+<p>RNN에서 <strong>hidden state</strong>라고 부른다.<br />
+\(\begin{align*}\end{align*}\)</p>
+
+<p><strong>hidden state</strong>에서는 이전 <strong>time step</strong>의 <strong>hidden state</strong> 로부터 얻은 출력값을 현재 <strong>time step</strong>의 <strong>hidden state</strong> 에서 입력값으로 사용한다.</p>
+
+<p><img src="/assets/img/RNN%20Note/RNN/RNN_0.png" alt="RNN_0" /></p>
+<h5><center>출처: CS 230</center></h5>
+
+<p><strong>timestep</strong> $t$ 에서 activation \(a^{&lt;t&gt;}\)와 output \(y^{&lt;t&gt;}\)는 아래와 같이 표현한다.</p>
+
+\[\begin{align*}
+a^{&lt;t&gt;}&amp;=g_1(W_{aa}a^{&lt;t-1&gt;}+W_{ax}x^{&lt;t&gt;}+b_a)\\
+y^{&lt;t&gt;}&amp;=g_2(W_{ya}a^{&lt;t&gt;}+b_y)
+\end{align*}\]
+
+<p>$W_{ax},\ W_{aa},\ W_{ya},\ b_a,\ b_y$는 모든 <strong>timestep</strong>에서 변하지 않는 계수이고<br />
+$g_1,\ g_2$는 활성함수들이다.<br />
+\(\begin{align*}\end{align*}\)</p>
+
+<p><img src="/assets/img/RNN%20Note/RNN/RNN_1.png" alt="RNN_1" /></p>
+<h5><center>출처: CS 230</center></h5>
+
+<h3 id="rnn의-장점과-단점">RNN의 장점과 단점</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Advantages</th>
+      <th style="text-align: left">Drawbacks</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">$\cdot$ 어떤 길이의 입력도 처리 가능</td>
+      <td style="text-align: left">$\cdot$ 계산이 느림</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$\cdot$ 입력 크기에 따라 모델 크기가 커지지 않음</td>
+      <td style="text-align: left">$\cdot$ 오래된 <strong>timestep</strong>에 접근하기 어려움</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$\cdot$ 시간에 대한 결과를 고려한 계산</td>
+      <td style="text-align: left">$\cdot$ 현재 state에서는 미래의 입력을 고려하지 못함</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">$\cdot$ 전체 시간동안 가중치가 공유됨</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="applications-of-rnns">Applications of RNNs</h2>
+<p>RNN model들은 NLP와 speech recognition 처럼 sequential data를 다루기 위해 사용된다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Type of RNN</th>
+      <th style="text-align: center">Illustration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">One-to-one                              </td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_2.png" alt="RNN_2" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">One-to-many</td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_3.png" alt="RNN_3" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Many-to-one</td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_4.png" alt="RNN_4" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Many-to-many</td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_5.png" alt="RNN_5" /></td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Many-to-many</td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_6.png" alt="RNN_6" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h5><center>출처: CS 230</center></h5>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="loss-function">Loss function</h2>
+<p>RNN의 경우 모든 timestep에서 loss function $\mathcal{L}$ 은 각 timestep 별 loss를 더하는 것으로 정의한다.</p>
+
+\[\mathcal{L}(\hat y,y)=\sum\limits^{T_y}_{t=1}\mathcal{L}\left(\hat y^{&lt;t&gt;},y^{&lt;t&gt;}\right)\]
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="backpropagation-through-time">Backpropagation through time</h2>
+<p>역전파는 각 시간별로 진행된다.<br />
+timestep $T$ 인 경우, ${\partial\mathcal{L}^{(T)}\over\partial W}$ 는 아래와 같이 표현된다.</p>
+
+\[{\partial\mathcal{L}^{(T)}\over\partial W}=\left.\sum\limits^{T}_{t=1}{\partial\mathcal{L}^{(T)}\over\partial W}\right|_{(t)}\]
+
+<h3 id="참고자료">참고자료:</h3>
+<h4 id="michigan-online"><a href="https://www.youtube.com/watch?v=dUzLD91Sj-o&amp;list=PL5-TkQAfAZFbzxjBHtzdVCWE0Zbhomg7r&amp;index=12">Michigan Online</a>,</h4>
+<h4 id="cs-230"><a href="https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-recurrent-neural-networks">CS 230</a>,</h4>
+<h4 id="wiki-docs"><a href="https://wikidocs.net/22886">Wiki Docs</a></h4>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;RNN Note&quot;]" /><summary type="html"><![CDATA[Overview]]></summary></entry><entry><title type="html">Vector Differential</title><link href="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html" rel="alternate" type="text/html" title="Vector Differential" /><published>2022-08-21T15:08:13+09:00</published><updated>2022-08-21T15:08:13+09:00</updated><id>http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98%20%EB%AF%B8%EB%B6%84</id><content type="html" xml:base="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html"><![CDATA[<h1 id="vector-differential">Vector Differential</h1>
 
 <p><img src="/assets/img/Math_Note/VectorDifferential/vector_diff_0.jpg" alt="vector_diff_0" /></p>
 
@@ -301,7 +412,7 @@ y&amp;=x\cdot c\\
 
 <h1 id="56-affinesoftmax-계층-구현">5.6 Affine/Softmax 계층 구현</h1>
 
-<h2 id="벡터의-미분"><a href="http://localhost:4000/math%20note/2022/08/21/벡터의-미분.html">*벡터의 미분</a></h2>
+<h2 id="벡터의-미분"><a href="http://kchanghun.github.io/math%20note/2022/08/21/벡터의-미분.html">*벡터의 미분</a></h2>
 
 <h2 id="561-affine-계층">5.6.1 Affine 계층</h2>
 
@@ -980,7 +1091,7 @@ degradation 문제가 생긴다 :
 <p>뜻밖에도, 이러한 degradation은 과적합에 의한 문제가 아니고
 적당히 깊은 모델이 더 깊어지도록 층을 추가하는 행위가 높은 training error 를 갖게하는 것이다.</p>
 
-<p><img src="/assets/img/ResNet/ResNet0.png" alt="ResNet0" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet0.png" alt="ResNet0" /></p>
 
 <p>(학습 정확도의) degradation은 모든 시스템들이 optimize하기 쉬운건 아니라는 것을 보여준다.</p>
 
@@ -1011,7 +1122,7 @@ original mapping보다 optimize하는 것 보다 더 쉽다.</p>
 
 <p>$F(x)+x$라는 식은 “shortcut connections”를 통해 신경망의 feedforward에 의해 알 수 있을 것이다.</p>
 
-<p><img src="/assets/img/ResNet/ResNet1.png" alt="ResNet1" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet1.png" alt="ResNet1" /></p>
 
 <p>Shortcut connections는 하나 이상의 층을 skip하는 것이다.</p>
 
@@ -1147,7 +1258,7 @@ solver들은 다층 비선형 구조가 identity mapping이 0을 향해 근접�
 
 <p>예를들어</p>
 
-<p><img src="/assets/img/ResNet/ResNet1.png" alt="ResNet1" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet1.png" alt="ResNet1" /></p>
 
 <p>이 구조는</p>
 
@@ -1232,7 +1343,7 @@ filter의 수를 두배로 해서 층마다 시간 복잡도를 유지한다.</l
 <p>34개의 층들은 36억개의 FLOPs(multiply-add)가 필요하고
 이는 196억개의 FLOPs인 VGG-19의 18%에 해당하는 수치이다.</p>
 
-<p><img src="/assets/img/ResNet/ResNet2.png" alt="ResNet2" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet2.png" alt="ResNet2" /></p>
 
 <h2 id="residual-network">Residual Network</h2>
 
@@ -1298,13 +1409,13 @@ momentum계수는 0.9로 했다.</p>
 
 <p>18-layer와 34-layer를 평가했다.</p>
 
-<p><img src="/assets/img/ResNet/ResNet3.png" alt="ResNet3" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet3.png" alt="ResNet3" /></p>
 
 <p>Downsampling은 conv3_1,conv4_1,conv5_1에서도 stride 2로 진행된다</p>
 
 <p>아래 결과를 보면 더 깊은 34-layer가 얕은 18-layer보다 validation error가 더 큰 것을 알 수 있다.</p>
 
-<p><img src="/assets/img/ResNet/ResNet4.png" alt="ResNet4" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet4.png" alt="ResNet4" /></p>
 
 <p>얇은 선은 training error, 굵은 선은 validation error</p>
 
@@ -1339,11 +1450,11 @@ BN을 사용했다.</p>
 
 <p>따라서 plain net과 비교해 추가적인 매개변수가 없다.</p>
 
-<p><img src="/assets/img/ResNet/ResNet5.png" alt="ResNet5" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet5.png" alt="ResNet5" /></p>
 
 <p>얇은 선은 training error, 굵은 선은 validation error</p>
 
-<p><img src="/assets/img/ResNet/ResNet6.png" alt="ResNet6" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet6.png" alt="ResNet6" /></p>
 
 <p>위 결과로부터 3가지 주요 관찰할 것을 얻었다.</p>
 
@@ -1359,11 +1470,11 @@ BN을 사용했다.</p>
 <h3 id="plain-net과-resnet을-비교했을-때">plain net과 ResNet을 비교했을 때,</h3>
 <p>34-layer ResNet은 top-1 error가 줄었다는 것이다.</p>
 
-<p><img src="/assets/img//ResNet/ResNet7.png" alt="ResNet7" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet7.png" alt="ResNet7" /></p>
 
-<p><img src="/assets/img/ResNet/ResNet8.png" alt="ResNet8" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet8.png" alt="ResNet8" /></p>
 
-<p><img src="/assets/img/ResNet/ResNet9.png" alt="ResNet9" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet9.png" alt="ResNet9" /></p>
 
 <p>이러한 비교는 extremely deep system에서 residual learning의 효과를 입증한다.</p>
 
@@ -1381,7 +1492,7 @@ SGD는 계속해서 좋은 solution을 Plain net에 찾아줄 수 있다.</p>
 
 <p>다음으로는 projection shortcut을 살펴보겠다.</p>
 
-<p><img src="/assets/img/ResNet/ResNet7.png" alt="ResNet7" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet7.png" alt="ResNet7" /></p>
 
 <p>Table 3에서 세가지 옵션들을 비교했다.</p>
 
@@ -1428,7 +1539,7 @@ building block을 bottleneck 구조로 변경했다.</p>
 
 <p>bottleneck과 non-bottleneck 모두 시간 복잡도는 비슷하다.</p>
 
-<p><img src="/assets/img/ResNet/ResNet10.png" alt="ResNet10" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet10.png" alt="ResNet10" /></p>
 
 <p>매개변수가 추가되지 않는 identity shortcuts는 병목 구조에서
 특히 더 중요하다.</p>
@@ -1462,9 +1573,9 @@ building block을 bottleneck 구조로 변경했다.</p>
 
 <h3 id="comparisons-with-state-of-the-art-methods">Comparisons with State-of-the art Methods</h3>
 
-<p><img src="/assets/img/ResNet/ResNet8.png" alt="ResNet8" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet8.png" alt="ResNet8" /></p>
 
-<p><img src="/assets/img/ResNet/ResNet9.png" alt="ResNet9" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet9.png" alt="ResNet9" /></p>
 
 <p>위 결과에서 보듯 이전에 사용하던 최고의 단일-모델과 비교했다.</p>
 
@@ -1501,7 +1612,7 @@ extremely deep network의 구조를 간단하게 구성했다.</p>
 
 <p>따라서 총 가중치층은 6n+2가 된다.</p>
 
-<p><img src="/assets/img/ResNet/ResNet11.png" alt="ResNet11" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet11.png" alt="ResNet11" /></p>
 
 <p>shortcur connection이 사용되면,
 그것들은 3x3 합성곱 두개에 하나씩 연결되어 총 3n개의 shortcut이 생긴다.</p>
@@ -1528,7 +1639,7 @@ padding한 이미지와 그것을 뒤집은 이미지로부터 32x32의 크기�
 
 <p>n={3,5,7,9}를 적용해 20, 32, 44, 56-layer network를 만들었다.</p>
 
-<p><img src="/assets/img/ResNet/ResNet12.png" alt="ResNet12" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet12.png" alt="ResNet12" /></p>
 
 <p>Highway network를 보면 증가된 깊이로부터 error가 증가하는 것을 볼 수 있다.</p>
 
@@ -1550,19 +1661,19 @@ padding한 이미지와 그것을 뒤집은 이미지로부터 32x32의 크기�
 
 <p>110-layer는 최첨단 구조가 아님에도 다른 깊거나 얕은 구조들 (Fitnet and Highway)보다 더 매개변수가 적다.</p>
 
-<p><img src="/assets/img/ResNet/ResNet13.png" alt="ResNet13" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet13.png" alt="ResNet13" /></p>
 
 <p>bold : training error, dashed : test error</p>
 
-<p><img src="/assets/img/ResNet/ResNet14.png" alt="ResNet14" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet14.png" alt="ResNet14" /></p>
 
 <p>bold : training error, dashed : test error</p>
 
-<p><img src="/assets/img/ResNet/ResNet15.png" alt="ResNet15" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet15.png" alt="ResNet15" /></p>
 
 <h3 id="analysis-of-layer-responses">Analysis of Layer Responses</h3>
 
-<p><img src="/assets/img/ResNet/ResNet16.png" alt="ResNet16" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet16.png" alt="ResNet16" /></p>
 
 <p>위 그래프에서 표준편차를 확인할 수 있다.</p>
 
@@ -1613,7 +1724,7 @@ optimization difficulty에는 초점을 두지 않았다.</p>
 
 <p>우리의 방법은 다른 recognition 작업에서도 좋은 generalization 성능을 보인다.</p>
 
-<p><img src="/assets/img/ResNet/ResNet17.png" alt="ResNet17" /></p>
+<p><img src="/assets/img/Paper_Review/ResNet/ResNet17.png" alt="ResNet17" /></p>
 
 <p>Table7과 Table8 에서 볼 수 있듯이
 object detection baseline은 PASCAL VOC 2007 and 2012 and COCO를 통해 평가했다.</p>
@@ -1759,7 +1870,7 @@ feature map의 saptial resolution이 첫 번째 합성곱층에서 계산량을 
 
 <p>우리의 모델은 GooLeNet보다 single-network classification accuracy 측면에서 뛰어나다.</p>
 
-<p><img src="/assets/img/VGGNet/VGGNet0.png" alt="VGGNet0" /></p>
+<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet0.png" alt="VGGNet0" /></p>
 
 <h1 id="3-classification-framework">3. Classification Framework</h1>
 
@@ -1945,7 +2056,7 @@ A의 11층부터 E의 19층까지 실험했다.</p>
 
 <p>따라서 training set augmentation by scale jittering은 capturing multi-scale image statistics에 도움을 준다는 것을 알 수 있다.</p>
 
-<p><img src="/assets/img/VGGNet/VGGNet1.png" alt="VGGNet1" /></p>
+<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet1.png" alt="VGGNet1" /></p>
 
 <h2 id="42-multi-scale-evaluation">4.2 Multi-Scale Evaluation</h2>
 
@@ -1969,7 +2080,7 @@ $Q=\left{S_{min},\ 0.5(S_{min}+S_{max}),\ S_{max}\right}$
 
 <p>test set에서 E 네트워크의 top-5 error는 7.3%가 나왔다.</p>
 
-<p><img src="/assets/img/VGGNet/VGGNet2.png" alt="VGGNet2" /></p>
+<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet2.png" alt="VGGNet2" /></p>
 
 <h2 id="43-multi-crop-evaluation">4.3 Multi-Crop Evaluation</h2>
 
@@ -1981,7 +2092,7 @@ $Q=\left{S_{min},\ 0.5(S_{min}+S_{max}),\ S_{max}\right}$
 
 <p>위에서 말했듯이 이것은 합성곱 결정 조건이 다르게 나타나기 때문이다.</p>
 
-<p><img src="/assets/img/VGGNet/VGGNet3.png" alt="VGGNet3" /></p>
+<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet3.png" alt="VGGNet3" /></p>
 
 <h2 id="44-convnet-fusion">4.4 ConvNet Fusion</h2>
 
@@ -1999,7 +2110,7 @@ $Q=\left{S_{min},\ 0.5(S_{min}+S_{max}),\ S_{max}\right}$
 
 <p>참고로 가장 좋은 single model 은 7.1%의 error를 보였다.</p>
 
-<p><img src="/assets/img/VGGNet/VGGNet4.png" alt="VGGNet4" /></p>
+<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet4.png" alt="VGGNet4" /></p>
 
 <h2 id="45-comparison-with-the-state-of-the-art">4.5 Comparison with the State-of-the-art</h2>
 
@@ -2020,7 +2131,7 @@ $Q=\left{S_{min},\ 0.5(S_{min}+S_{max}),\ S_{max}\right}$
 
 <p>참고로, 우리는 LeCun의 구조에서 많이 벗어나지 않고 실질적으로 깊이만 증가시켰다.</p>
 
-<p><img src="/assets/img/VGGNet/VGGNet5.png" alt="VGGNet5" /></p>
+<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet5.png" alt="VGGNet5" /></p>
 
 <h1 id="5-conclusion">5. Conclusion</h1>
 
@@ -2127,7 +2238,7 @@ top-1과 top-5 error rate이다.</p>
 
 <p>tanh와 비교해 ReLU를 사용한 Deep CNN은 몇배 더 빠르게 학습한다.</p>
 
-<p><img src="/assets/img/AlexNet/AlexNet0.png" alt="AlexNet0" /></p>
+<p><img src="/assets/img/Paper_Review/AlexNet/AlexNet0.png" alt="AlexNet0" /></p>
 
 <p>A four-layer CNN with ReLUs(solid line) 가 CIFAR-10을 사용했을 때 학습에러 25%에 도달하기 까지 걸리는 시간은  tanh(dashed line)를 사용할 때보다 6배 빠르다.</p>
 
@@ -2383,7 +2494,7 @@ w_{i+1}&amp;:=w_i+v_{i+1}
 
 <h2 id="61-qualitative-evalutaions">6.1 Qualitative Evalutaions</h2>
 
-<p><img src="/assets/img/AlexNet/AlexNet1.png" alt="AlexNet1" /></p>
+<p><img src="/assets/img/Paper_Review/AlexNet/AlexNet1.png" alt="AlexNet1" /></p>
 
 <p>제한된 연결성을 가지는 구조로 인해 GPU1에 있는 kernel 들은 color-agnostic(색상에 구애받지 않는)하고</p>
 
@@ -2391,7 +2502,7 @@ w_{i+1}&amp;:=w_i+v_{i+1}
 
 <p>이 특징은 매 학습마다 발견되고 가중치 초기화와 관련이 없다.</p>
 
-<p><img src="/assets/img/AlexNet/AlexNet2.png" alt="AlexNet2" /></p>
+<p><img src="/assets/img/Paper_Review/AlexNet/AlexNet2.png" alt="AlexNet2" /></p>
 
 <p>사진에서 객체가 중심에 없더라도 사진에서 mite처럼 network에 의해 검출이 될 수 있다.</p>
 
@@ -2401,7 +2512,7 @@ w_{i+1}&amp;:=w_i+v_{i+1}
 
 <p>grille과 cherry같은 경우는 사진에서 의도된 초점에 대한 진정한 모호함이 있다.</p>
 
-<p><img src="/assets/img/AlexNet/AlexNet3.png" alt="AlexNet3" /></p>
+<p><img src="/assets/img/Paper_Review/AlexNet/AlexNet3.png" alt="AlexNet3" /></p>
 
 <p>네트워크의 visual knowledge를 살피는 다른 방법은 마지막 4096차원의 은닉층으로부터 유도된 feature activation을 생각하는 것이다.</p>
 
@@ -2437,7 +2548,7 @@ w_{i+1}&amp;:=w_i+v_{i+1}
 
 <p>learning techniques의 사용은 최근 성공적인 패턴인식 적용에 중요한 요인이다.</p>
 
-<p><img src="/assets/img/LeNet-5/LeNet_0.png" alt="LeNet0" /></p>
+<p><img src="/assets/img/Paper_Review/LeNet-5/LeNet_0.png" alt="LeNet0" /></p>
 
 <p>Feature Extractor( 특징 추출기 )는 사전지식이 많이 필요하고 진행중인 작업에 따라 다르다(ex&gt; A와 B작업을 위한 특징 추출기는 다르다)</p>
 
@@ -2755,7 +2866,7 @@ stroke end-point나 corner같은 잠재적 특징이 될만한 것들이 나타�
 <h3 id="c3">C3</h3>
 <p>feature maps 6@14x14 → feature maps 16@10x10</p>
 
-<p><img src="/assets/img/LeNet-5/LeNet_1.png" alt="LeNet1" /></p>
+<p><img src="/assets/img/Paper_Review/LeNet-5/LeNet_1.png" alt="LeNet1" /></p>
 
 <p>S2와 C3의 연결을 보면 S2의 모든 feature map이 C3의 모든 feature map에 연결되지 않는다.</p>
 

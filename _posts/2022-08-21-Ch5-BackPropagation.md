@@ -76,7 +76,7 @@ $$
 {\partial t\over \partial x}=1
 $$
 
-1. 연쇄법칙$\mathsf{^{chain rule}}$ 적용
+2. 연쇄법칙$\mathsf{^{chain rule}}$ 적용
 
 $$
 {\partial z\over \partial x}={\partial z\over \partial t}{\partial t\over \partial x}=

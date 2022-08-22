@@ -142,6 +142,10 @@ table td { border: 1px solid #e8e8e8; }
 
 .post-content { margin-bottom: 30px; }
 
+.post-content h1 { font-size: 38px; }
+
+@media screen and (max-width: 800px) { .post-content h1 { font-size: 34px; } }
+
 .post-content h2 { font-size: 32px; }
 
 @media screen and (max-width: 800px) { .post-content h2 { font-size: 28px; } }

@@ -35,7 +35,7 @@
         
         <a class="page-link" href="">Jump to</a>
 
-        <!-- <div class="trigger"><a class="page-link" href="/categories/DeepLearning%20from%20scratch.html">DeepLearning from scratch</a><a class="page-link" href="/categories/Math%20Note.html">Math Note</a><a class="page-link" href="/categories/Paper%20Review.html">Paper Review</a><a class="page-link" href="/categories/Project.html">Project</a><a class="page-link" href="/">All Documents</a></div> -->
+        <!-- <div class="trigger"><a class="page-link" href="/categories/DeepLearning%20from%20scratch.html">DeepLearning from scratch</a><a class="page-link" href="/categories/Math%20Note.html">Math Note</a><a class="page-link" href="/categories/Paper%20Review.html">Paper Review</a><a class="page-link" href="/categories/Project.html">Project</a><a class="page-link" href="/categories/RNN%20Note.html">RNN Note</a><a class="page-link" href="/">All Documents</a></div> -->
       </nav></div>
 </header>
 <div class="container">
@@ -57,6 +57,10 @@
           
                 
                 <li><a href=" http://localhost:4000/categories/Paper Review "> Paper Review     </a></li>
+                <br/>
+          
+                
+                <li><a href=" http://localhost:4000/categories/RNN Note "> RNN Note     </a></li>
                 <br/>
         
     </ul>
@@ -222,7 +226,7 @@ feature map의 saptial resolution이 첫 번째 합성곱층에서 계산량을 
 
 <p>우리의 모델은 GooLeNet보다 single-network classification accuracy 측면에서 뛰어나다.</p>
 
-<p><img src="/assets/img/VGGNet/VGGNet0.png" alt="VGGNet0" /></p>
+<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet0.png" alt="VGGNet0" /></p>
 
 <h1 id="3-classification-framework">3. Classification Framework</h1>
 
@@ -408,7 +412,7 @@ A의 11층부터 E의 19층까지 실험했다.</p>
 
 <p>따라서 training set augmentation by scale jittering은 capturing multi-scale image statistics에 도움을 준다는 것을 알 수 있다.</p>
 
-<p><img src="/assets/img/VGGNet/VGGNet1.png" alt="VGGNet1" /></p>
+<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet1.png" alt="VGGNet1" /></p>
 
 <h2 id="42-multi-scale-evaluation">4.2 Multi-Scale Evaluation</h2>
 
@@ -432,7 +436,7 @@ $Q=\left{S_{min},\ 0.5(S_{min}+S_{max}),\ S_{max}\right}$
 
 <p>test set에서 E 네트워크의 top-5 error는 7.3%가 나왔다.</p>
 
-<p><img src="/assets/img/VGGNet/VGGNet2.png" alt="VGGNet2" /></p>
+<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet2.png" alt="VGGNet2" /></p>
 
 <h2 id="43-multi-crop-evaluation">4.3 Multi-Crop Evaluation</h2>
 
@@ -444,7 +448,7 @@ $Q=\left{S_{min},\ 0.5(S_{min}+S_{max}),\ S_{max}\right}$
 
 <p>위에서 말했듯이 이것은 합성곱 결정 조건이 다르게 나타나기 때문이다.</p>
 
-<p><img src="/assets/img/VGGNet/VGGNet3.png" alt="VGGNet3" /></p>
+<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet3.png" alt="VGGNet3" /></p>
 
 <h2 id="44-convnet-fusion">4.4 ConvNet Fusion</h2>
 
@@ -462,7 +466,7 @@ $Q=\left{S_{min},\ 0.5(S_{min}+S_{max}),\ S_{max}\right}$
 
 <p>참고로 가장 좋은 single model 은 7.1%의 error를 보였다.</p>
 
-<p><img src="/assets/img/VGGNet/VGGNet4.png" alt="VGGNet4" /></p>
+<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet4.png" alt="VGGNet4" /></p>
 
 <h2 id="45-comparison-with-the-state-of-the-art">4.5 Comparison with the State-of-the-art</h2>
 
@@ -483,7 +487,7 @@ $Q=\left{S_{min},\ 0.5(S_{min}+S_{max}),\ S_{max}\right}$
 
 <p>참고로, 우리는 LeCun의 구조에서 많이 벗어나지 않고 실질적으로 깊이만 증가시켰다.</p>
 
-<p><img src="/assets/img/VGGNet/VGGNet5.png" alt="VGGNet5" /></p>
+<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet5.png" alt="VGGNet5" /></p>
 
 <h1 id="5-conclusion">5. Conclusion</h1>
 
