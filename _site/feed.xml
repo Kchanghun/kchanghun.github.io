@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-24T02:20:17+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Recurrent Neural Networks</title><link href="http://localhost:4000/rnn%20note/2022/08/22/RNN.html" rel="alternate" type="text/html" title="Recurrent Neural Networks" /><published>2022-08-22T15:16:15+09:00</published><updated>2022-08-22T15:16:15+09:00</updated><id>http://localhost:4000/rnn%20note/2022/08/22/RNN</id><content type="html" xml:base="http://localhost:4000/rnn%20note/2022/08/22/RNN.html"><![CDATA[<h1 id="overview">Overview</h1>
-
-<h2 id="architecture-of-a-traditional-rnn">Architecture of a traditional RNN</h2>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-24T05:04:24+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Hnadling long term dependencies</title><link href="http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html" rel="alternate" type="text/html" title="Hnadling long term dependencies" /><published>2022-08-23T21:27:13+09:00</published><updated>2022-08-23T21:27:13+09:00</updated><id>http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies</id><content type="html" xml:base="http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html"><![CDATA[<p>HI</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;RNN Note&quot;]" /><summary type="html"><![CDATA[HI]]></summary></entry><entry><title type="html">RNN Overview</title><link href="http://localhost:4000/rnn%20note/2022/08/22/RNN.html" rel="alternate" type="text/html" title="RNN Overview" /><published>2022-08-22T15:16:15+09:00</published><updated>2022-08-22T15:16:15+09:00</updated><id>http://localhost:4000/rnn%20note/2022/08/22/RNN</id><content type="html" xml:base="http://localhost:4000/rnn%20note/2022/08/22/RNN.html"><![CDATA[<h1 id="architecture-of-a-traditional-rnn">Architecture of a traditional RNN</h1>
 <p><strong>RNN</strong>에서는 은닉층에서 활성화 함수를 통해 결과를 내보내는 역할을 하는 노드를 <strong>cell</strong>(메모리 셀, RNN 셀) 이라고 한다.</p>
 
 <p>regular feed-forward network에서 hidden layer라고 부르던 뉴런은</p>
@@ -27,7 +25,7 @@ $g_1,\ g_2$는 활성함수들이다.<br />
 <p><img src="/assets/img/RNN%20Note/RNN/RNN_1.png" alt="RNN_1" /></p>
 <h5><center>출처: CS 230</center></h5>
 
-<h3 id="rnn의-장점과-단점">RNN의 장점과 단점</h3>
+<h2 id="rnn의-장점과-단점">RNN의 장점과 단점</h2>
 
 <table>
   <thead>
@@ -57,7 +55,7 @@ $g_1,\ g_2$는 활성함수들이다.<br />
 </table>
 
 <p>\(\begin{align*}\end{align*}\)</p>
-<h2 id="applications-of-rnns">Applications of RNNs</h2>
+<h1 id="applications-of-rnns">Applications of RNNs</h1>
 <p>RNN model들은 NLP와 speech recognition 처럼 sequential data를 다루기 위해 사용된다.</p>
 
 <table>
@@ -94,60 +92,51 @@ $g_1,\ g_2$는 활성함수들이다.<br />
 <h5><center>출처: CS 230</center></h5>
 
 <p>\(\begin{align*}\end{align*}\)</p>
-<h2 id="loss-function">Loss function</h2>
+<h1 id="loss-function">Loss function</h1>
 <p>RNN의 경우 모든 timestep에서 loss function $\mathcal{L}$ 은 각 timestep 별 loss를 더하는 것으로 정의한다.</p>
 
 \[\mathcal{L}(\hat y,y)=\sum\limits^{T_y}_{t=1}\mathcal{L}\left(\hat y^{&lt;t&gt;},y^{&lt;t&gt;}\right)\]
 
 <p>\(\begin{align*}\end{align*}\)</p>
-<h2 id="backpropagation-through-time">Backpropagation through time</h2>
+<h1 id="backpropagation-through-time">Backpropagation through time</h1>
 <p>역전파는 각 시간별로 진행된다.<br />
 timestep $T$ 인 경우, ${\partial\mathcal{L}^{(T)}\over\partial W}$ 는 아래와 같이 표현된다.</p>
 
 \[{\partial\mathcal{L}^{(T)}\over\partial W}=\left.\sum\limits^{T}_{t=1}{\partial\mathcal{L}^{(T)}\over\partial W}\right|_{(t)}\]
 
-<h2 id="for-example"><strong>For example</strong></h2>
-<p>If we use <strong>tanh</strong> as activation function in $g_1\mathsf{\ and\ }g_2$ and<br />
-use <strong>softmax</strong> as activation function before passing through loss function and<br />
-use <strong>Cross Entropy Loss</strong> as loss function,<br />
-then the <strong>BPTT</strong> at timestep $t$ will be as follows :
-<img src="/assets/img/RNN%20Note/RNN/RNN_1.png" alt="RNN_1" /></p>
-<h5><center>출처: CS 230</center></h5>
-
-<h2 id="first-go-forward">First, go forward</h2>
+<h2 id="how-to-do-bptt-">How to do <strong>BPTT</strong> ?</h2>
+<p><img src="/assets/img/RNN%20Note/RNN/RNN_7.png" alt="RNN_7" />
+예를 들어 위와 같이 $S_t=S_{t-1}\cdot W$ 이고 $\mathcal{L}=S_t\cdot W$ 인 경우<br />
+${\partial\ \mathcal{L}\over\partial\ W}$ 는 아래와 같이 구한다.</p>
 
 \[\begin{align*}
-s_1&amp;=W_{aa}\cdot a^{&lt;t-1&gt;}+W_{ax}\cdot x^{&lt;t&gt;}+b_a\\ \\
-a^{&lt;t&gt;}&amp;=g_1(s_1)=\tanh(s_1)\\ \\
-s_2&amp;=W_{ya}\cdot a^{&lt;t&gt;}+b_y\\ \\
-s_3&amp;=g_2(s_2)=\tanh(s_2) \\ \\
-\hat y^{&lt;t&gt;}&amp;=\mathrm{softmax}(s_3)\\ \\
-\mathcal{L}\left(\hat y^{&lt;t&gt;},y^{&lt;t&gt;}\right)&amp;=-\sum\limits_ky^{&lt;t&gt;}_k\log\left(\hat y^{&lt;t&gt;}_k\right)\\
-\mathcal{L}(\hat y,y)
-&amp;=\sum\limits^{T_y}_{t=1}\mathcal{L}\left(\hat y^{&lt;t&gt;},y^{&lt;t&gt;}\right)
+{\partial\ \mathcal{L}\over\partial\ W}&amp;=
+{\partial\ \mathcal{L}\over\partial\ S_t}\cdot{\partial\ S_t\over\partial\ W}\\ \\
+{\partial\ S_t\over\partial\ W}&amp;=
+\underbrace{\partial^+\ S_t\over\partial\ W}_{\mathsf{explicit}}+
+\underbrace{\dfrac{\partial\ S_t}{\partial\ S_{t-1}}\cdot{\partial\ S_{t-1}\over\partial\ W}}_{\mathsf{implicit}}\\ \\
+&amp;=
+{\partial^+\ S_t\over\partial\ W}+{\partial\ S_t\over\partial\ S_{t-1}}\left[\underbrace{\partial^+\ S_{t-1}\over\partial\ W}_{\mathsf{explicit}}+\underbrace{\dfrac{\partial\ S_{t-1}}{\partial\ S_{t-2}}\cdot{\partial\ S_{t-2}\over\partial\ W}}_{\mathsf{implicit}}\right]=\dots\\ \\
+&amp;=
+{\partial\ S_t\over\partial\ S_t}\ {\partial^+\ S_t\over\partial\ W}+
+{\partial\ S_t\over\partial\ S_{t-1}}\ {\partial^+\ S_{t-1}\over\partial\ W}+
+{\partial\ S_t\over\partial\ S_{t-1}}\ {\partial\ S_{t-1}\over\partial\ S_{t-2}}\ {\partial^+\ S_{t-2}\over\partial\ W}+\dots+{\partial\ S_t\over\partial\ S_{t-1}}\dots{\partial^+\ S_1\over\partial\ W}\\ \\
+&amp;=\sum\limits^t_{k=1}{\partial\ S_t\over\partial\ S_k}\ {\partial^+\ S_k\over\partial\ W}\\ \\
+\therefore\dfrac{\partial\ \mathcal{L^{&lt;t&gt;}}}{\partial\ W}&amp;=
+\dfrac{\partial\ \mathcal{L^{&lt;t&gt;}}}{\partial\ S_t}\ 
+\sum\limits^t_{k=1}{\partial\ S_t\over\partial\ S_k}\ {\partial^+\ S_k\over\partial\ W}
 \end{align*}\]
 
-<p>\(\begin{align*}\end{align*}\)</p>
-<h2 id="then-bptt-at-timestep-t-is">Then <strong>BPTT</strong> at timestep $t$ is:</h2>
-<div style="text-align: right"><h5><a href="https://kchanghun.github.io/deeplearning%20from%20scratch/2022/08/21/Ch5-BackPropagation.html">Go to backpropagate CE, softmax, etc.</a></h5></div>
+<p>위와 같은 개념으로 BPTT 진행하여 RNN이 학습을 한다.</p>
 
-\[\begin{align*}
-{\partial\ \mathcal{L}(\hat y, y)\over\partial\ \mathcal{L}(\hat y^{&lt;t&gt;},y^{&lt;t&gt;})}&amp;=1\\ \\
-{\partial\ \mathcal{L}(\hat y^{&lt;t&gt;},y^{&lt;t&gt;})\over\partial\ s_3}&amp;=\hat y^{&lt;t&gt;}-y^{&lt;t&gt;}\\ \\
-{\partial\ s_3\over\partial\ s_2}&amp;=1-\tanh(s_2)^2\\ \\
-{\partial\ s_2\over\partial\ b_y}&amp;=1\\ \\
-{\partial\ s_2\over\partial\ W_{ya}}&amp;=a^{&lt;t&gt;}\\ \\
-{\partial\ s_2\over\partial\ a^{&lt;t&gt;}}&amp;=W_{ya}\\ \\
-{\partial\ a^{&lt;t&gt;}\over\partial\ s_1}&amp;=1-\tanh(s_1)^2\\ \\
-{\partial\ s_1\over\partial\ W_{ax}}&amp;=x^{&lt;t&gt;}\\ \\
-{\partial\ s_1\over\partial\ W_{aa}}&amp;=a^{&lt;t-1&gt;}
-\end{align*}\]
+<p>\(\begin{align*}\end{align*}\)
+\(\begin{align*}\end{align*}\)</p>
 
 <h3 id="참고자료">참고자료:</h3>
 <h4 id="michigan-online"><a href="https://www.youtube.com/watch?v=dUzLD91Sj-o&amp;list=PL5-TkQAfAZFbzxjBHtzdVCWE0Zbhomg7r&amp;index=12">Michigan Online</a>,</h4>
 <h4 id="cs-230"><a href="https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-recurrent-neural-networks">CS 230</a>,</h4>
 <h4 id="wiki-docs"><a href="https://wikidocs.net/22886">Wiki Docs</a></h4>
-<h4 id="nptel-noc-iitm"><a href="https://www.youtube.com/watch?v=Xeb6OjnVn8g">NPTEL-NOC IITM</a></h4>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;RNN Note&quot;]" /><summary type="html"><![CDATA[Overview]]></summary></entry><entry><title type="html">Vector Differential</title><link href="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html" rel="alternate" type="text/html" title="Vector Differential" /><published>2022-08-21T15:08:13+09:00</published><updated>2022-08-21T15:08:13+09:00</updated><id>http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98%20%EB%AF%B8%EB%B6%84</id><content type="html" xml:base="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html"><![CDATA[<h1 id="vector-differential">Vector Differential</h1>
+<h4 id="nptel-noc-iitm"><a href="https://www.youtube.com/watch?v=Xeb6OjnVn8g">NPTEL-NOC IITM</a></h4>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;RNN Note&quot;]" /><summary type="html"><![CDATA[Architecture of a traditional RNN RNN에서는 은닉층에서 활성화 함수를 통해 결과를 내보내는 역할을 하는 노드를 cell(메모리 셀, RNN 셀) 이라고 한다.]]></summary></entry><entry><title type="html">Vector Differential</title><link href="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html" rel="alternate" type="text/html" title="Vector Differential" /><published>2022-08-21T15:08:13+09:00</published><updated>2022-08-21T15:08:13+09:00</updated><id>http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98%20%EB%AF%B8%EB%B6%84</id><content type="html" xml:base="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html"><![CDATA[<h1 id="vector-differential">Vector Differential</h1>
 
 <p><img src="/assets/img/Math_Note/VectorDifferential/vector_diff_0.jpg" alt="vector_diff_0" /></p>
 
