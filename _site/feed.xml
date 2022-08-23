@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-23T00:25:00+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Recurrent Neural Networks</title><link href="http://localhost:4000/rnn%20note/2022/08/22/RNN.html" rel="alternate" type="text/html" title="Recurrent Neural Networks" /><published>2022-08-22T15:16:15+09:00</published><updated>2022-08-22T15:16:15+09:00</updated><id>http://localhost:4000/rnn%20note/2022/08/22/RNN</id><content type="html" xml:base="http://localhost:4000/rnn%20note/2022/08/22/RNN.html"><![CDATA[<h1 id="overview">Overview</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-24T02:20:17+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Recurrent Neural Networks</title><link href="http://localhost:4000/rnn%20note/2022/08/22/RNN.html" rel="alternate" type="text/html" title="Recurrent Neural Networks" /><published>2022-08-22T15:16:15+09:00</published><updated>2022-08-22T15:16:15+09:00</updated><id>http://localhost:4000/rnn%20note/2022/08/22/RNN</id><content type="html" xml:base="http://localhost:4000/rnn%20note/2022/08/22/RNN.html"><![CDATA[<h1 id="overview">Overview</h1>
 
 <h2 id="architecture-of-a-traditional-rnn">Architecture of a traditional RNN</h2>
 <p><strong>RNN</strong>에서는 은닉층에서 활성화 함수를 통해 결과를 내보내는 역할을 하는 노드를 <strong>cell</strong>(메모리 셀, RNN 셀) 이라고 한다.</p>
@@ -106,10 +106,48 @@ timestep $T$ 인 경우, ${\partial\mathcal{L}^{(T)}\over\partial W}$ 는 아래
 
 \[{\partial\mathcal{L}^{(T)}\over\partial W}=\left.\sum\limits^{T}_{t=1}{\partial\mathcal{L}^{(T)}\over\partial W}\right|_{(t)}\]
 
+<h2 id="for-example"><strong>For example</strong></h2>
+<p>If we use <strong>tanh</strong> as activation function in $g_1\mathsf{\ and\ }g_2$ and<br />
+use <strong>softmax</strong> as activation function before passing through loss function and<br />
+use <strong>Cross Entropy Loss</strong> as loss function,<br />
+then the <strong>BPTT</strong> at timestep $t$ will be as follows :
+<img src="/assets/img/RNN%20Note/RNN/RNN_1.png" alt="RNN_1" /></p>
+<h5><center>출처: CS 230</center></h5>
+
+<h2 id="first-go-forward">First, go forward</h2>
+
+\[\begin{align*}
+s_1&amp;=W_{aa}\cdot a^{&lt;t-1&gt;}+W_{ax}\cdot x^{&lt;t&gt;}+b_a\\ \\
+a^{&lt;t&gt;}&amp;=g_1(s_1)=\tanh(s_1)\\ \\
+s_2&amp;=W_{ya}\cdot a^{&lt;t&gt;}+b_y\\ \\
+s_3&amp;=g_2(s_2)=\tanh(s_2) \\ \\
+\hat y^{&lt;t&gt;}&amp;=\mathrm{softmax}(s_3)\\ \\
+\mathcal{L}\left(\hat y^{&lt;t&gt;},y^{&lt;t&gt;}\right)&amp;=-\sum\limits_ky^{&lt;t&gt;}_k\log\left(\hat y^{&lt;t&gt;}_k\right)\\
+\mathcal{L}(\hat y,y)
+&amp;=\sum\limits^{T_y}_{t=1}\mathcal{L}\left(\hat y^{&lt;t&gt;},y^{&lt;t&gt;}\right)
+\end{align*}\]
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="then-bptt-at-timestep-t-is">Then <strong>BPTT</strong> at timestep $t$ is:</h2>
+<div style="text-align: right"><h5><a href="https://kchanghun.github.io/deeplearning%20from%20scratch/2022/08/21/Ch5-BackPropagation.html">Go to backpropagate CE, softmax, etc.</a></h5></div>
+
+\[\begin{align*}
+{\partial\ \mathcal{L}(\hat y, y)\over\partial\ \mathcal{L}(\hat y^{&lt;t&gt;},y^{&lt;t&gt;})}&amp;=1\\ \\
+{\partial\ \mathcal{L}(\hat y^{&lt;t&gt;},y^{&lt;t&gt;})\over\partial\ s_3}&amp;=\hat y^{&lt;t&gt;}-y^{&lt;t&gt;}\\ \\
+{\partial\ s_3\over\partial\ s_2}&amp;=1-\tanh(s_2)^2\\ \\
+{\partial\ s_2\over\partial\ b_y}&amp;=1\\ \\
+{\partial\ s_2\over\partial\ W_{ya}}&amp;=a^{&lt;t&gt;}\\ \\
+{\partial\ s_2\over\partial\ a^{&lt;t&gt;}}&amp;=W_{ya}\\ \\
+{\partial\ a^{&lt;t&gt;}\over\partial\ s_1}&amp;=1-\tanh(s_1)^2\\ \\
+{\partial\ s_1\over\partial\ W_{ax}}&amp;=x^{&lt;t&gt;}\\ \\
+{\partial\ s_1\over\partial\ W_{aa}}&amp;=a^{&lt;t-1&gt;}
+\end{align*}\]
+
 <h3 id="참고자료">참고자료:</h3>
 <h4 id="michigan-online"><a href="https://www.youtube.com/watch?v=dUzLD91Sj-o&amp;list=PL5-TkQAfAZFbzxjBHtzdVCWE0Zbhomg7r&amp;index=12">Michigan Online</a>,</h4>
 <h4 id="cs-230"><a href="https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-recurrent-neural-networks">CS 230</a>,</h4>
-<h4 id="wiki-docs"><a href="https://wikidocs.net/22886">Wiki Docs</a></h4>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;RNN Note&quot;]" /><summary type="html"><![CDATA[Overview]]></summary></entry><entry><title type="html">Vector Differential</title><link href="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html" rel="alternate" type="text/html" title="Vector Differential" /><published>2022-08-21T15:08:13+09:00</published><updated>2022-08-21T15:08:13+09:00</updated><id>http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98%20%EB%AF%B8%EB%B6%84</id><content type="html" xml:base="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html"><![CDATA[<h1 id="vector-differential">Vector Differential</h1>
+<h4 id="wiki-docs"><a href="https://wikidocs.net/22886">Wiki Docs</a></h4>
+<h4 id="nptel-noc-iitm"><a href="https://www.youtube.com/watch?v=Xeb6OjnVn8g">NPTEL-NOC IITM</a></h4>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;RNN Note&quot;]" /><summary type="html"><![CDATA[Overview]]></summary></entry><entry><title type="html">Vector Differential</title><link href="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html" rel="alternate" type="text/html" title="Vector Differential" /><published>2022-08-21T15:08:13+09:00</published><updated>2022-08-21T15:08:13+09:00</updated><id>http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98%20%EB%AF%B8%EB%B6%84</id><content type="html" xml:base="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html"><![CDATA[<h1 id="vector-differential">Vector Differential</h1>
 
 <p><img src="/assets/img/Math_Note/VectorDifferential/vector_diff_0.jpg" alt="vector_diff_0" /></p>
 
