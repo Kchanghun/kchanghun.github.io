@@ -1,4 +1,119 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-24T05:04:24+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Hnadling long term dependencies</title><link href="http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html" rel="alternate" type="text/html" title="Hnadling long term dependencies" /><published>2022-08-23T21:27:13+09:00</published><updated>2022-08-23T21:27:13+09:00</updated><id>http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies</id><content type="html" xml:base="http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html"><![CDATA[<p>HI</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;RNN Note&quot;]" /><summary type="html"><![CDATA[HI]]></summary></entry><entry><title type="html">RNN Overview</title><link href="http://localhost:4000/rnn%20note/2022/08/22/RNN.html" rel="alternate" type="text/html" title="RNN Overview" /><published>2022-08-22T15:16:15+09:00</published><updated>2022-08-22T15:16:15+09:00</updated><id>http://localhost:4000/rnn%20note/2022/08/22/RNN</id><content type="html" xml:base="http://localhost:4000/rnn%20note/2022/08/22/RNN.html"><![CDATA[<h1 id="architecture-of-a-traditional-rnn">Architecture of a traditional RNN</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-25T13:37:15+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Hnadling long term dependencies</title><link href="http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html" rel="alternate" type="text/html" title="Hnadling long term dependencies" /><published>2022-08-23T21:27:13+09:00</published><updated>2022-08-23T21:27:13+09:00</updated><id>http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies</id><content type="html" xml:base="http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html"><![CDATA[<h1 id="vanilla-rnn의-한계">Vanilla RNN의 한계</h1>
+<p>아래 Vanilla RNN 의 구조를 보자.<br />
+각 timestep별로 결과에 얼마나 영향을 주는지 색으로 표현했을때<br />
+색이 짙을 수록 역전파 과정에서 피드백 크기가 점점 작아져서 결과에 영향을 거의 안주게 된다.<br />
+만약 앞에 입력이 결과에 영향을 줘야하는 경우라면 현재 timestep으로부터 먼 앞에 입력을 기억하고 있지 않다면<br />
+<strong>Long Term Dependencies problem</strong> 이 발생하게 된다.</p>
+
+<p align="center"><img style="width: 70%" src="../../../../assets/img/RNN%20Note/Handling_long_term_dependencies/handling_0.png" /></p>
+<h5><center>출처: Wiki Docs</center></h5>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="자주-사용되는-activation-functions">자주 사용되는 activation functions</h1>
+<p>RNN에서 가장 많이 사용되는 activation functions들은 아래와 같다.</p>
+
+<p align="center"><img src="../../../../assets/img/RNN%20Note/Handling_long_term_dependencies/handling_1.png" /></p>
+<h5><center>출처: CS 230</center></h5>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="vanishingexploding-gradient">Vanishing/exploding gradient</h1>
+<p>RNN을 사용하다보면 Vanishing/exploding gradient 문제를 자주 만나게 된다.<br />
+층의 수에 따라 기하급수적으로 커지거나 작아지는 기울기 때문에<br />
+long term dependencies를 포착하기 어려워서<br />
+Vanishing/exploding gradient 문제가 발생하게 된다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="gradient-clipping">Gradient clipping</h1>
+<p>이 테크닉은 backpropagation 수행중에 가끔 마주치는<br />
+exploding gradient 문제에 대응하기 위해 사용된다.</p>
+
+<p align="center"><img style="width: 60%" src="../../../../assets/img/RNN%20Note/Handling_long_term_dependencies/handling_2.png" /></p>
+<h5><center>출처: CS 230</center></h5>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="grulstm">GRU/LSTM</h1>
+<p>Gated Recurrent Unit(GRU)와 GRU의 일반화 버전인 Long Short-Term Memory units(LSTM)은 전통적인 RNNs를 통해 마주하는 vanishing gradient problem을 다루기 위해 사용한다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="types-of-gates">Types of Gates</h1>
+<p><strong>vanishing gradient</strong> 문제를 해결하기 위해 RNNs에서는 목적이 잘 정의된 특정 gate들을 사용한다.<br />
+그것들을 보통 $\Gamma$ 로 표기한다.</p>
+
+\[\Gamma=\sigma\left(Wx^{&lt;t&gt;}+Ua^{&lt;t-1&gt;}+b\right)\]
+
+<p>$W,U,b$ 는 gate의 고유한 계수들이고 $\sigma$ 는 sigmoid function이다.<br />
+아래는 주요 내용이다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Type of gate</th>
+      <th style="text-align: center">Role</th>
+      <th style="text-align: center">Used in</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Update gate $\Gamma_u$</td>
+      <td style="text-align: center">과거가 현재에 얼마나 영향을 주는가</td>
+      <td style="text-align: center">GRU,LSTM</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Relevance gate $\Gamma_r$</td>
+      <td style="text-align: center">이전 정보를 버릴지</td>
+      <td style="text-align: center">GRU,LSTM</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Forget gate $\Gamma_f$</td>
+      <td style="text-align: center">cell을 지울지 말지</td>
+      <td style="text-align: center">LSTM</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Output gate $\Gamma_o$</td>
+      <td style="text-align: center">cell의 어느정도를 내보낼지</td>
+      <td style="text-align: center">LSTM</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="lstm">LSTM</h1>
+<p>LSTM의 cell의 구조는 아래와 같다.</p>
+<p align="center"><img src="../../../../assets/img/RNN%20Note/Handling_long_term_dependencies/handling_3.png" /></p>
+<h5><center>출처 : Explain LSTM &amp; GRU</center></h5>
+
+\[\begin{align*}\\
+\text{Input gate}\quad\rightarrow\quad i_t&amp;=\sigma\left(W_{ii}x_t+b_{ii}+W_{hi}h_{t-1}+b_{hi}\right)\\ \\
+\text{Forget gate}\quad\rightarrow\quad f_t&amp;=\sigma\left(W_{if}x_t+b_{if}+W_{hf}h_{t-1}+b_{hf} \right)\\ \\
+\text{Cell(Gate) gate}\quad\rightarrow\quad g_t&amp;=\tanh\left(W_{ig}x_t+b_{ig}+W_{hg}h_{t-1}+b_{hg} \right)\\ \\
+\text{Output gate}\quad\rightarrow\quad o_t&amp;=\sigma\left(W_{io}x_t+b_{io}+W_{ho}h_{t-1}+b_{ho} \right)\\ \\
+\text{Cell state}\quad\rightarrow\quad c_t&amp;=f_t\odot c_{t-1}+i_t\odot g_t\\ \\
+\text{Hidden state}\quad\rightarrow\quad h_t&amp;=o_t\odot\tanh\left(c_t\right)
+\end{align*}\]
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="gru">GRU</h1>
+<p>GRU의 cell의 구조는 아래와 같다.</p>
+
+<p align="center"><img src="../../../../assets/img/RNN%20Note/Handling_long_term_dependencies/handling_4.png" /></p>
+<h5><center>출처 : Explain LSTM &amp; GRU</center></h5>
+
+\[\begin{align*}\\ 
+\text{Reset gate}\quad\rightarrow\quad r_t&amp;=\sigma\left(W_{ir}x_t+b_{ir}+W_{hr}h_{t-1}+b_{hr}\right) \\ \\
+\text{Update gate}\quad\rightarrow\quad z_t&amp;=\sigma\left(W_{iz}x_t+b_{iz}+W_{hz}h_{t-1}+b_{hz}\right) \\ \\
+\text{New gate}\quad\rightarrow\quad n_t&amp;=\tanh\left(W_{in}x_t+b_{in}+r_t*\left(W_{hn}h_{t-1}+b_{hn}\right)\right) \\ \\
+\text{Hidden state}\quad\rightarrow\quad h_t&amp;=\left(1-z_t\right)*n_t+z_t*h_{t-1}
+\end{align*}\]
+
+<p>\(\begin{align*}\end{align*}\)
+\(\begin{align*}\end{align*}\)</p>
+<h3 id="참고자료">참고자료:</h3>
+<h4 id="cs-230---deep-learning"><a href="https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-recurrent-neural-networks">CS 230 - Deep Learning</a>,</h4>
+<h4 id="wiki-docs"><a href="https://wikidocs.net/22888">Wiki Docs</a>,</h4>
+<h4 id="mit-6s191-recurrent-neural-networks-and-transformers"><a href="https://www.youtube.com/watch?v=QvkQ1B3FBqA">MIT 6.S191: Recurrent Neural Networks and Transformers</a>,</h4>
+<h4 id="explain-lstm--gru"><a href="https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21">Explain LSTM &amp; GRU</a>,</h4>
+<h4 id="pytorch-lstm"><a href="https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html?highlight=lstm#torch.nn.LSTM">pytorch LSTM</a>,</h4>
+<h4 id="pytorch-gru"><a href="https://pytorch.org/docs/stable/generated/torch.nn.GRU.html?highlight=gru#torch.nn.GRU">pytorch GRU</a></h4>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;RNN Note&quot;]" /><summary type="html"><![CDATA[Vanilla RNN의 한계 아래 Vanilla RNN 의 구조를 보자. 각 timestep별로 결과에 얼마나 영향을 주는지 색으로 표현했을때 색이 짙을 수록 역전파 과정에서 피드백 크기가 점점 작아져서 결과에 영향을 거의 안주게 된다. 만약 앞에 입력이 결과에 영향을 줘야하는 경우라면 현재 timestep으로부터 먼 앞에 입력을 기억하고 있지 않다면 Long Term Dependencies problem 이 발생하게 된다.]]></summary></entry><entry><title type="html">RNN Overview</title><link href="http://localhost:4000/rnn%20note/2022/08/22/RNN.html" rel="alternate" type="text/html" title="RNN Overview" /><published>2022-08-22T15:16:15+09:00</published><updated>2022-08-22T15:16:15+09:00</updated><id>http://localhost:4000/rnn%20note/2022/08/22/RNN</id><content type="html" xml:base="http://localhost:4000/rnn%20note/2022/08/22/RNN.html"><![CDATA[<h1 id="architecture-of-a-traditional-rnn">Architecture of a traditional RNN</h1>
 <p><strong>RNN</strong>에서는 은닉층에서 활성화 함수를 통해 결과를 내보내는 역할을 하는 노드를 <strong>cell</strong>(메모리 셀, RNN 셀) 이라고 한다.</p>
 
 <p>regular feed-forward network에서 hidden layer라고 부르던 뉴런은</p>
@@ -8,7 +123,7 @@
 
 <p><strong>hidden state</strong>에서는 이전 <strong>time step</strong>의 <strong>hidden state</strong> 로부터 얻은 출력값을 현재 <strong>time step</strong>의 <strong>hidden state</strong> 에서 입력값으로 사용한다.</p>
 
-<p><img src="/assets/img/RNN%20Note/RNN/RNN_0.png" alt="RNN_0" /></p>
+<p><img src="/assets/img/RNN%20Note/RNN_overview/RNN_0.png" alt="RNN_0" /></p>
 <h5><center>출처: CS 230</center></h5>
 
 <p><strong>timestep</strong> $t$ 에서 activation \(a^{&lt;t&gt;}\)와 output \(y^{&lt;t&gt;}\)는 아래와 같이 표현한다.</p>
@@ -22,7 +137,7 @@ y^{&lt;t&gt;}&amp;=g_2(W_{ya}a^{&lt;t&gt;}+b_y)
 $g_1,\ g_2$는 활성함수들이다.<br />
 \(\begin{align*}\end{align*}\)</p>
 
-<p><img src="/assets/img/RNN%20Note/RNN/RNN_1.png" alt="RNN_1" /></p>
+<p><img src="/assets/img/RNN%20Note/RNN_overview/RNN_1.png" alt="RNN_1" /></p>
 <h5><center>출처: CS 230</center></h5>
 
 <h2 id="rnn의-장점과-단점">RNN의 장점과 단점</h2>
@@ -68,23 +183,23 @@ $g_1,\ g_2$는 활성함수들이다.<br />
   <tbody>
     <tr>
       <td style="text-align: center">One-to-one                              </td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_2.png" alt="RNN_2" /></td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_2.png" alt="RNN_2" /></td>
     </tr>
     <tr>
       <td style="text-align: center">One-to-many</td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_3.png" alt="RNN_3" /></td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_3.png" alt="RNN_3" /></td>
     </tr>
     <tr>
       <td style="text-align: center">Many-to-one</td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_4.png" alt="RNN_4" /></td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_4.png" alt="RNN_4" /></td>
     </tr>
     <tr>
       <td style="text-align: center">Many-to-many</td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_5.png" alt="RNN_5" /></td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_5.png" alt="RNN_5" /></td>
     </tr>
     <tr>
       <td style="text-align: center">Many-to-many</td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_6.png" alt="RNN_6" /></td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_6.png" alt="RNN_6" /></td>
     </tr>
   </tbody>
 </table>
@@ -105,8 +220,8 @@ timestep $T$ 인 경우, ${\partial\mathcal{L}^{(T)}\over\partial W}$ 는 아래
 \[{\partial\mathcal{L}^{(T)}\over\partial W}=\left.\sum\limits^{T}_{t=1}{\partial\mathcal{L}^{(T)}\over\partial W}\right|_{(t)}\]
 
 <h2 id="how-to-do-bptt-">How to do <strong>BPTT</strong> ?</h2>
-<p><img src="/assets/img/RNN%20Note/RNN/RNN_7.png" alt="RNN_7" />
-예를 들어 위와 같이 $S_t=S_{t-1}\cdot W$ 이고 $\mathcal{L}=S_t\cdot W$ 인 경우<br />
+<p><img src="/assets/img/RNN%20Note/RNN_overview/RNN_7.png" alt="RNN_7" />
+예를 들어 위와 같이 $S_t=W\cdot S_{t-1}$ 이고 $\mathcal{L}=W\cdot S_t$ 인 경우<br />
 ${\partial\ \mathcal{L}\over\partial\ W}$ 는 아래와 같이 구한다.</p>
 
 \[\begin{align*}

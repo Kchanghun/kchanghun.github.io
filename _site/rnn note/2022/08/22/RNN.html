@@ -108,7 +108,7 @@
 
 <p><strong>hidden state</strong>에서는 이전 <strong>time step</strong>의 <strong>hidden state</strong> 로부터 얻은 출력값을 현재 <strong>time step</strong>의 <strong>hidden state</strong> 에서 입력값으로 사용한다.</p>
 
-<p><img src="/assets/img/RNN%20Note/RNN/RNN_0.png" alt="RNN_0" /></p>
+<p><img src="/assets/img/RNN%20Note/RNN_overview/RNN_0.png" alt="RNN_0" /></p>
 <h5><center>출처: CS 230</center></h5>
 
 <p><strong>timestep</strong> $t$ 에서 activation \(a^{&lt;t&gt;}\)와 output \(y^{&lt;t&gt;}\)는 아래와 같이 표현한다.</p>
@@ -122,7 +122,7 @@ y^{&lt;t&gt;}&amp;=g_2(W_{ya}a^{&lt;t&gt;}+b_y)
 $g_1,\ g_2$는 활성함수들이다.<br />
 \(\begin{align*}\end{align*}\)</p>
 
-<p><img src="/assets/img/RNN%20Note/RNN/RNN_1.png" alt="RNN_1" /></p>
+<p><img src="/assets/img/RNN%20Note/RNN_overview/RNN_1.png" alt="RNN_1" /></p>
 <h5><center>출처: CS 230</center></h5>
 
 <h2 id="rnn의-장점과-단점">RNN의 장점과 단점</h2>
@@ -168,23 +168,23 @@ $g_1,\ g_2$는 활성함수들이다.<br />
   <tbody>
     <tr>
       <td style="text-align: center">One-to-one                              </td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_2.png" alt="RNN_2" /></td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_2.png" alt="RNN_2" /></td>
     </tr>
     <tr>
       <td style="text-align: center">One-to-many</td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_3.png" alt="RNN_3" /></td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_3.png" alt="RNN_3" /></td>
     </tr>
     <tr>
       <td style="text-align: center">Many-to-one</td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_4.png" alt="RNN_4" /></td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_4.png" alt="RNN_4" /></td>
     </tr>
     <tr>
       <td style="text-align: center">Many-to-many</td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_5.png" alt="RNN_5" /></td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_5.png" alt="RNN_5" /></td>
     </tr>
     <tr>
       <td style="text-align: center">Many-to-many</td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN/RNN_6.png" alt="RNN_6" /></td>
+      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_6.png" alt="RNN_6" /></td>
     </tr>
   </tbody>
 </table>
@@ -205,8 +205,8 @@ timestep $T$ 인 경우, ${\partial\mathcal{L}^{(T)}\over\partial W}$ 는 아래
 \[{\partial\mathcal{L}^{(T)}\over\partial W}=\left.\sum\limits^{T}_{t=1}{\partial\mathcal{L}^{(T)}\over\partial W}\right|_{(t)}\]
 
 <h2 id="how-to-do-bptt-">How to do <strong>BPTT</strong> ?</h2>
-<p><img src="/assets/img/RNN%20Note/RNN/RNN_7.png" alt="RNN_7" />
-예를 들어 위와 같이 $S_t=S_{t-1}\cdot W$ 이고 $\mathcal{L}=S_t\cdot W$ 인 경우<br />
+<p><img src="/assets/img/RNN%20Note/RNN_overview/RNN_7.png" alt="RNN_7" />
+예를 들어 위와 같이 $S_t=W\cdot S_{t-1}$ 이고 $\mathcal{L}=W\cdot S_t$ 인 경우<br />
 ${\partial\ \mathcal{L}\over\partial\ W}$ 는 아래와 같이 구한다.</p>
 
 \[\begin{align*}
