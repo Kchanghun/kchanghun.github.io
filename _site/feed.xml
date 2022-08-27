@@ -1,4 +1,369 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-27T20:02:03+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Ch6 학습 관련 기술들</title><link href="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4.html" rel="alternate" type="text/html" title="Ch6 학습 관련 기술들" /><published>2022-08-27T19:40:27+09:00</published><updated>2022-08-27T19:40:27+09:00</updated><id>http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4</id><content type="html" xml:base="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4.html"><![CDATA[<h1 id="61-매개변수-갱신">6.1 매개변수 갱신</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-27T20:10:31+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Ch7 합성곱 신경망(CNN)</title><link href="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html" rel="alternate" type="text/html" title="Ch7 합성곱 신경망(CNN)" /><published>2022-08-27T20:05:47+09:00</published><updated>2022-08-27T20:05:47+09:00</updated><id>http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D</id><content type="html" xml:base="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html"><![CDATA[<h1 id="71-전체-구조">7.1 전체 구조</h1>
+
+<p>CNN = Convolutional Layer + Pooling Layer + Fully Connected Layer</p>
+
+<p>(ex&gt; CONV_1 ⇒ RELU ⇒ CONV_2 ⇒ RELU ⇒ POOL_3 ⇒ DROP_4 ⇒ FLATTEN_5 ⇒ FC_6 ⇒ DROP_7 ⇒ FC_8 ⇒ SOFTMAX )</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="72-합성곱-계층">7.2 합성곱 계층</h1>
+
+<p>패딩$\mathsf{^{padding}}$ : 필터 통과 후 데이터 사이즈 조절</p>
+
+<p>스트라이드$\mathsf{^{stride}}$ : 필터가 이동하는 보폭</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="721-완전연결-계층의-문제점">7.2.1 완전연결 계층의 문제점</h2>
+
+<p>완전연결 계층은 입력데이터가 다차원 이더라도 Flatten작업을 통해
+그것의 형상을 무시하고 1차원 데이터로 만들어서 학습한다.</p>
+
+<p>때문에 칼라 이미지 데이터처럼 다차원 형상의 데이터인 경우
+인접한 데이터끼리 연관이 있을 가능성이 큰데
+이를 무시해서 정확도가 더 낮을 수 있다.</p>
+
+<p>반면 CNN은 입력 데이터의 형상을 보존하고
+한 번에 데이터 전체를 보는 것이 아니라 부분 부분 필터를 적용하며
+합성곱을 하기 때문에 인접한 데이터끼리의 연관성을 파악할 수 있다.</p>
+
+<p>또한, 이러한 점 덕분에 음성 데이터의 처리에도 강점을 보이게 된다.</p>
+
+<p>CNN에서 입출력 데이터를 특징맵$\mathsf{^{feature\ map}}$이라고 한다.</p>
+
+<p>입력 특징 맵$\mathsf{^{input\ feature\ map}}$ : 합성곱 계층의 입력 데이터</p>
+
+<p>출력 특징 맵$\mathsf{^{output\ feature\ map}}$ : 합성곱 계층의 출력 데이터</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="722-합성곱-연산">7.2.2 합성곱 연산</h2>
+
+<p>데이터와 필터의 형상을 (높이, 너비)로 표기 한다.</p>
+
+<p>문헌에 따라 필터를 커널이라 칭하기도 한다.</p>
+
+<p>합성곱 연산은 필터의 윈도우를 일정 간격으로 이동해가며 단일 곱셈-누산$\mathsf{^{fused\ multiply-add,\ FMA}}$를 한다.</p>
+
+<p>필터에 매개변수가 그동안의 가중치와 같은 역할을 한다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled.jpeg" alt="Untitled" /></p>
+
+<p>편향까지 포함한 흐름이다. 편향은 항상 (1,1)이다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled.png" alt="Untitled" /></p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="723-패딩">7.2.3 패딩</h2>
+
+<p>패딩 : 합성곱 연산을 수행하기 전에 입력 데이터 주변을 특정 값으로 채우는 것</p>
+
+<p>아래는 zero padding이고 padding_size = 1</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%201.png" alt="Untitled" /></p>
+
+<p>입력 데이터 형상 유지에 사용</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="724-스트라이드">7.2.4 스트라이드</h2>
+
+<p>스트라이드 : 필터가 움직이는 간격</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%201.jpeg" alt="Untitled" /></p>
+
+<p>필터 적용시 출력 크기 관계식</p>
+
+<p>입력 크기 : (H, W)</p>
+
+<p>필터 크기 : (FH, FW)</p>
+
+<p>출력 크기 : (OH, OW)</p>
+
+<p>패딩 : P</p>
+
+<p>스트라이드 : S</p>
+
+\[OH={H+2P-FH\over S}+1\\
+OW={W+2P-FW\over S}+1\]
+
+<p>단, 출력 크기는 모두 정수여야 함.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="725-3차원-데이터의-합성곱-연산">7.2.5 3차원 데이터의 합성곱 연산</h2>
+
+<p>채널까지 고려한 3차원 데이터를 연산해 본다.</p>
+
+<p>입력 데이터와 필터의 합성곱 연산을 채널마다 수행하고, 그 결과를 더해서 하나의 출력을 얻는다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%202.jpeg" alt="Untitled" /></p>
+
+<p>주의할점</p>
+
+<ul>
+  <li>입력 데이터의 채널 수 = 필터의 채널 수</li>
+  <li>모든 채널의 필터 크기가 같아야함</li>
+</ul>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="726-블록으로-생각하기">7.2.6 블록으로 생각하기</h2>
+
+<p>데이터 형상 = (채널, 높이, 너비)</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%203.jpeg" alt="Untitled" /></p>
+
+<p>위에서의 결과는 채널이 1개다.</p>
+
+<p>따라서 특징 맵을 여러장 얻기 위해서는 필터를 여러장 사용하면 된다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%202.png" alt="Untitled" /></p>
+
+<p>필터의 형상 = (필터 수 = 출력 채널 수, 채널 수 = 입력 채널 수, 높이, 너비)</p>
+
+<p>필터를 FN개 만큼 만들어서 합성곱을 하면 출력 데이터의 형상에서 채널 수가 FN개가 된다.</p>
+
+<p>다음은 편향을 적용한 그림 ( 편향은 브로드캐스팅으로 계산됨 )</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%203.png" alt="Untitled" /></p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="727-배치-처리">7.2.7 배치 처리</h2>
+
+<p>한번에 여러개의 데이터를 학습하기 위해 배치 처리를 지원하게 하려면</p>
+
+<p>데이터의 차원을 하나 늘려줘야 한다. ( 3차원 ⇒ 4차원 )</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%204.jpeg" alt="Untitled" /></p>
+
+<p>데이터 형상 = ( 데이터 수, 채널 수, 높이, 너비 )</p>
+
+<p>정리 : 4차원 데이터가 하나 하른다 → N개에 대한 합성곱 연산이 이뤄진다 = N회 분의 처리를 한 번에 수행한다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="73-풀링-계층">7.3 풀링 계층</h1>
+
+<p>세로, 가로 방향의 공간을 줄이는 연산</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%205.jpeg" alt="Untitled" /></p>
+
+<p>2X2 최대 풀링을 스트라이드 2로 처리 ( 보통 풀링 윈도우 크기와 스트라이드는 같은 값으로 설정 )</p>
+
+<p>풀링의 종류는 최대 풀링 말고도 평균 풀링 같은 것이 있지만 이미지에서는 주로 최대 풀링 사용</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="731-풀링-계층의-특징">7.3.1 풀링 계층의 특징</h2>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h3 id="1-학습해야-할-매개변수가-없다">1. 학습해야 할 매개변수가 없다</h3>
+
+<p>풀링 계층은 오히려 매개변수를 줄인다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h3 id="2-채널-수가-변하지-않는다">2. 채널 수가 변하지 않는다</h3>
+
+<p>풀링 연산을 통해 각 채널의 높이와 너비는 작아져도</p>
+
+<p>채녈마다 독립적으로 계산해서 채널 수는 그대로다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h3 id="3-입력의-변화에-영향을-적게-받는다--강건하다-">3. 입력의 변화에 영향을 적게 받는다 ( 강건하다 )</h3>
+
+<p>입력 데이터가 조금 변해도 풀리의 결과는 잘 변하지 않는다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%206.jpeg" alt="Untitled" /></p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="74-합성곱--풀링-계층-구현하기">7.4 합성곱 / 풀링 계층 구현하기</h1>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="741-4차원-배열">7.4.1 4차원 배열</h2>
+
+<p>CNN에는 4차원 데이터가 흐른다.</p>
+
+<p>ex&gt; (10, 1, 28, 28) ⇒ 높이 28, 너비 28, 채널 1개인 데이터가 10개</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="742-im2col로-데이터-전개하기">7.4.2 im2col로 데이터 전개하기</h2>
+
+<p>합성곱 연산의 가장 간단한 구현 방법은 for 문을 겹겹이 쓰는 것이다.</p>
+
+<p>그렇게하면 numpy의 퍼포먼스가 떨어지기 때문에 좋은 방법이 아니다.</p>
+
+<p>대신 im2col을 사용해서 쉽게 구현 가능하다.</p>
+
+<p>그림은 3차원을 2차원으로 변환한 것이지만</p>
+
+<p>4차원 데이터도 2차원으로 변환시켜준다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%204.png" alt="Untitled" /></p>
+
+<p>im2col은 필터링하기 좋게 입력 데이터를 전개한다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%205.png" alt="Untitled" /></p>
+
+<p>여기서는 스트라이드를 크게 잡아 필터의 적용 영역이 겹치지 않도록 했지만,</p>
+
+<p>실제 상황에서는 영역이 겹치는 경우가 대부분이다.</p>
+
+<p>필터 적용 영역이 겹치게 되면 im2col로 전개한 후의 원소 수가 원래 블록의 원소 수보다 많아진다.</p>
+
+<p>그래서 im2col을 사용해 구현하면 메모리를 더 많이 소비하는 단점이 있다.</p>
+
+<p>하지만 행렬 계산에 고도로 최적화된 선형 대수 라이브러리 등을 통해 다시 계산 효율을 높일 수 있다.</p>
+
+<p>입력 데이터도 전개했으므로 필터도 전개해서 행렬 곱을 하면 된다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%207.jpeg" alt="Untitled" /></p>
+
+<p>CNN은 4차원 데이터가 흐르므로 다시 reshape한다.</p>
+
+<p>ex&gt; (1,3,7,7) — im2col(5,5,stride=1,pad=0) —&gt; (9,75)</p>
+
+<p>결과 ⇒ (입력 데이터 수 * 채널 하나에 들어가는 필터 수) X (필터 사이즈 * 입력 데이터의 채널 수)</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%206.png" alt="Untitled" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Convolution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">W</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pad</span> <span class="o">=</span> <span class="n">pad</span>
+        
+        <span class="c1"># 중간 데이터（backward 시 사용）
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">None</span>   
+        <span class="bp">self</span><span class="p">.</span><span class="n">col</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">col_W</span> <span class="o">=</span> <span class="bp">None</span>
+        
+        <span class="c1"># 가중치와 편향 매개변수의 기울기
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">dW</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">db</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">FN</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">FH</span><span class="p">,</span> <span class="n">FW</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">W</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">N</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">out_h</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">int</span><span class="p">((</span><span class="n">H</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="p">.</span><span class="n">pad</span> <span class="o">-</span> <span class="n">FH</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">)</span>
+        <span class="n">out_w</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">int</span><span class="p">((</span><span class="n">W</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="p">.</span><span class="n">pad</span> <span class="o">-</span> <span class="n">FW</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">)</span>
+
+        <span class="n">col</span> <span class="o">=</span> <span class="n">im2col</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">FH</span><span class="p">,</span> <span class="n">FW</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pad</span><span class="p">)</span>
+        <span class="n">col_W</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">W</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">FN</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="n">T</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">col_W</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="p">.</span><span class="n">b</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">out_h</span><span class="p">,</span> <span class="n">out_w</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">col</span> <span class="o">=</span> <span class="n">col</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">col_W</span> <span class="o">=</span> <span class="n">col_W</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dout</span><span class="p">):</span>
+        <span class="n">FN</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">FH</span><span class="p">,</span> <span class="n">FW</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">W</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">dout</span> <span class="o">=</span> <span class="n">dout</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">FN</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">dout</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">dW</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">col</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">dW</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">dW</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="n">FN</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">FH</span><span class="p">,</span> <span class="n">FW</span><span class="p">)</span>
+
+        <span class="n">dcol</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dout</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">col_W</span><span class="p">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="n">dx</span> <span class="o">=</span> <span class="n">col2im</span><span class="p">(</span><span class="n">dcol</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">FH</span><span class="p">,</span> <span class="n">FW</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pad</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">dx</span>
+</code></pre></div></div>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="744-풀링-계층-구현하기">7.4.4 풀링 계층 구현하기</h2>
+
+<p>합성곱과 다른점은 채널 독립적이라는 것.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%208.jpeg" alt="Untitled" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Pooling</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pool_h</span><span class="p">,</span> <span class="n">pool_w</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pool_h</span> <span class="o">=</span> <span class="n">pool_h</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pool_w</span> <span class="o">=</span> <span class="n">pool_w</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pad</span> <span class="o">=</span> <span class="n">pad</span>
+        
+        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">arg_max</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">N</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">out_h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">H</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_h</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">)</span>
+        <span class="n">out_w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">W</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_w</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">)</span>
+
+        <span class="n">col</span> <span class="o">=</span> <span class="n">im2col</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_h</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_w</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pad</span><span class="p">)</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">col</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_h</span><span class="o">*</span><span class="bp">self</span><span class="p">.</span><span class="n">pool_w</span><span class="p">)</span>
+
+        <span class="n">arg_max</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">out_h</span><span class="p">,</span> <span class="n">out_w</span><span class="p">,</span> <span class="n">C</span><span class="p">).</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">arg_max</span> <span class="o">=</span> <span class="n">arg_max</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dout</span><span class="p">):</span>
+        <span class="n">dout</span> <span class="o">=</span> <span class="n">dout</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="n">pool_size</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_h</span> <span class="o">*</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_w</span>
+        <span class="n">dmax</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">dout</span><span class="p">.</span><span class="n">size</span><span class="p">,</span> <span class="n">pool_size</span><span class="p">))</span>
+        <span class="n">dmax</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">arg_max</span><span class="p">.</span><span class="n">size</span><span class="p">),</span> <span class="bp">self</span><span class="p">.</span><span class="n">arg_max</span><span class="p">.</span><span class="n">flatten</span><span class="p">()]</span> <span class="o">=</span> <span class="n">dout</span><span class="p">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="n">dmax</span> <span class="o">=</span> <span class="n">dmax</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dout</span><span class="p">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">pool_size</span><span class="p">,))</span> 
+        
+        <span class="n">dcol</span> <span class="o">=</span> <span class="n">dmax</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dmax</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">dmax</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">dmax</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">dx</span> <span class="o">=</span> <span class="n">col2im</span><span class="p">(</span><span class="n">dcol</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_h</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_w</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pad</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">dx</span>
+</code></pre></div></div>
+
+<p>과정</p>
+
+<ol>
+  <li>입력 데이터 전개</li>
+  <li>행별 최댓값 계산</li>
+  <li>reshape</li>
+</ol>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="75-cnn-구현">7.5 CNN 구현</h1>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="정리">정리</h2>
+
+<ul>
+  <li>데이터 준비
+    <ul>
+      <li>데이터 강화 ( flip, move, rotate )</li>
+      <li>training data, validation data, test data
+        <ul>
+          <li>데이터의 분포가 고르게 나눈다.
+            <ul>
+              <li>분류를 하려면 3가지 데이터에 각 클래스가 차지하는 비율이 비슷해야함</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>data normalization</li>
+    </ul>
+  </li>
+  <li>모델 정의
+    <ul>
+      <li>어떤 층을 조합할건지</li>
+      <li>몇 층까지 쌓을건지</li>
+      <li>합성곱층은 filter를 몇개로 할건지, filter size는 몇개로 할건지, padding과 stride는 어떻게 할건지, 활성화 함수는 뭘 쓸건지</li>
+      <li>풀링층은 pooling size를 몇으로 할건지, padding과 stride는 몇으로 할건지</li>
+      <li>Dropout은 몇%만큼 뉴런을 막을건지</li>
+      <li>전결합층은 뉴런을 몇개 사용할건지</li>
+      <li>Regularization은 뭘로 할건지, 얼마나 할건지</li>
+    </ul>
+  </li>
+  <li>모델 학습
+    <ul>
+      <li>Optimizer는 뭘 사용할건지 learning rate는 몇으로 시작할건지</li>
+      <li>batch size 는 몇으로 할지</li>
+      <li>epochs는 몇으로 할건지, 조기종료 조건은 어떻게 할건지</li>
+    </ul>
+  </li>
+</ul>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;DeepLearning from scratch&quot;]" /><summary type="html"><![CDATA[7.1 전체 구조]]></summary></entry><entry><title type="html">Ch6 학습 관련 기술들</title><link href="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4.html" rel="alternate" type="text/html" title="Ch6 학습 관련 기술들" /><published>2022-08-27T19:40:27+09:00</published><updated>2022-08-27T19:40:27+09:00</updated><id>http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4</id><content type="html" xml:base="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4.html"><![CDATA[<h1 id="61-매개변수-갱신">6.1 매개변수 갱신</h1>
 
 <p>최적화$\mathsf{^{optimization}}$ : 손실 함수의 값을 가능한 한 낮추는 매개변수를 찾는 것</p>
 
@@ -3323,741 +3688,4 @@ w_{i+1}&amp;:=w_i+v_{i+1}
 
 <p>지금까지, 우리는 네트워크의 크기를 키우거나 더 오래 학습시키면 성능이 향상되는것을 알고있지만 인간의 시각 시스템 방법인 아래관자피질(Inferior temporal cortex,IT-cortex 또는 IT)과 대응 되려면 아직 해야하는 일들이 많다.</p>
 
-<p>궁극적으로 우리는 정적인 이미지에서 누락된 부분이나 덜 명백한 매우 유용한 정보를 제공하는 시간적 구조인 video sequences에 크고 깊은 합성곱 네트워크를 사용하고 싶다.</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[AlexNet]]></summary></entry><entry><title type="html">LeNet-5</title><link href="http://localhost:4000/paper%20review/2022/08/20/LeNet-5.html" rel="alternate" type="text/html" title="LeNet-5" /><published>2022-08-20T02:50:58+09:00</published><updated>2022-08-20T02:50:58+09:00</updated><id>http://localhost:4000/paper%20review/2022/08/20/LeNet-5</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/08/20/LeNet-5.html"><![CDATA[<h1 id="lenet-5">LeNet-5</h1>
-
-<h1 id="i-introduction">I. Introduction</h1>
-
-<p>learning techniques의 사용은 최근 성공적인 패턴인식 적용에 중요한 요인이다.</p>
-
-<p><img src="/assets/img/Paper_Review/LeNet-5/LeNet_0.png" alt="LeNet0" /></p>
-
-<p>Feature Extractor( 특징 추출기 )는 사전지식이 많이 필요하고 진행중인 작업에 따라 다르다(ex&gt; A와 B작업을 위한 특징 추출기는 다르다)</p>
-
-<p>특징 추출기는 거의 전체를 대부분 사람이 직접 설계하기 때문에 설계에서 많은 집중이 필요하게 된다.</p>
-
-<p>반면, Classifier( 분류기 )는 종종 범용적이고 학습 가능하다.</p>
-
-<p>때문에 주요 문제점중 하나는 설계자의 적절한 특징 set을 적용하는 능력은 인식 정확도에 큰 영향을 주는 것이다.</p>
-
-<p>각 새로운 문제를 해결하려 할 때 매번 다시 특징 추출기를 새로 설계해야 한다면 매우 힘들 것이다.</p>
-
-<p>learning techniques 가 쉽게 분리되도록 저차원 공간으로 한정된 분류기에 의해 사용되기 때문에 적절한 특징 추출기의 필요했었다.</p>
-
-<p>세 요인들이 뭉치면서 지난 위와 같은 수십년동안의 관점이 바뀌었다.</p>
-
-<ol>
-  <li>
-    <p>낮은 비용으로 수학적 계산이 빠른 컴퓨터를 사용</p>
-
-    <p>때문에 알고리즘적 개선보다 무차별적 수치대입 방법에 의존하게 되었다.</p>
-  </li>
-  <li>
-    <p>큰 시장과 폭넓은 관심이 있는 문제에 대한 대규모 데이터베이스의 가용성</p>
-
-    <p>때문에 인식 시스템 설계에서 직접 만든 특징 추출기보다 실제 데이터에 의존하게 되었다.</p>
-  </li>
-  <li>
-    <p>높은 차원의 입력 처리 능력과 큰 데이터를 통해 뒤얽힌 결정 함수를 만드는 능력을 가진 강력한 기계학습의 사용</p>
-  </li>
-</ol>
-
-<p>때문에 음성과 필기 인식 시스템에 대한 정확도의 최근 진보는 학습 기술과 큰 학습 데이터에서 크게 기인되었다고 할 수 있다.</p>
-
-<h2 id="a-larning-from-data">A. Larning from Data</h2>
-
-<p>자동 기계학습에 대하 접근중 가장 성공적인 접근은 ‘numerical’ 또는 gradient-based learning이라 불린다.</p>
-
-\[Y^p=F(Z^p,W)\\
-E^p=\mathcal{D}(D^p,F(Z^p,W))\\
-E_{train}(W)=Average(E^p)\]
-
-<p>간단히 보면 학습은 $E_{train}(W)$을 낮추는 $W$를 찾는 것이지만</p>
-
-<p>사실, 학습 데이터에서의 성능은 별로 중요하지 않다.</p>
-
-<p>더 중요한 지표는 실제로 사용될 분야에서 그 시스템이 보이는 ‘오차율’이다.</p>
-
-<p>이 ‘오차율’은 학습 데이터와 분리된 테스트 데이터에서의 정확도를 계산하여 평가한다.</p>
-
-<p>테스트 데이터 오차율과 학습 데이터 오차율의 차이는 보통 다음과 같이 정의된다.</p>
-
-\[E_{test}-E_{train}=k(h/P)^\alpha\]
-
-<p>P가 학습 데이터 수, h는 ‘effective capacity’로 기계의 복잡도를 나타낸다.</p>
-
-<p>따라서 학습 데이터 수가 많아지면 오차율 gap이 항상 줄고</p>
-
-<p>그리고 h값을 높이면 $E_{train}$값이 줄지만 $E_{test}-E_{train}$값인 오차율의gap이 커진다.</p>
-
-<p>대부분 학습 알고리즘들은 $E_{train}$와 $E_{test}-E_{train}$을 최소화 하려고 한다.</p>
-
-<p>이러한 것을 공식적으로 Structural Risk Minimization(구조적 결함 최소화)라고 부르고</p>
-
-<p>각 하위 집합이 이전 하위 집합의 상위 집합이 되도록 매개 변수 공간의 하위 집합을 만드는것 처럼 기계가 학습을 하도록 capacity를 높이는 시퀀스를 기반으로 정의한다.</p>
-
-<p>실제로 구조적 결함 최소화는</p>
-
-\[E_{train}+\beta H(W)\]
-
-<p>를 최소화 시키도록 구현한다.</p>
-
-<p>$H(W)$는 Regularization function(정규화 함수)이라 하고</p>
-
-<p>$\beta$는 상수다</p>
-
-<p>정규화 함수는 매개변수 공간의 하위집합중 high-capacity인 매개변수들 W에서 큰 값을 취하도록 선택된다.</p>
-
-<p>H(W)의 최소화는 capacity가 접근 가능한 매개변수공간의 하위집합을 제한 한다.</p>
-
-<p>그렇게 함으로써 학습 오차율과 두 오차율간의 차이의 tradeoff를 조절한다.</p>
-
-<h2 id="b-gradient-based-learning">B. Gradient-Based Learning</h2>
-
-<p>매개변수 집합을 사용하는 함수의 값을 최소화 하는 문제는 컴퓨터 과학의 많은 문제의 근원이다.</p>
-
-<p>손실함숫값은 매개변수의 작은 변화가 손실함수에 끼치는 영향을 측정하여 최소화 한다.( 손실함수를 매개변수에 대해 미분한 기울기를 통해 손실함숫값을 측정 )</p>
-
-<p>해석적 미분이 가능할 때 효율적인 학습 알고리즘을 고안할 수 있다.( 반대는 perturbation을 통해 수치적으로 한다 )</p>
-
-<p>최소화하는 가장 간단한 방법은 Gradient Descent 알고리즘이다.</p>
-
-\[W_k=W_{k-1}-\epsilon\dfrac{\partial E(W)}{\partial W}\]
-
-<p>유명한 최소화 과정은 SGD(stochastic gradient descent, also called on-line update)이다.</p>
-
-\[W_k=W_{k-1}-\epsilon\dfrac{\partial E^{p_k}(W)}{\partial W}\]
-
-<p>SGD는 기울기 평균의 근사치를 통해 매개변수를 업데이트한다.</p>
-
-<p>가장 흔한 경우로 매개변수는 단일 샘플을 기반으로 업데이트 된다.</p>
-
-<p>때문에 W는 평균 궤도에서 변동되지만
-대개는 빅데이터에서 일반적인 경사하강법과 second-order방법보다 상당히 빠르게 수렴한다.</p>
-
-<h2 id="c-gradient-back-propagation">C. Gradient Back-Propagation</h2>
-
-<p>경사 하강 학습은 1950년대 부터 사용 됐지만,</p>
-
-<p>대부분 선형 시스템으로 제한되었다.</p>
-
-<p>복잡한 기계학습 작업에 대한 경사하강법의 놀라운 유용성은 아래 세가지 사건이 발생할 때까지 널리 실현되지 않았었다.</p>
-
-<ol>
-  <li>극솟값에 대한 존재가 실제로는 큰 문제가 되지 않는 다는 것을 깨달음
-    <ul>
-      <li>사실 극솟값이 다층 신경망에서 문제가 되지 않는다는 것이 이론적으로 미스테리하다.</li>
-      <li>It is conjectured that if the network is oversized for the task ( as is usually the case in practice ), the presence of “extra dimensions” in parameter space reduces the risk of unattainable regions.</li>
-      <li>추측해보자면 네트워크는 실제 문제에서 필요한 경우보다 oversize되어있다면(대개 실제문제에서 그러함), 매개변수 공간에서 “extra dimensions”의 존재는 global minima에 도달하지 못하더라도 oversize된 parameter space에서 도달한 local minima가 tight한 parameter space에서 도달 해야하는 global minima일 확률이 올라가기 때문</li>
-    </ul>
-  </li>
-  <li>비선형 시스템에서 간단하고 효율적으로 gradient를 구하기 위해 Back-Propagation이 대중화 되었다.</li>
-  <li>sigmoid를 통해 다층신경망에 적용된 backpropagation이 복잡한 학습 문제를 해결한것이 증명되었기 때문이다.</li>
-</ol>
-
-<p>제어이론에서 Lagrange formalism이 back-propagation을 유도하는 최고의 방법이고 다시 나타나거나 새로 등장하는 네트워크를 유도할 때에도 좋다.</p>
-
-<h2 id="d-learning-in-real-handwriting-recognition-systems">D. Learning in Real Handwriting Recognition Systems</h2>
-
-<p>최고의 neural network인 Convolution Network는 연관있는 feature를 이미지 픽셀로부터 바로 추출 하도록 학습하게 디자인 되었다.</p>
-
-<p>필기체 인식 문제중 가장 어려운 문제중 하나는 문자 하나하나를 인식하는것 뿐만 아니라, 단어나 문장으로부터 이웃한 문자들을 서루 분리하는 것도 어렵다. ( a process known as “segmentation”)</p>
-
-<p>모델에서 시스템의 정확도는 “heuristic에 의해 segmentation된 quality”와 인식기의 문자나 여러 문자로 잘 분할되거나 잘 분할되지 못한 문자들을 “구별해내는 능력”에 달려있다.</p>
-
-<p>잘못 분해된 문자들을 라벨된 데이터로 만들어야 하는 어려움 때문에 인식기가 잘 작동하도록 학습시키는 것은 큰 도전이 된다.</p>
-
-<h2 id="e-globally-trainable-systems">E. Globally Trainable Systems</h2>
-
-<p>대부분의 실제 패턴인식 시스템들은 multiple modules로 구성되어 있다.</p>
-
-<p>ex&gt; 문서인식 시스템은</p>
-
-<ul>
-  <li>field locator( extract ROI )</li>
-  <li>field segmentor</li>
-  <li>recognizer</li>
-  <li>contextual post-processor</li>
-</ul>
-
-<p>로 구성된다.</p>
-
-<p>각 모듈을 수동적으로 최적화하고 또는 학습시킨다.</p>
-
-<p>각 모듈들을 조립하여 시스템을 완성시킨 다음</p>
-
-<p>각 모듈별로 성능을 최대로 올리기 위해 파라미터를 조정하는데 이것은 별로 좋지 않다.</p>
-
-<p>더 좋은 방안은 global error를 최소화 하기 위해 전체 시스템을 한번에 학습시키는 것이다.</p>
-
-<p>만약 성능을 측정하는 손실함수 E가 tunable한 파라미터W에 대해 미분가능하게 만들어진다면, Gradient-Based Learningdmf 통해 극솟값을 구할 수 있다.</p>
-
-<p>global loss function이 미분 가능하게 하기 위해</p>
-
-<p>전체적인 시스템을 미분 가능한 모듈들로 feed-forward 네트워크로 설계한다.</p>
-
-\[\begin{align*}
-Z^p&amp;=X_0\\
-X_n&amp;=F(W_n,X_{n-1})\\
-\dfrac{\partial E^p}{\partial W_n}&amp;=\dfrac{\partial F}{\partial W}(W_n,X_{n-1})\dfrac{\partial E^p}{\partial X_n}\\
-\dfrac{\partial E^p}{\partial X_{n-1}}&amp;=\dfrac{\partial F}{\partial X}(W_n,X_{n-1})\dfrac{\partial E^p}{\partial X_n}
-\end{align*}\]
-
-<h1 id="ii-convolutional-neural-networks-for-isolated-character-recognition">II. Convolutional Neural Networks for Isolated Character Recognition</h1>
-
-<p>복잡하고 다차원이고 비선형인 큰 데이터들을 경사 하강법으로 학습한 다층 네트워크의 능력은 이미지 인식 작업에 명백한 후보자가 된다.</p>
-
-<p>CNN의 흥미로운 점은 특징 추출기가 스스로 학습한다는 것이다.</p>
-
-<p>문자인식에서 전결합의 feed-forward 네트워크가 성공적으로 이루어지기위해 몇가지 문제점들을 해결해야 한다.</p>
-
-<h3 id="1-일반적인-이미지는-수백가지의-픽셀들로-이루어져-있다">1. 일반적인 이미지는 수백가지의 픽셀들로 이루어져 있다.</h3>
-
-<p>100개의 hidden unit을 가진 전결합층은 수만가지의 가중치를 갖게 된다.</p>
-
-<p>매개변수의 증가는 모델의 capacity를 높이고 많은 양의 학습 데이터를 필요로 한다.</p>
-
-<p>게다가 많은 가중치를 저장하기 위해 메모리 수요가 증가해 하드웨어의 능력을 뛰어넘을 수 있다.
-translate나 loacl distortion 같은 변형을 FC Layer가 충분한 크기의 unit들로 해결할 수 있지만,</p>
-
-<p>비슷한 패턴의 매개변수들이 여러 뉴런에서 확인될 것이다.</p>
-
-<p>또한, 충분한 크기의 unit들을 제대로 학습 시키려면 많은 데이터도 필요하다.</p>
-
-<p>하지만, CNN에서는 매개벼수 공간에서 가중치 구성의 복제를 억제함으로써 shift 불변성이 자동적으로 적용된다.</p>
-
-<h3 id="2-전결합-구조의-결핍은-입력의-topology를-완전히-무시한다">2. 전결합 구조의 결핍은 입력의 topology를 완전히 무시한다.</h3>
-
-<p>입력 변수는 학습에서 결과에 영향을 주지 않고 많은 순서로 입력될 수 있다.</p>
-
-<p>하지만, 이미지나 time-frequency같은 음성 파일은 근처에 있으면 높은 correlation을 보인다.</p>
-
-<p>Local Correlation은 local feature 추출하기에 좋다고 잘 알려져있다.</p>
-
-<p>가까운 변수들은 edge나 corner같은 작은 범주에 구성원이 되기 때문이다.</p>
-
-<p>CNN은 은닉 뉴런들의 receptive field를 지역적이 되도록 제한함으로써 local feature들을 추출한다.</p>
-
-<h2 id="a-convolutional-networks">A. Convolutional Networks</h2>
-
-<dl>
-  <dt>Convolutional Netwrok는 shift, scale, distortion에 불변을 보장하기 위해 세가지 구조를 조합한다</dt>
-  <dd>local receptive fields, shared weights( weight replication ), and spatial or temporal sub-sampling</dd>
-</dl>
-
-<p>각 층의 유닛들은 이전 층의 이웃된 작은 영역의 유닛들의 집합을 입력으로 받는다.</p>
-
-<p>Local receptive fields에서 뉴런들은 기초적인 visual feature들을 추출한다.(ex&gt; edge, end-point, corner,…)</p>
-
-<p>distortion이나 shift는 다양한 눈에 띄는 feature들을 발생시킨다.</p>
-
-<p>그리고 이미지의 한 부분에 유용한 elementary feature detector들은 전체 이미지에 유용할 가능성이 있다.</p>
-
-<p>이런 내용을 접목시키기 위해 이미지에서 다른 위치에 있는 receptive field들을 가진 유닛들의 집합이 고유의 가중치 벡터를 갖도록 한다.</p>
-
-<p>한 층의 유닛들은 평면을 구성하고 그 안에 유닛들은 같은 가중치 집합을 공유한다.</p>
-
-<p>이러한 유닛들로 만든 평면을 feature map이라 한다.</p>
-
-<p>feature map의 모든 유닛들은 이미지에서 각각 다른 부분에 같은 연산을 하게 된다.</p>
-
-<p>완성된 convolutional layer는 몇개의 feature map으로 구성되고 여러개의 feature map은 각 위치에서 여러개의 특징을 추출한다.</p>
-
-<p>LeNet-5의 첫번째 층은 6개의 feature map을 가지고
-각 feature map은 5x5형태로 25개의 입력값(receptive field)을 받는다.</p>
-
-<p>따라서 25개의 입력을 받는 각 유닛은 25개의 학습가능한 계수와 하나의 편향을 갖는다.</p>
-
-<p>convolutional layer의 흥미로운 점은 입력 이미지가 shift되면, feature map out도 같은 양 만큼 shift된다는 것이다.</p>
-
-<p>이러한 convolutional network의 특성이 shift와 distortion에 robust하게되는 이유이다.</p>
-
-<p>일단 특징이 감지되면, 그것의 정확한 위치는 덜 중요해진다.</p>
-
-<p>그 특징과 연관된 다른 특징의 대략적인 위치가 더 중요하다.</p>
-
-<p>각 특징들의 정확한 위치가 패턴을 구분짓는 것과는 연관이 없을 뿐 아니라,</p>
-
-<p>다른 문자 예시에서 다양한 위치를 갖기 때문에 오히려 해롭다.</p>
-
-<p>특징의 정확한 위치정보를 제거하기 위해 sub-sampling layer를 사용한다.</p>
-
-<p>sub-sampling layer를 사용하면 shift와 distortion에 대한 민감성도 줄어든다.</p>
-
-<p>LeNet-5의 두번째 층은 sub-sampling layer이다.</p>
-
-<p>2x2의 receptive field에서 평균을 취하고 편향을 더한다.</p>
-
-<p>결과적으로 크기가 이전 층보다 반으로 줄어든다.</p>
-
-<p>sub-sampling에서 가중치 파라미터가 작으면, 준선형 모드의 작동을 하고</p>
-
-<p>단지 입력을 blur처리할 뿐이다.</p>
-
-<p>sub-sampling에서 가중치 파라미터가 크면, 편향에 따라 “noisy OR” 또는 “noisy AND” 함수 기능을 수행한다.</p>
-
-<p>convolution과 sub-sampling을 연달아 두면 “bi-pyramid” 결과를 만든다.</p>
-
-<p>feature map은 늘어나고 spatial resolution은 줄어든다.</p>
-
-<p>weight sharing 기술의 흥미로운 부가 효과는 자유 매개변수를 줄인다는 점이다.</p>
-
-<p>자유매개변수가 줄면 기계의 capacity도 줄고 test error와 training error의 차이도 줄어든다.</p>
-
-<h2 id="b-lenet-5">B. LeNet-5</h2>
-
-<p>LeNet은 입력층 빼고 가중치 있는 7층의 구조로 되어있다.</p>
-
-<p>입력은 32x32 pixel 이미지이다.(데이터베이스에서 가장 큰 문자의 크기보다 충분히 큰 사이즈이다.)</p>
-
-<p>highest-level feature detector에서 보는 receptive field의 중앙에
-stroke end-point나 corner같은 잠재적 특징이 될만한 것들이 나타나기 때문이다.</p>
-
-<p>마지막 convolutional layer(C3)의 receptive field들의 중앙은 32x32인 입력의 중앙에 20x20인 영역을 만든다.</p>
-
-<p>입력값은 normalized를 통해 -0.1~1.175로 변형해서 거의 평균이 0, 분산이 1로 만들어 학습을 가속화 했다.</p>
-
-<h3 id="c1">C1</h3>
-<p>32x32 → feature maps 6@28x28</p>
-
-<p>5x5 크기의 필터 6개를 통해 연산을 하고 input이 32x32이므로</p>
-
-<p>padding=0, stride=1에 대한 결과로</p>
-
-<p>feature maps 6@28x28이 나온다.</p>
-
-<p>가중치 수 : $(필터크기+편향)\times특징맵수 = 156$</p>
-
-<p>연결 수 : $(필터크기+편향)\times convolution연산수\times 특징맵수=122304$</p>
-
-<h3 id="s2">S2</h3>
-<p>feature maps 6@28x28 → feature maps 6@14x14</p>
-
-<p>14x14크기인 6개의 feature map으로 출력된다.</p>
-
-<p>2x2의 입력을 받고 4개의 값을 더하고 학습가능한 계수를 곱하고 편향을 더한다.</p>
-
-<p>그 결과는 sigmoidal 함수로 전해진다.</p>
-
-<p>각 receptive field는 겹치는 부분이 없기 때문에 C1의 출력을 입력으로 받은 S2의 출력은 C1의 출력의 반절이 된다.</p>
-
-<p>가중치 수 : 12 = (1+1)*6</p>
-
-<p>연결 수 : 5880 = (3+1+1)<em>14</em>14*6</p>
-
-<h3 id="c3">C3</h3>
-<p>feature maps 6@14x14 → feature maps 16@10x10</p>
-
-<p><img src="/assets/img/Paper_Review/LeNet-5/LeNet_1.png" alt="LeNet1" /></p>
-
-<p>S2와 C3의 연결을 보면 S2의 모든 feature map이 C3의 모든 feature map에 연결되지 않는다.</p>
-
-<p>첫 번째 이유</p>
-
-<ul>
-  <li>완전한 연결을 하지 않으면 연결의 수를 합리적인 범위로 제한할 수 있다.</li>
-  <li>더 중요한 것은 균형을 깬다는 것이다.
-균형이 깨지면 서로 다른 입력을 받게 될 것이고 다른 특징들의 조합으로 서로 다른 상향된 특징을 얻을 수 있기 때문이다.</li>
-</ul>
-
-<p>가중치 수 : 1516</p>
-
-<p>연결 수 : 151600</p>
-
-<h3 id="s4">S4</h3>
-<p>feature maps 16@10x10 → feature maps 16@5x5</p>
-
-<p>가중치 수 : 32 = (1+1)*16</p>
-
-<p>연결 수 : 2000 = (3+1+1)<em>25</em>16</p>
-
-<h3 id="c5">C5</h3>
-<p>feature maps 16@5x5 → feature maps 120@1x1</p>
-
-<p>필터의 크기가 그대로 5x5이고 feature map은 120개 이다.</p>
-
-<p>따라서 출력의 모양이 120개의 feature map이고 그 크기가 1x1이 된다.</p>
-
-<p>C5는 C3와 다르게 이전 층(S4)과 완전 연결을 한다.</p>
-
-<p>이런 결과를 얻게 되는데도 C5가 Fully Connected Layer가 아니라 convolutional layer인 이유는
-입력의 크기가 더 커지게 되면 C5의 결과는 1x1보다 커지기 때문이다.</p>
-
-<p>가중치 수 : 48120 = (25<em>16+1)</em>120</p>
-
-<p>연결 수 : 48120 = (25<em>16+1)</em>120</p>
-
-<h3 id="f6">F6</h3>
-<p>120(feature maps 120@1x1) → 84</p>
-
-<p>C5와 전결합을 이루는 84개의 유닛을 가진 층</p>
-
-<p>가중치 수 : 10164 = (120+1)*84</p>
-
-<p>연결 수 : 10164 = (120+1)*84</p>
-
-<p>전통적인 신경망처럼, F6층까지는 입력벡터와 가중치벡터의 dot연산을 하고 bias를 더했다.</p>
-
-<p>그리고 그 결과를 sigmoid squashing function에 입력했다.</p>
-
-\[x_i=f(a_i)\\
-f(a)=A\ tanh(Sa)\]
-
-<p>sigmoid squashing function으로 scaled hyperbolic tangent함수를 사용했다.</p>
-
-<p>A는 함수의 amplitude이고 S는 원점에서의 경사를 결정한다.</p>
-
-<p>따라서 함수 f는 +A와 -A에 수평 점근선이 있는 기함수이다.</p>
-
-<p>A는 1.7159로 했다.</p>
-
-<h3 id="output">output</h3>
-
-<p>출력층은 Euclidean Radial Basis Function (RBF)으로 구성된다.</p>
-
-\[y_i=\sum_j(x_j-w_{ij})^2\]
-
-<p>입력 패턴과 RBF와 연관된 class의 적합도를 측정한다.</p>
-
-<p>값이 작을수록 관련있는 class</p>
-
-<p>RBF는 분류할 클래스 수가 많아지더라도 잘 작동한다.</p>
-
-<p>sigmoid와 달리 RBF는 원하는 특징이 아닌 영역을 보더라도 계산을 수행하기 때문에 목적이 아닌 class를 거부하는 용도로도 쓸 수 있다.</p>
-
-<p>가중치의 범위를 1과 -1로만 구성하게 되면
-sigmoid가 치솟는것을 막는데
-그렇게 되면 손실함수가 천천히 수렴하는것을 방지한다.</p>
-
-<h2 id="c-loss-function">C. Loss Function</h2>
-
-<p>LeNet-5에는 Maximum Likelihood Estimation criterion(MLE)가 사용될 수 있고
-위에서는 Minimum Mean Squared Error( MSE )를 사용했다.</p>
-
-\[E(W)=\dfrac{1}{P}\sum^P_{p=1}y_{D^p}(Z^p,W)\]
-
-<p>$y_{D^p}$ 는 $D_p$번째 RBF 결과이다.</p>
-
-<p>이 손실 함수는 대부분의 경우에 적절하지만,
-중요한 3가지가 빠져있다.</p>
-
-<ol>
-  <li>RBF 매개변수를 adaptive하게 한다면, E(W)는 trivial solution을 갖는다 (Collapsing Effect)
-하지만 이 문제는 RBF를 adaptive하게 안하면 일어나지 않게 해결할 수 있다.</li>
-  <li>
-    <p>competition이 없는 것이 두번째 문제이다.
-더 차별적인 학습 기준에서 경쟁이 있을 수 있는데,ex&gt; MAP(maximum a posteriori) criterion,
-경쟁은 입력 이미지가 분류된 클래스이거나 어디에도 분류가 안되는 클래스일 수가 있다는 점에서 올바른 클래스일 확률을 최대화하는 것과 같다.
-penalty의 관점에서 보면, MSE는 올바른 클래스의 penalty를 작게 했다면 아래는 잘못된 클래스의 penalty를 끌어 올린다.</p>
-
-\[E(W)=\dfrac{1}{P}\sum^P_{p=1}(y_{D^p}(Z^p,W)+\log(e^{-j}+\sum_ie^{-y_i(Z^p,W)}))\]
-
-    <p>log항의 -값이 “competitive” 역할을 한다.</p>
-
-    <p>그 값은 손실 함수가 양수이기 위해 반드시 첫번째 항보다 작거가 같아야한다.</p>
-
-    <p>상수 j는 양수이고 class의 penalty가 이미 큰것을 더 커지지 않게 막는다.</p>
-
-    <p>쓰레기 클래쓰의 posterior probability는 $e^{-j}$와 $e^{-j}+\sum\limits_ie^{-y_i(Z^p,W)}$의 비율이 될것이다.</p>
-
-    <p>이 차별적인 기준은 RBF의 중심을 서로 떨어져 유지 시킴으로써 “collapsing effect”를 막는다.</p>
-  </li>
-</ol>
-
-<h1 id="iii-results-and-comparison-with-other-methods">III. Results and Comparison with other methods</h1>
-
-<p>개별 숫자를 인식하는 것은 실용적인 인식 시스템에 속한 많은 문제들중 하나지만, 모양을 비교하는 인식 방법의 성능을 아는데에는 훌륭한 기준이다.</p>
-
-<p>많은 방법들이 직접 만든 특징 추출기와 학습 가능한 분류기의 조합으로 구성되지만, 이 논문은 normalized된 크기의 이미지에 바로 사용할 수 있는 적용가능한 방법에 집중한다.</p>
-
-<h2 id="a-database-the-modified-nist-set">A. Database: the Modified NIST set</h2>
-
-<p>NIST’s Special Database 3와 Special Database 1을 사용한다.</p>
-
-<p>SD3는 학습데이터이고 SD1은 시험데이터이고 SD3가 SD1보다 clean 한다.</p>
-
-<p>SD3는 Census Bureau(미국 인구조사국)에서 얻은 것이고
-SD1은 고등학교 학생들로 부터 얻었기 때문이다.</p>
-
-<p>학습 경험으로부터 현명한 결론을 도출하려면 전체 샘플에서 학습과 시험 데이터중 어느 것을 선택했는지와 무관하게 결과가 나와야 한다. ( 따라서 둘을 섞는다 )</p>
-
-<p>SD1에서 첫 250명의 데이터는 학습데이터로
-SD1에서 나머지 250명의 데이터는 테스트데이터로
-각 데이터가 약 30000개가 되었고 SD3를 통해 각 데이터를 60000개로 만들어 줬다.</p>
-
-<p>실험에는 10000개의 테스트데이터만 사용한다.(SD1과 SD3로부터 5000개씩)
-그리고 학습데이터는 60000개 모두 사용한다.</p>
-
-<p>세가지의 데이터베이스가 사용되었다.</p>
-
-<ol>
-  <li>regular database
-28x28 사이즈이고 가운데에 위치하게 함
-어떤 경우에는 배경과 함께 32x32인 것도 있다.</li>
-  <li>deslanted database
-deslanting과 cropped down으로 20x20으로 함
-deslanting은 pixel inertia의 second moment를 계산(counting a foreground as 1 and a background as 0)
-그리고 line의 shear 변환을 통해 principal axis가 수직을 이루게 한다.</li>
-  <li>옛날에 썼던 데이터로 크기가 16x16이다.</li>
-</ol>
-
-<h2 id="b-results">B. Results</h2>
-
-<p>LeNet-5는 regular database를 사용
-전체 학습데이터 학습을 20번 수행
-학습률 → ~2 : 0.0005 → ~5 : 0.0002 → ~8 : 0.0001 → ~12 : 0.00005 → ~20 : 0.00001</p>
-
-<p>각 iteration전에 diagonal Hessian 은 500개 샘플로 재평가하고 iteration 끝날때까지 유지</p>
-
-<p>매개변수들 사이에서 효과적인 학습률은 0.00007~0.016 사이이다.</p>
-
-<p>10 iter까지 test error는 0.95%이고</p>
-
-<p>19 iter후에는 0.35%였다.</p>
-
-<p>많은 저자들이 NN을 다른 adaptive 알고리즘을 다양한 작업에서 학습 시키는 경우 over-training 현상을 관찰했다.</p>
-
-<p>over-training이 발생하면, training error는 계속 감소하고 test error는 작아지다가 커진다.</p>
-
-<p>이런 현상이 일반적이지만, LeNet-5에서는 볼 수 없었다.</p>
-
-<p>가능한 이유로는 학습률이 비교적 컸기 때문이라고 할 수 있다.</p>
-
-<p>가중치가 local minima에 수렴하지 않고 무작위로 진동하는 것이 over-training의 현상이다.</p>
-
-<p>이러한 진동 때문에 그 평균 비용은 broader minimum에서 더 낮아지기 때문이다.</p>
-
-<p>그래서, Stochastic gradient는 regularization에서 broader minima를 선호하는 비슷한 현상을 보일것이다.</p>
-
-<p>Broader minima는 generalization error가 높아지는 매개변수 분포의 entropy가 커지는 경우에 solution과 일치한다.</p>
-
-<p>학습데이터의 수가 많아지면 정확도가 향상된다.</p>
-
-<p>왜곡된 데이터를 학습한 네트워크는 20번의 iter동안 두번만 각 개별 샘플을 효과적으로 본다는 것이 흥미롭다.</p>
-
-<p>비록 나타나지 않았던 형태로 쓰여졌지만 어떤 것은 정말 애매하더라도 어떤 것은 사람이 완벽하게 분류할 수 있다.</p>
-
-<p>때문에 더 많은 학습 데이터를 통해 개선 가능하다고 기대된다.</p>
-
-<h2 id="c-comparison-with-other-classifiers">C. Comparison with Other Classifiers</h2>
-
-<h3 id="c1-linear-classifer-and-pairwise-linear-classifier">C.1 Linear Classifer, and Pairwise Linear Classifier</h3>
-
-\[\mathsf{Linear&lt;[deslant]Linear&lt;Pairwise\ Linear}\]
-
-<h3 id="c2-baseline-nearest-neighbor-classifier">C.2 Baseline Nearest Neighbor Classifier</h3>
-
-<p>K-nearest neighbor 분류기는 입력 이미지 사이에 Euclidean 거리를 측정한다.</p>
-
-<p>이것의 이점은 학습시간이 필요없고, 설계자의 뇌가 필요없다는 것이다.</p>
-
-<p>하지만, 메모리 수요가 크고 인식하는데 시간이 오래 걸린다.</p>
-
-<p>1pixel = 1 byte → 20x20 pixel = 400byte → 60000x(20x20) pixel = 24000000byte = 24Megabyte</p>
-
-<p>24Megabyte가 run time에서 사용가능해야함</p>
-
-<p>많은 표현이 들어가면 error rate가 조금 올라갈 수 있다.</p>
-
-<p>원래 실제 유클리드 거리 NN시스템은 특징 벡터들 사이의 연산을 하지만, 이 논문에 모든 시스템들은 픽셀들 사이에 연산을 하기 때문에 이 결과는 baseline comparison에 유용하다.</p>
-
-<h3 id="c3-principal-component-analysis-pca-and-polynomial-classifier">C.3 Principal Component Analysis (PCA) and Polynomial Classifier</h3>
-
-<p>40개의 principal component를 사용</p>
-
-<p>821개의 입력을 받는 선형 분류기로 보일수 있다.</p>
-
-<h3 id="c4-radial-basis-function-network">C.4 Radial Basis Function Network</h3>
-
-<p>첫 층은 28x28의 입력을 받는 1000개 가우시안 RBF유닛이다.</p>
-
-<p>두번째 층은 1000개의 입력을 받고 10개를 출력하는 선형 분류기이다.</p>
-
-<p>RBF 유닛들은 100개씩 10개의 그룹으로 나뉘고 K-means알고리즘을 통해 각 그룹은 학습을 한다.</p>
-
-<p>두번째 층에서 가중치들은 pseudo-inverse 방법으로 regularized를 통해 계산된다.</p>
-
-<h3 id="c5-one-hidden-layer-fully-connected-multilayer-neural-network">C.5 One-Hidden Layer Fully Connected Multilayer Neural Network</h3>
-
-<p>또다른 분류기는 하나의 전결합층이 은닉층 전부이고
-하나의 출력층을 갖는 역전파 알고리즘을 이용한 다층 신경망이다.</p>
-
-<p>regular test data를 사용하면 300개의 은닉뉴런을 사용할 때가 1000개의 은닉뉴런을 사용할 때보다 test error가 높았다.</p>
-
-<p>distortion이 적용된 데이터로 학습하면 전체적으로 개선이 되고
-300개의 은닉뉴런일 때가 1000개의 은닉뉴런일 때보다 test error가 작았다.</p>
-
-<p>deslanted data를 학습하면 300개의 은닉뉴런일 때 test error가 1.6%까지 떨어졌다.</p>
-
-<p>자유 매개변수가 많을 수록  test error가 낮게 나온다.</p>
-
-<p>→ self-regularization을 한다고 추측한다. 가중치 공간에서 원점은 saddle point이기 때문에 어느 방향으로든 SGD가 보기에는 매력적으로 보이기 때문이다. 첫 몇번에 epoch에서만 가중치가 줄지 않음.</p>
-
-<p>작은 가중치는 sigmoid를 준선형으로 작동하게 하여 network는 low-capacity가 되어 마치 sigle layer network처럼 된다.</p>
-
-<h3 id="c6-two-hidden-layer-fully-connected-multilayer-neural-network">C.6 Two-Hidden Layer Fully Connected Multilayer Neural Network</h3>
-
-<p>이론상 어떤 기능도 하나의 은닉층 신경망으로 근사화될 수 있다.</p>
-
-<p>그러나, 두 은닉층 신경망이 가끔 실제 상황에서 더 좋은 성능을 보였다.</p>
-
-<p>여기서도 그 현상을 관찰했는데, 28x28-300-100-10 network에서 test error가 3.05%로 은닉층이 하나인 경우보다 뛰어났다.</p>
-
-<p>network 크기를 28x28-1000-150-10으로 늘린 경우에는 조금 개선된 test error가 2.95% 였다.
-28x28-300-100-10가 training with distorted pattern으로 된 경우 약간 개선된 2.50%다.</p>
-
-<p>그리고 크기를 키워서 28x28-1000-150-10일 때는 2.45%였다.</p>
-
-<h3 id="c7-a-small-convolutional-network-lenet-1">C.7 A Small Convolutional Network: LeNet-1</h3>
-
-<p>Convolutional network는 딜레마를 풀려고 한다.</p>
-
-<p>작은 network는 학습을 할 수 없고 큰 network는 매개변수가 너무 많은 딜레마</p>
-
-<p>이미지는 16x16으로 줄이고 28x28크기의 가운데에 위치 시켰다.</p>
-
-<p>100000번의 계산이 필요하지만 convolution의 특징으로 자유 매개변수는 2600개 뿐이다.</p>
-
-<p>LeNet-1은 USPS 데이터 형식에 만들어졌고 입력을 위해 다시 조절했다.</p>
-
-<p>test error는 1.7%가 나왔다.</p>
-
-<p>적은 수의 매개변수로 error가 작게 나오는 신경망은 그 구조가 적용될 작업에 적합하다는 것이다.</p>
-
-<h3 id="c8-lenet-4">C.8 LeNet-4</h3>
-
-<p>LeNet-1에서 convolutional network가 크면 큰 사이즈의 학습 데이터에 적합해진다고 보았다.</p>
-
-<p>LeNet-4와 LeNet-5는 이 문제를 해결하기 위해 고안되었다.</p>
-
-<p>LeNet-4는</p>
-
-<p>Conv1(4)→Sub2(8)→Conv2(16)→Sub3(16)→FC4(120)→output</p>
-
-<p>free parameters : 17000</p>
-
-<p>connections : 260000</p>
-
-<p>test error : 1.1%</p>
-
-<p>실험에서 분류기는 유클리드 NN 분류기를 사용했다.</p>
-
-<h3 id="c9-boosted-lenet-4">C.9 Boosted LeNet-4</h3>
-
-<p>여러개의 분류기를 조합해 “boosting” 방법을 만들었다.</p>
-
-<p>3개의 LeNet-4를 조합했다</p>
-
-<ol>
-  <li>하나는 일반적 방법으로 학습시켰고</li>
-  <li>두 번째는 첫번째 네트워크의 분류 결과를 가지고 학습했다.</li>
-  <li>세 번째 네트워크는 앞에 네트워크들과 일치하지 않는 새로운 패턴에 대해 훈련했다.</li>
-</ol>
-
-<p>test하는 도안, 세개의 네트워크의 결과를 단순히 더했다.</p>
-
-<p>왜냐하면 LeNet-4의 error는 괸장히 작기 때문이다.</p>
-
-<p>그리고 두 번째와 세 번째 네트워크를 학습 시키기 위해 인공적으로 왜곡시킨 학습 데이터를 사용했다.</p>
-
-<p>test error : 0.7 %</p>
-
-<p>boosing이 3배 더 비용이 들어 보이지만
-사실, 첫 번재 네트워크가 정답에 높은 자신을 보이면 두 번째와 세 번째 네트워크는 호출되지 않는다.</p>
-
-<p>따라서 계산 비용은 LeNet-4가 하나인 경우보다 boosting에 경우 1.75배만 증가했다.</p>
-
-<h3 id="c10-tangent-distance-classifier--tdc-">C.10 Tangent Distance Classifier ( TDC )</h3>
-
-<p>TDC는 입력 이미지의 작은 왜곡과 이동에 민감한 거리측정 함수가 사용된 nearest-neighbor 방법이다.</p>
-
-<p>만약 고차원 공간에서 이미지를 점 하나로 생각할 때,
-문자의 왜곡은 픽셀 공간에서 곡선을 따라간다.</p>
-
-<p>같이 취해진 이 모든 왜곡들은 픽셀 공간에서 낮은 차원의 다양성을 정의한다.</p>
-
-<p>원본 이미지에 가까운 작은 왜곡들로인한 다양성은 tangent plane으로 추측될 수 있다.</p>
-
-<p>여러 왜곡들을 사용해 만든 tangent plane들 과의 거리를 통해 “closeness”를 측정한다.</p>
-
-<p>test error : 1.1% (입력 16x16)</p>
-
-<p>유클리드 거리를 통해 여러 결과들을 사전에 필터링하면 tangent 거리 계산을 줄일 수 있다.</p>
-
-<h3 id="c11-support-vector-machine-svm">C.11 Support Vector Machine (SVM)</h3>
-
-<p>Polynomial 분류기들은 복잡한 결정 평면을 만들 때 잘 학습되는 방법이다.</p>
-
-<p>하지만, 제공되는 항의 수가 제한적이라 고차원 문제를 풀기에는 실용적이지 못하다.</p>
-
-<p>SVM은 고차원 공간에서 다항식이나 많은 평면을 포함하는 복잡한 평면을 나타내는 매우 경제적인 방법이다.</p>
-
-<p>regular SVM test error : 1.4%</p>
-
-<p>Cortes and Vapnik test error : 1.1%</p>
-
-<p>계산 비용이 매우 높다.</p>
-
-<p>V-SVM test error : 1.0%</p>
-
-<p>modified V-SVM test error : 0.8%</p>
-
-<p>하지만, V-SVM은 regular SVM의 2배 만큼 비용이 높다.</p>
-
-<p>Burges는 Reduced Set Support Vector technique(RS-SVM)을 제안하고 1.1%의 test error를 얻었고</p>
-
-<p>계산 비용은 LeNet-5보다 60%만큼만 높았다.</p>
-
-<h3 id="d-discussion">D. Discussion</h3>
-
-<p>Boosted LeNet-4의 성능이 제일 좋고 그 다음이 LeNet-5이다.</p>
-
-<p>신경망은 memory 기반 방법들보다 계산 수가 적다.</p>
-
-<p>일반적인 구조와 그들의 적은 메모리 수요 때문에 CNN들은 하드웨어 구현에 특히 적합하다.</p>
-
-<p>LeNet-5이전 analog와 digital을 섞어서 구현한 네트워크는 초당 1000자를 넘는 속도로 계산해왔다.</p>
-
-<p>그러나, 컴퓨터 주요 기술의 급진적 진보로 인해 섞어서 만든 네트워크들을 쓸모없게 만들었다.</p>
-
-<p>메모리 기반 기술들은 메모리와 컴퓨팅에 대한 수요가 커서 비용 효과적 구현에서는 피한다.</p>
-
-<p>KNN과 TDC는 학습 시간이 없다고
-단층 네트워크, pairwise 네트워크, PCA+quadratic 네트워크 1시간 내로 학습하고
-다층 네트워크는 더 오래 걸린다.</p>
-
-<p>CPU로 LeNet-5를 학습시키는데에는 2~3일이 걸렸다.</p>
-
-<p>학습 시간은 설계자가 고려할 사항이고 최종 시스템 사용자와는 별로 관계가 없다는 것을 알아야 한다.</p>
-
-<p>현존하는 기술과 그것보다 학습시간이 늘고 조금 상향된 정확도의 새로운 기술중에 최종 사용자는 새로운 기술을 택할 것이다.</p>
-
-<p>대부분의 방법들은 적절한 성능을 위해 1byte만 필요하지만 Nearest-Neighbor방법은 pixel당 4bits만 필요하다.</p>
-
-<p>게다가, 신경망은 메모리 기반 방법보다 더 적은 메모리를 수요한다.</p>
-
-<p>전반적인 성능은 많은 요인에 기인한다(정확도, 실행시간,메모리 수요).</p>
-
-<p>컴퓨터 기술이 상향되면, larger-capacity recognizers도 가능해진다.</p>
-
-<p>larger recognizer는 더 큰 학습 데이터를 필요로 한다.</p>
-
-<p>LeNet-1은 1989에 사용하기 적절했고 LeNet-5는 1998에 사용하기 적절하다.</p>
-
-<p>1989년도에는 LeNet-5 정도의 복잡한 인식기는 학습하는데 몇주가 걸리고 더 많은 데이터가 필요했기 때문에 사용하려고 생각하지도 않았다.</p>
-
-<p>boosting이 메모리와 계산비용에 적당한 증가를 주지만 많은 개선력을 준다는걸 알았다.</p>
-
-<p>도한, 왜곡을 통해 데이터의 양을 효과적으로 늘려서 실제로 많은 데이터를 모아야 될 필요가 없어졌다.</p>
-
-<p>SVM은 훌륭한 정확도를 갖지만 사용에 대한 비용이 높아 Reduced된 형태로 사용했더니 CNN의 error rate와 비슷했다.</p>
-
-<p>신경망은 메모리 기반 방법보다 더 빠르고 더 적은 공간을 필요로하기 때문에 데이터의 사이즈가 커질수록 더 뛰어난 성능을 보인다.</p>
-
-<h3 id="e-invariance-and-noise-resistance">E. Invariance and Noise Resistance</h3>
-
-<p>convolutional network는 특히 다양한 사이즈, 위치, 방향, 사람에 의한 분할같은 형태를 거부하거나 인식하는데 적합하다.</p>
-
-<p>글자 분할기는 완벽하지않아서 기울어지거나 중심에 있지 않거나 크기가 다르거나 할 수 있어서 분류기의 invariance는 중요하다.</p>
-
-<p>완벽한 불변성을 가지는 분류기를 만드는 목표는 해결하기 어렵지만
-CNN은 그 문제에 대한 어느정도 해답이 된다.</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[LeNet-5]]></summary></entry></feed>
+<p>궁극적으로 우리는 정적인 이미지에서 누락된 부분이나 덜 명백한 매우 유용한 정보를 제공하는 시간적 구조인 video sequences에 크고 깊은 합성곱 네트워크를 사용하고 싶다.</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[AlexNet]]></summary></entry></feed>

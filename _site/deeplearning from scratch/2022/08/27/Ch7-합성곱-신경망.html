@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Ch7 합성곱 신경망(CNN) | No Free Knowledge</title>
+<meta name="generator" content="Jekyll v4.2.2" />
+<meta property="og:title" content="Ch7 합성곱 신경망(CNN)" />
+<meta name="author" content="Chang Hun Kang" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="7.1 전체 구조" />
+<meta property="og:description" content="7.1 전체 구조" />
+<link rel="canonical" href="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html" />
+<meta property="og:url" content="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html" />
+<meta property="og:site_name" content="No Free Knowledge" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-08-27T20:05:47+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Ch7 합성곱 신경망(CNN)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Chang Hun Kang"},"dateModified":"2022-08-27T20:05:47+09:00","datePublished":"2022-08-27T20:05:47+09:00","description":"7.1 전체 구조","headline":"Ch7 합성곱 신경망(CNN)","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html"},"url":"http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="No Free Knowledge" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">No Free Knowledge</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+        
+        <a class="page-link" href="">Jump to</a>
+
+        <!-- <div class="trigger"><a class="page-link" href="/categories/DeepLearning%20from%20scratch.html">DeepLearning from scratch</a><a class="page-link" href="/categories/Math%20Note.html">Math Note</a><a class="page-link" href="/categories/Paper%20Review.html">Paper Review</a><a class="page-link" href="/categories/Project.html">Project</a><a class="page-link" href="/categories/RNN%20Note.html">RNN Note</a><a class="page-link" href="/">All Documents</a></div> -->
+      </nav></div>
+</header>
+<div class="container">
+      <div>
+        
+
+
+<div class="category_box">
+    <h2> CATEGORY </h2>
+    <ul>
+          
+                
+                <li><a href=" http://localhost:4000/categories/DeepLearning from scratch "> DeepLearning from scratch     </a></li>
+                <br/>
+          
+                
+                <li><a href=" http://localhost:4000/categories/Math Note "> Math Note     </a></li>
+                <br/>
+          
+                
+                <li><a href=" http://localhost:4000/categories/Paper Review "> Paper Review     </a></li>
+                <br/>
+          
+                
+                <li><a href=" http://localhost:4000/categories/RNN Note "> RNN Note     </a></li>
+                <br/>
+        
+    </ul>
+</div>
+      </div>
+      <main class="page-content" aria-label="Content">
+        <div class="wrapper">
+          <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML">
+  MathJax.Hub.Config({
+    "HTML-CSS": {
+      availableFonts: ["TeX"],
+    },
+    tex2jax: {
+      inlineMath: [['$','$'],["\\(","\\)"]]},
+      displayMath: [ ['$$','$$'], ['\[','\]'] ],
+    TeX: {
+      extensions: ["AMSmath.js", "AMSsymbols.js", "color.js"],
+      equationNumbers: {
+        autoNumber: "AMS"
+      }
+    },
+    showProcessingMessages: false,
+    messageStyle: "none",
+    imageFont: null,
+    "AssistiveMML": { disabled: true }
+  });
+</script>
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Ch7 합성곱 신경망(CNN)</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2022-08-27T20:05:47+09:00" itemprop="datePublished">Aug 27, 2022
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <h1 id="71-전체-구조">7.1 전체 구조</h1>
+
+<p>CNN = Convolutional Layer + Pooling Layer + Fully Connected Layer</p>
+
+<p>(ex&gt; CONV_1 ⇒ RELU ⇒ CONV_2 ⇒ RELU ⇒ POOL_3 ⇒ DROP_4 ⇒ FLATTEN_5 ⇒ FC_6 ⇒ DROP_7 ⇒ FC_8 ⇒ SOFTMAX )</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="72-합성곱-계층">7.2 합성곱 계층</h1>
+
+<p>패딩$\mathsf{^{padding}}$ : 필터 통과 후 데이터 사이즈 조절</p>
+
+<p>스트라이드$\mathsf{^{stride}}$ : 필터가 이동하는 보폭</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="721-완전연결-계층의-문제점">7.2.1 완전연결 계층의 문제점</h2>
+
+<p>완전연결 계층은 입력데이터가 다차원 이더라도 Flatten작업을 통해
+그것의 형상을 무시하고 1차원 데이터로 만들어서 학습한다.</p>
+
+<p>때문에 칼라 이미지 데이터처럼 다차원 형상의 데이터인 경우
+인접한 데이터끼리 연관이 있을 가능성이 큰데
+이를 무시해서 정확도가 더 낮을 수 있다.</p>
+
+<p>반면 CNN은 입력 데이터의 형상을 보존하고
+한 번에 데이터 전체를 보는 것이 아니라 부분 부분 필터를 적용하며
+합성곱을 하기 때문에 인접한 데이터끼리의 연관성을 파악할 수 있다.</p>
+
+<p>또한, 이러한 점 덕분에 음성 데이터의 처리에도 강점을 보이게 된다.</p>
+
+<p>CNN에서 입출력 데이터를 특징맵$\mathsf{^{feature\ map}}$이라고 한다.</p>
+
+<p>입력 특징 맵$\mathsf{^{input\ feature\ map}}$ : 합성곱 계층의 입력 데이터</p>
+
+<p>출력 특징 맵$\mathsf{^{output\ feature\ map}}$ : 합성곱 계층의 출력 데이터</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="722-합성곱-연산">7.2.2 합성곱 연산</h2>
+
+<p>데이터와 필터의 형상을 (높이, 너비)로 표기 한다.</p>
+
+<p>문헌에 따라 필터를 커널이라 칭하기도 한다.</p>
+
+<p>합성곱 연산은 필터의 윈도우를 일정 간격으로 이동해가며 단일 곱셈-누산$\mathsf{^{fused\ multiply-add,\ FMA}}$를 한다.</p>
+
+<p>필터에 매개변수가 그동안의 가중치와 같은 역할을 한다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled.jpeg" alt="Untitled" /></p>
+
+<p>편향까지 포함한 흐름이다. 편향은 항상 (1,1)이다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled.png" alt="Untitled" /></p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="723-패딩">7.2.3 패딩</h2>
+
+<p>패딩 : 합성곱 연산을 수행하기 전에 입력 데이터 주변을 특정 값으로 채우는 것</p>
+
+<p>아래는 zero padding이고 padding_size = 1</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%201.png" alt="Untitled" /></p>
+
+<p>입력 데이터 형상 유지에 사용</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="724-스트라이드">7.2.4 스트라이드</h2>
+
+<p>스트라이드 : 필터가 움직이는 간격</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%201.jpeg" alt="Untitled" /></p>
+
+<p>필터 적용시 출력 크기 관계식</p>
+
+<p>입력 크기 : (H, W)</p>
+
+<p>필터 크기 : (FH, FW)</p>
+
+<p>출력 크기 : (OH, OW)</p>
+
+<p>패딩 : P</p>
+
+<p>스트라이드 : S</p>
+
+\[OH={H+2P-FH\over S}+1\\
+OW={W+2P-FW\over S}+1\]
+
+<p>단, 출력 크기는 모두 정수여야 함.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="725-3차원-데이터의-합성곱-연산">7.2.5 3차원 데이터의 합성곱 연산</h2>
+
+<p>채널까지 고려한 3차원 데이터를 연산해 본다.</p>
+
+<p>입력 데이터와 필터의 합성곱 연산을 채널마다 수행하고, 그 결과를 더해서 하나의 출력을 얻는다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%202.jpeg" alt="Untitled" /></p>
+
+<p>주의할점</p>
+
+<ul>
+  <li>입력 데이터의 채널 수 = 필터의 채널 수</li>
+  <li>모든 채널의 필터 크기가 같아야함</li>
+</ul>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="726-블록으로-생각하기">7.2.6 블록으로 생각하기</h2>
+
+<p>데이터 형상 = (채널, 높이, 너비)</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%203.jpeg" alt="Untitled" /></p>
+
+<p>위에서의 결과는 채널이 1개다.</p>
+
+<p>따라서 특징 맵을 여러장 얻기 위해서는 필터를 여러장 사용하면 된다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%202.png" alt="Untitled" /></p>
+
+<p>필터의 형상 = (필터 수 = 출력 채널 수, 채널 수 = 입력 채널 수, 높이, 너비)</p>
+
+<p>필터를 FN개 만큼 만들어서 합성곱을 하면 출력 데이터의 형상에서 채널 수가 FN개가 된다.</p>
+
+<p>다음은 편향을 적용한 그림 ( 편향은 브로드캐스팅으로 계산됨 )</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%203.png" alt="Untitled" /></p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="727-배치-처리">7.2.7 배치 처리</h2>
+
+<p>한번에 여러개의 데이터를 학습하기 위해 배치 처리를 지원하게 하려면</p>
+
+<p>데이터의 차원을 하나 늘려줘야 한다. ( 3차원 ⇒ 4차원 )</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%204.jpeg" alt="Untitled" /></p>
+
+<p>데이터 형상 = ( 데이터 수, 채널 수, 높이, 너비 )</p>
+
+<p>정리 : 4차원 데이터가 하나 하른다 → N개에 대한 합성곱 연산이 이뤄진다 = N회 분의 처리를 한 번에 수행한다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="73-풀링-계층">7.3 풀링 계층</h1>
+
+<p>세로, 가로 방향의 공간을 줄이는 연산</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%205.jpeg" alt="Untitled" /></p>
+
+<p>2X2 최대 풀링을 스트라이드 2로 처리 ( 보통 풀링 윈도우 크기와 스트라이드는 같은 값으로 설정 )</p>
+
+<p>풀링의 종류는 최대 풀링 말고도 평균 풀링 같은 것이 있지만 이미지에서는 주로 최대 풀링 사용</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="731-풀링-계층의-특징">7.3.1 풀링 계층의 특징</h2>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h3 id="1-학습해야-할-매개변수가-없다">1. 학습해야 할 매개변수가 없다</h3>
+
+<p>풀링 계층은 오히려 매개변수를 줄인다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h3 id="2-채널-수가-변하지-않는다">2. 채널 수가 변하지 않는다</h3>
+
+<p>풀링 연산을 통해 각 채널의 높이와 너비는 작아져도</p>
+
+<p>채녈마다 독립적으로 계산해서 채널 수는 그대로다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h3 id="3-입력의-변화에-영향을-적게-받는다--강건하다-">3. 입력의 변화에 영향을 적게 받는다 ( 강건하다 )</h3>
+
+<p>입력 데이터가 조금 변해도 풀리의 결과는 잘 변하지 않는다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%206.jpeg" alt="Untitled" /></p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="74-합성곱--풀링-계층-구현하기">7.4 합성곱 / 풀링 계층 구현하기</h1>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="741-4차원-배열">7.4.1 4차원 배열</h2>
+
+<p>CNN에는 4차원 데이터가 흐른다.</p>
+
+<p>ex&gt; (10, 1, 28, 28) ⇒ 높이 28, 너비 28, 채널 1개인 데이터가 10개</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="742-im2col로-데이터-전개하기">7.4.2 im2col로 데이터 전개하기</h2>
+
+<p>합성곱 연산의 가장 간단한 구현 방법은 for 문을 겹겹이 쓰는 것이다.</p>
+
+<p>그렇게하면 numpy의 퍼포먼스가 떨어지기 때문에 좋은 방법이 아니다.</p>
+
+<p>대신 im2col을 사용해서 쉽게 구현 가능하다.</p>
+
+<p>그림은 3차원을 2차원으로 변환한 것이지만</p>
+
+<p>4차원 데이터도 2차원으로 변환시켜준다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%204.png" alt="Untitled" /></p>
+
+<p>im2col은 필터링하기 좋게 입력 데이터를 전개한다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%205.png" alt="Untitled" /></p>
+
+<p>여기서는 스트라이드를 크게 잡아 필터의 적용 영역이 겹치지 않도록 했지만,</p>
+
+<p>실제 상황에서는 영역이 겹치는 경우가 대부분이다.</p>
+
+<p>필터 적용 영역이 겹치게 되면 im2col로 전개한 후의 원소 수가 원래 블록의 원소 수보다 많아진다.</p>
+
+<p>그래서 im2col을 사용해 구현하면 메모리를 더 많이 소비하는 단점이 있다.</p>
+
+<p>하지만 행렬 계산에 고도로 최적화된 선형 대수 라이브러리 등을 통해 다시 계산 효율을 높일 수 있다.</p>
+
+<p>입력 데이터도 전개했으므로 필터도 전개해서 행렬 곱을 하면 된다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%207.jpeg" alt="Untitled" /></p>
+
+<p>CNN은 4차원 데이터가 흐르므로 다시 reshape한다.</p>
+
+<p>ex&gt; (1,3,7,7) — im2col(5,5,stride=1,pad=0) —&gt; (9,75)</p>
+
+<p>결과 ⇒ (입력 데이터 수 * 채널 하나에 들어가는 필터 수) X (필터 사이즈 * 입력 데이터의 채널 수)</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%206.png" alt="Untitled" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Convolution</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">W</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">b</span> <span class="o">=</span> <span class="n">b</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pad</span> <span class="o">=</span> <span class="n">pad</span>
+        
+        <span class="c1"># 중간 데이터（backward 시 사용）
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">None</span>   
+        <span class="bp">self</span><span class="p">.</span><span class="n">col</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">col_W</span> <span class="o">=</span> <span class="bp">None</span>
+        
+        <span class="c1"># 가중치와 편향 매개변수의 기울기
+</span>        <span class="bp">self</span><span class="p">.</span><span class="n">dW</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">db</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">FN</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">FH</span><span class="p">,</span> <span class="n">FW</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">W</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">N</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">out_h</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">int</span><span class="p">((</span><span class="n">H</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="p">.</span><span class="n">pad</span> <span class="o">-</span> <span class="n">FH</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">)</span>
+        <span class="n">out_w</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nb">int</span><span class="p">((</span><span class="n">W</span> <span class="o">+</span> <span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="p">.</span><span class="n">pad</span> <span class="o">-</span> <span class="n">FW</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">)</span>
+
+        <span class="n">col</span> <span class="o">=</span> <span class="n">im2col</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">FH</span><span class="p">,</span> <span class="n">FW</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pad</span><span class="p">)</span>
+        <span class="n">col_W</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">W</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">FN</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="n">T</span>
+
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">col_W</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="p">.</span><span class="n">b</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">out_h</span><span class="p">,</span> <span class="n">out_w</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">).</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">col</span> <span class="o">=</span> <span class="n">col</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">col_W</span> <span class="o">=</span> <span class="n">col_W</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dout</span><span class="p">):</span>
+        <span class="n">FN</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">FH</span><span class="p">,</span> <span class="n">FW</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">W</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">dout</span> <span class="o">=</span> <span class="n">dout</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">FN</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">db</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">dout</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">dW</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">col</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">dW</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">dW</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">).</span><span class="n">reshape</span><span class="p">(</span><span class="n">FN</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">FH</span><span class="p">,</span> <span class="n">FW</span><span class="p">)</span>
+
+        <span class="n">dcol</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dout</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">col_W</span><span class="p">.</span><span class="n">T</span><span class="p">)</span>
+        <span class="n">dx</span> <span class="o">=</span> <span class="n">col2im</span><span class="p">(</span><span class="n">dcol</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">FH</span><span class="p">,</span> <span class="n">FW</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pad</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">dx</span>
+</code></pre></div></div>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="744-풀링-계층-구현하기">7.4.4 풀링 계층 구현하기</h2>
+
+<p>합성곱과 다른점은 채널 독립적이라는 것.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch7/Untitled%208.jpeg" alt="Untitled" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Pooling</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pool_h</span><span class="p">,</span> <span class="n">pool_w</span><span class="p">,</span> <span class="n">stride</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pool_h</span> <span class="o">=</span> <span class="n">pool_h</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pool_w</span> <span class="o">=</span> <span class="n">pool_w</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">stride</span> <span class="o">=</span> <span class="n">stride</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">pad</span> <span class="o">=</span> <span class="n">pad</span>
+        
+        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">arg_max</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="n">N</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">H</span><span class="p">,</span> <span class="n">W</span> <span class="o">=</span> <span class="n">x</span><span class="p">.</span><span class="n">shape</span>
+        <span class="n">out_h</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">H</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_h</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">)</span>
+        <span class="n">out_w</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">W</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_w</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">)</span>
+
+        <span class="n">col</span> <span class="o">=</span> <span class="n">im2col</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_h</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_w</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pad</span><span class="p">)</span>
+        <span class="n">col</span> <span class="o">=</span> <span class="n">col</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_h</span><span class="o">*</span><span class="bp">self</span><span class="p">.</span><span class="n">pool_w</span><span class="p">)</span>
+
+        <span class="n">arg_max</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">out</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">out_h</span><span class="p">,</span> <span class="n">out_w</span><span class="p">,</span> <span class="n">C</span><span class="p">).</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">arg_max</span> <span class="o">=</span> <span class="n">arg_max</span>
+
+        <span class="k">return</span> <span class="n">out</span>
+
+    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dout</span><span class="p">):</span>
+        <span class="n">dout</span> <span class="o">=</span> <span class="n">dout</span><span class="p">.</span><span class="n">transpose</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        
+        <span class="n">pool_size</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_h</span> <span class="o">*</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_w</span>
+        <span class="n">dmax</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">dout</span><span class="p">.</span><span class="n">size</span><span class="p">,</span> <span class="n">pool_size</span><span class="p">))</span>
+        <span class="n">dmax</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">arg_max</span><span class="p">.</span><span class="n">size</span><span class="p">),</span> <span class="bp">self</span><span class="p">.</span><span class="n">arg_max</span><span class="p">.</span><span class="n">flatten</span><span class="p">()]</span> <span class="o">=</span> <span class="n">dout</span><span class="p">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="n">dmax</span> <span class="o">=</span> <span class="n">dmax</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dout</span><span class="p">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="n">pool_size</span><span class="p">,))</span> 
+        
+        <span class="n">dcol</span> <span class="o">=</span> <span class="n">dmax</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">dmax</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">dmax</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">dmax</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">dx</span> <span class="o">=</span> <span class="n">col2im</span><span class="p">(</span><span class="n">dcol</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">x</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_h</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pool_w</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">stride</span><span class="p">,</span> <span class="bp">self</span><span class="p">.</span><span class="n">pad</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">dx</span>
+</code></pre></div></div>
+
+<p>과정</p>
+
+<ol>
+  <li>입력 데이터 전개</li>
+  <li>행별 최댓값 계산</li>
+  <li>reshape</li>
+</ol>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="75-cnn-구현">7.5 CNN 구현</h1>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="정리">정리</h2>
+
+<ul>
+  <li>데이터 준비
+    <ul>
+      <li>데이터 강화 ( flip, move, rotate )</li>
+      <li>training data, validation data, test data
+        <ul>
+          <li>데이터의 분포가 고르게 나눈다.
+            <ul>
+              <li>분류를 하려면 3가지 데이터에 각 클래스가 차지하는 비율이 비슷해야함</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>data normalization</li>
+    </ul>
+  </li>
+  <li>모델 정의
+    <ul>
+      <li>어떤 층을 조합할건지</li>
+      <li>몇 층까지 쌓을건지</li>
+      <li>합성곱층은 filter를 몇개로 할건지, filter size는 몇개로 할건지, padding과 stride는 어떻게 할건지, 활성화 함수는 뭘 쓸건지</li>
+      <li>풀링층은 pooling size를 몇으로 할건지, padding과 stride는 몇으로 할건지</li>
+      <li>Dropout은 몇%만큼 뉴런을 막을건지</li>
+      <li>전결합층은 뉴런을 몇개 사용할건지</li>
+      <li>Regularization은 뭘로 할건지, 얼마나 할건지</li>
+    </ul>
+  </li>
+  <li>모델 학습
+    <ul>
+      <li>Optimizer는 뭘 사용할건지 learning rate는 몇으로 시작할건지</li>
+      <li>batch size 는 몇으로 할지</li>
+      <li>epochs는 몇으로 할건지, 조기종료 조건은 어떻게 할건지</li>
+    </ul>
+  </li>
+</ul>
+
+  </div><a class="u-url" href="/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html" hidden></a>
+</article>
+
+        </div>
+      </main>
+    </div><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Humans think like Machines, Machines think like Humans</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Chang Hun Kang</li><li><a class="u-email" href="mailto:abcd877287@gmail.com">abcd877287@gmail.com</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/Kchanghun"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">Kchanghun</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>There is No Free Knowledge when we study something.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
