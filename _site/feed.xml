@@ -1,4 +1,643 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-25T13:37:15+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Hnadling long term dependencies</title><link href="http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html" rel="alternate" type="text/html" title="Hnadling long term dependencies" /><published>2022-08-23T21:27:13+09:00</published><updated>2022-08-23T21:27:13+09:00</updated><id>http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies</id><content type="html" xml:base="http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html"><![CDATA[<h1 id="vanilla-rnn의-한계">Vanilla RNN의 한계</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-27T20:02:03+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Ch6 학습 관련 기술들</title><link href="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4.html" rel="alternate" type="text/html" title="Ch6 학습 관련 기술들" /><published>2022-08-27T19:40:27+09:00</published><updated>2022-08-27T19:40:27+09:00</updated><id>http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4</id><content type="html" xml:base="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4.html"><![CDATA[<h1 id="61-매개변수-갱신">6.1 매개변수 갱신</h1>
+
+<p>최적화$\mathsf{^{optimization}}$ : 손실 함수의 값을 가능한 한 낮추는 매개변수를 찾는 것</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="611-모험가-이야기">6.1.1 모험가 이야기</h2>
+
+<p>최적화 문제는 지도없이 눈을 가리고 광활한 산에서 가장 깊고 낮은 골짜기를 찾는 것이라고 비유 할 수 있다.</p>
+
+<p>이때 단 하나의 단서로 발을 통해 땅의 기울기만 느낄 수 있다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="612-확률적-경사-하강법--sgd-stochastic-gradient-descent">6.1.2 확률적 경사 하강법 ( SGD, Stochastic Gradient Descent)</h2>
+
+\[\mathrm{W}\leftarrow\mathrm{W}-\eta{\partial L\over\partial\mathrm{W}}\]
+
+<p>$\mathbf{W}$ : 갱신할 가중치 매개변수</p>
+
+<p>${\partial L\over\partial\mathbf{W}}$: $\mathbf{W}$에 대한 손실 함수의 기울기</p>
+
+<p>$\eta$ : 학습률</p>
+
+<p>$\leftarrow$ : 좌변의 값을 우변의 값으로 갱신</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">SGD</span><span class="p">:</span>
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+		<span class="bp">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span>
+	
+	<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">grads</span><span class="p">):</span>
+		<span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">params</span><span class="p">.</span><span class="n">keys</span><span class="p">():</span>
+			<span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">-=</span> <span class="bp">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">*</span> <span class="n">grads</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="613-sgd의-단점">6.1.3 SGD의 단점</h2>
+
+<p>특정한 지표 없이 모든 매개변수를 검사하면서 손실 함수가 가장 낮은 지점을 찾는 것보다 SGD 처럼 기울기를 통해 방향성을 찾고 움직이는 것이 더 효율적인 방법이다.</p>
+
+<p>SGD는 단순하고 구현도 쉽지만,</p>
+
+<p>문제에 따라 비효율적일 때가 있다.</p>
+
+\[f(x,y)={1\over20}x^2+y^2\]
+
+<p>위 식을 3차원(좌)과 등고선(우)으로 그려보았다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled.png" alt="Untitled" /></p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%201.png" alt="Untitled" /></p>
+
+<p>몇개의 $f(x,y)$ 점에서 기울기를 그려보면</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%202.png" alt="Untitled" /></p>
+
+<p>위와 같은데 $f(x,y)$ 의 실제 최소값은 $(0,0)$이지만</p>
+
+<p>대부분의 기울기 방향이 $(0,0)$을 가리키지 않기 때문에 문제가 발생</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%203.png" alt="Untitled" /></p>
+
+<p>lr = 0.9 &amp; iter_num = 40</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="614-모멘텀--momentum-">6.1.4 모멘텀 ( Momentum )</h2>
+
+<p>모멘텀$\mathsf{^{momentum}}$은 ‘운동량’을 뜻하는 단어로, 물리와 관계가 있다.</p>
+
+<p>수식은 다음과 같다.</p>
+
+\[\mathbf{v}\leftarrow\alpha\mathbf{v}-\eta{\partial L\over\partial\mathbf{W}}\\
+\mathbf{W}\leftarrow\mathbf{W}+\mathbf{v}\]
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%204.png" alt="Untitled" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Momentum</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">momentum</span> <span class="o">=</span> <span class="n">momentum</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">v</span> <span class="o">=</span> <span class="bp">None</span>
+        
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">grads</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">v</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">v</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">params</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">v</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+            
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">params</span><span class="p">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">v</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="p">.</span><span class="n">momentum</span><span class="o">*</span><span class="bp">self</span><span class="p">.</span><span class="n">v</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">lr</span><span class="o">*</span><span class="n">grads</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="p">.</span><span class="n">v</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%205.png" alt="Untitled" /></p>
+
+<p>lr = 0.1 &amp; iter_num = 30</p>
+
+<p>모멘텀의 갱신 경로는 공이 그릇 바닥을 구르듯 움직인다.</p>
+
+<p>x축 방향으로의 힘은 작지만 방향이 변하지 않아 한 방향으로 일정하지만
+y축 방향으로의 힘은 크면서 방향이 일정하지 않아 매개변수가 위아래로 흔들리면서 안정적이지 못한 모습을 보여준다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="615-adagrad">6.1.5 AdaGrad</h2>
+
+<p>학습률 값은 중요하다.</p>
+
+<p>너무 크면 최적화 과정에서 발산하고</p>
+
+<p>너무 작으면 최적화에 드는 시간과 계산 비용이 많이 든다.</p>
+
+<p>학습률을 정하는 효과적 기술로 학습률 감소$\mathsf{^{learning\ rate\ decay}}$가 있다.</p>
+
+<p>학습을 진행하면서 학습률을 점차 줄여가는 방법이다.</p>
+
+<p>매개변수 전체의 학습률 값을 일괄적으로 조절하면 구현이 간단하지만</p>
+
+<p>AdaGrad는 더 효율적으로 하기 위해</p>
+
+<p>각각의 매개변수에 맞게 학습률을 조절한다.</p>
+
+\[\mathbf{h}\leftarrow\mathbf{h}+{\partial L\over\partial\mathbf{W}}\odot{\partial L\over\partial\mathbf{W}}\\
+\mathbf{W}\leftarrow\mathbf{W}-\eta\dfrac{1}{\sqrt{\mathbf{h}}}\dfrac{\partial L}{\partial\mathbf{W}}\]
+
+<p>$\mathbf{h}$에는 기존 기울기 값을 제곱하여 계속 더해준다.</p>
+
+<p>그리고 $\mathbf{W}$를 업데이트할 때 $\sqrt{\mathbf{h}}$로 나눠준다.</p>
+
+<p>이렇게 해서 각 매개변수의 원소마다 각각 많이 움직인 원소는 학습률이 낮아지게 적용이 된다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">AdaGrad</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">=</span> <span class="n">lr</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">h</span> <span class="o">=</span> <span class="bp">None</span>
+        
+    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="n">grads</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="p">.</span><span class="n">h</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">h</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">params</span><span class="p">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="bp">self</span><span class="p">.</span><span class="n">h</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">params</span><span class="p">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">h</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">+=</span> <span class="n">grads</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">*</span><span class="n">grads</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">params</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">-=</span> <span class="bp">self</span><span class="p">.</span><span class="n">lr</span><span class="o">*</span><span class="n">grads</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="p">.</span><span class="n">h</span><span class="p">[</span><span class="n">key</span><span class="p">])</span><span class="o">+</span><span class="mf">1e-7</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%206.png" alt="Untitled" /></p>
+
+<p>lr = 1.4 &amp; iter_num = 30</p>
+
+<p>y축 방향은 기우리각 커서 처음에 크게 움직이지만,</p>
+
+<p>그 큰 움직임에 비례해 갱신 정도도 큰 폭으로 작아지도록 조정된다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%207.png" alt="Untitled" /></p>
+
+<p><a href="https://onevision.tistory.com/entry/Optimizer-%EC%9D%98-%EC%A2%85%EB%A5%98%EC%99%80-%ED%8A%B9%EC%84%B1-Momentum-RMSProp-Adam">Optimizer 의 종류와 특성 (Momentum, RMSProp, Adam)</a></p>
+
+<p><a href="https://ko.wikipedia.org/wiki/%EC%9D%B4%EB%8F%99%ED%8F%89%EA%B7%A0">이동평균 - 위키백과, 우리 모두의 백과사전</a></p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="616-adam">6.1.6 Adam</h2>
+
+<p>Adagrad는 SGD에서 개선된 방법이지만</p>
+
+<p>이동할 수록 학습률이 낮아져 멈추게 된다.</p>
+
+<p>이 문제를 해결하기 위해 RMSProp 이 제시되었는데</p>
+
+<p>RMSProp은 지수이동평균( EMA, Exponential Moving Average )을 이용해 이전에 움직였던 정보보다 최근 움직인 크기에 높은 가중치를 부여해 학습률이 낮아져서 학습이 멈추는 문제를 해결했다.</p>
+
+<p>그리고 RMSProp과 Momentum을 합쳐서 Adam을 만들었다.</p>
+
+<p>Adam은 Momentum에서 관성계수 m과 함께 계산된 v로 매개변수를 업데이트 하고 기울기 값과 기울기의 제곱값의 EMA를 활용해 step 변화량을 조절한다.</p>
+
+\[\mathbf{m}\leftarrow\beta_1\mathbf{m}+(1-\beta_1){\partial L\over\partial\mathbf{W}}\\
+\mathbf{v}\leftarrow\beta_2\mathbf{v}+(1-\beta_2){\partial L\over\partial\mathbf{W}}\odot{\partial L\over\partial\mathbf{W}}\\
+\mathbf{W}\leftarrow\mathbf{W}-\mathbf{m}{\eta\over\sqrt{\mathbf{v}+\epsilon}}\]
+
+<p>$\beta_1, \beta_2$는 0.9, 0.999가 적절하다고 한다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%208.png" alt="Untitled" /></p>
+
+<p>lr = 0.3 &amp; iter_num = 30</p>
+
+<p>모멘텀과 비슷한 패턴이지만 상하 흔들림이 적은 이유는</p>
+
+<p>학습의 갱신 강도를 적응적으로 조정해서 얻은 혜택이다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="617-어느-갱신-방법">6.1.7 어느 갱신 방법?</h2>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%209.png" alt="Untitled" /></p>
+
+<p>사용한 기법에 따라 갱신 경로가 다르지만 그림만 보면 이 문제에서는 AdaGrad가 가장 좋아보인다.</p>
+
+<p>하지만 어떤 optimizer를 쓸지는 풀어야 하는 문제가 무엇이냐에 따라 다르고 하이퍼파라미터를 어떻게 설정하느냐에 따라서도 결과가 다르니 잘 골라야 한다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="618-mnist-데이터셋으로-본-방법-비교">6.1.8 MNIST 데이터셋으로 본 방법 비교</h2>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2010.png" alt="Untitled" /></p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="62-가중치의-초깃값">6.2 가중치의 초깃값</h1>
+
+<p>가중치의 초깃값은 어떻게 설정하느냐에 따라 학습의 성패가 갈려서 특히 중요하다.</p>
+
+<p>때문에 연구를 통해 권장하는 초깃값을 사용해 학습이 이뤄지는 것을 확인.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="621-초기값을-0으로">6.2.1 초기값을 0으로</h2>
+
+<h3 id="가중치-감소mathsfweight-decay">가중치 감소$\mathsf{^{weight\ decay}}$</h3>
+
+<p>오버피팅을 억제해 범용 성능을 높이는 테크닉으로</p>
+
+<p>가중치 매개변수의 값이 작아지도록 학습하는 방법이다.</p>
+
+<p>가중치를 작게 만들고 싶으면 초깃값을 작게 시작하는게 정공법이다.</p>
+
+<p>지금까지는 초깃값을 만들 때 정규분포에서 생성되는 값을 0.01배 한 작은 값(표준편차가 0.01인 정규분포)를 사용했다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h3 id="그렇다면-초깃값을-모두-0으로-설정하면-어떻게-되나">그렇다면 초깃값을 모두 0으로 설정하면 어떻게 되나?</h3>
+
+<p>실제로 가중치 초깃값을 모두 0으로 설정하면 학습이 올바로 이뤄지지 않는다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h3 id="초깃값을-모두-0으로-해서는-안-되는-이유는-정확히는-가중치를-균일한-값으로-설정-해서는-안되는-이유-">초깃값을 모두 0으로 해서는 안 되는 이유는( 정확히는 가중치를 균일한 값으로 설정 해서는 안되는 이유 )?</h3>
+
+<p>오차역전파법에서 모든 가중치의 값이 똑같이 갱신되기 때문에 문제가 발생한다.</p>
+
+<p>예를 들어 2층 신경망에서 첫 번째와 두 번째 층의 가중치가 0이면 순전파 때는 입력층의 가중치가 0이기 때문에 두 번째 층의 뉴런에 모두 같은 값이 전달된다.</p>
+
+<p>두번째 층의 모든 뉴런에 같은 값이 입력된다는 것은 역전파 때 두 번째 층의 가중치가 모두 똑같이 갱신된다는 것이기 때문에</p>
+
+<p>갱신을 거쳐도 여전히 같은 값을 유지하게 되고
+이는 가중치를 여러 개 갖는 의미를 사라지게 한다.</p>
+
+<p>따라서 초깃값을 무작위로 설정해야 한다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="622-은닉층의-활성화값-분포">6.2.2 은닉층의 활성화값 분포</h2>
+
+<p>sigmoid함수를 활성함수로 사용하는 5층 신경망에 무작위로 생성한 입력 데이터를 흘리며 각 층의 활성화값 분포를 히스토그램으로 그려보겠다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2011.png" alt="Untitled" /></p>
+
+<p>histogram을 보면 각 층의 활성화값들이 0과 1에 치우쳐 분포한다.</p>
+
+<p>초깃값 설정은 다음과 같이 했다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1</span> <span class="o">+</span> <span class="mi">0</span>
+</code></pre></div></div>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2012.png" alt="Untitled" /></p>
+
+<p>초깃값은 표준편차가 1이고 평균은 0인 정규분포를 따르도록 (100,100) 모양으로 무작위로 골랐다. ( 입력값도 같은 정규분포를 따름 )</p>
+
+<p>때문에 입력값과 가중치의 곱이 활성함수 sigmoid를 통과하게 되면 모든 층에서 출력값이 0과 1에 치우치게 된다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2013.png" alt="Untitled" /></p>
+
+<p>이런 경우는 역전파 계산시 미분 값이 0에 가까운수를 계속 곱해나가 기울기 소실$\mathsf{^{gradient\ vanishing}}$ 문제를 생긴다</p>
+
+<p>이번에는 가중치의 표준편차를 0.01로 바꿔서 다시 한다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2014.png" alt="Untitled" /></p>
+
+<p>이전처럼 0과 1로 치우치진 않았으나 기울기 소실 문제는 일어나지 않는다.</p>
+
+<p>하지만 앞에서 가중치를 균일하게 설정했을 때 다수의 뉴런이 거의 같은 값을 출력해서 뉴런을 여러 개 둔 의미가 없어진다는 문제를 말했었다.</p>
+
+<p>뉴런들이 비슷한 값을 출력하면 여러 개를 사용한 의미가 없는 거고 그 의미는 표현력을 제한한다는 관점에서 문제가 된다.</p>
+
+<p>각 층의 활성화값은 적당히 고루 분포해 층과 층 사이에 적당하게 다양한 데이터가 흐르게 해야 신경망 학습이 효율적으로 이뤄진다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h3 id="xavier-초깃값">Xavier 초깃값</h3>
+
+<p>사비에르 그롤로트$\mathsf{^{Xavier\ Glorot}}$와 요슈아 벤지오$\mathsf{^{Yoshua\ Bengio}}$의 논문에서 권장하는 가중치 초깃값.</p>
+
+<p>일반적인 딥러닝 프레임워크들이 표준적으로 이용하고 있다.</p>
+
+<p>니 논문은 각 층의 활성화값들을 광범위하게 분포시키려면</p>
+
+<p>앞 계층의 노드가 $n$개일 때 표준 편차가 $1\over\sqrt n$인 분포를 사용해야 한다는 결론을 말한다.</p>
+
+<p>가중치 설정 코드</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="n">node_num</span><span class="p">,</span> <span class="n">node_num</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">node_num</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2015.png" alt="Untitled" /></p>
+
+<p>지난 두차례 결과보다 확실히 넓게 분포된 것을 확인 했다.</p>
+
+<p>하지만 1층의 결과는 종모양으로 제대로 분포되어있는데</p>
+
+<p>층을 통과할 수록 모양이 일그러지고 있다.</p>
+
+<p>이는 sigmoid함 수가 (0,0.5)에서 대칭인 S자 곡선이기 때문인데</p>
+
+<p>원점에서 대칭인 S곡선인 tanh를 활성화 함수로 사용하여 이를 해결 한다고 한다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h3 id="tanh">tanh</h3>
+
+\[\mathsf{tanh}={e^x-e^{-x}\over e^x+e^{-x}}\]
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2016.png" alt="Untitled" /></p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2017.png" alt="Untitled" /></p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="623-relu를-사용할-때의-가중치-초깃값">6.2.3 ReLu를 사용할 때의 가중치 초깃값</h2>
+
+<p>Xavier 초깃값이 학습에 효율적인 이유는 활성함수로 sigmoid와 tanh를 사용했기 때문이다.</p>
+
+<p>Xavier는 선형 함수인 활성함수를 상대로 효율이 좋은데 sigmoid와 tanh는 중앙 부근에서 선형이라 볼 수 있기 때문이다.</p>
+
+<p>반면에 ReLu를 사용하려면 ReLu에 특화된 초깃값을 이용해야 한다.</p>
+
+<p>카이밍 히$\mathsf{^{Kaiming\ He}}$의 이름을 따 ‘He 초깃값’ 이라 한다.</p>
+
+<p>He 초깃값은 앞 계층의 노드가 n개일 때,</p>
+
+<p>표준편차가 $\sqrt {2\over n}$ 인 정규분포를 사용한다.</p>
+
+<p>Xavier 초깃값은 표준편차가 $1\over\sqrt n$ 이었는데
+ReLu는 음의 영역에서 결과값이 0이라</p>
+
+<p>뉴런의 출력값을 더 넓게 분포시키기 위해 2배의 계수를 적용했다고 해석할 수 있다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2018.png" alt="Untitled" /></p>
+
+<p>ReLu 표준편차 0.01</p>
+
+<p>층들의 활성함수값들이 아주 작아서 신경망에 데이터가 조금 흐르게 되는데</p>
+
+<p>가중치 작게해서 오버피팅 피하려다</p>
+
+<p>역전파에서 기울기가 작아서 학습이 안됨</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2019.png" alt="Untitled" /></p>
+
+<p>ReLu Xavier</p>
+
+<p>처음엔 괜찮은데 층이 깊어지면서 치우침이 커져 ‘기울기 소실’ 문제 발생</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2020.png" alt="Untitled" /></p>
+
+<p>ReLu He</p>
+
+<p>모든 층에서 균일하게 분포, 층이 깊어져도 분포가 균일하여 학습이 적절히 된다고 기대할 수 있다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="624-mnist-데이터셋으로-본-가중치-초깃값-비교">6.2.4 MNIST 데이터셋으로 본 가중치 초깃값 비교</h2>
+
+<p>5층신경망, 활성함수 : ReLu</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2021.png" alt="Untitled" /></p>
+
+<ol>
+  <li>
+    <p>std = 0.01</p>
+
+    <p>위에서 봤듯이 가중치가 너무 작아 기울기 소실이 발생해 학습이 되고있지 않음</p>
+  </li>
+  <li>
+    <p>He</p>
+
+    <p>ReLu에 잘 맞는 초깃값을 제공하는 방법으로 제일 학습 속도가 빠름</p>
+  </li>
+  <li>
+    <p>Xavier</p>
+
+    <p>학습이 잘 진행되지만 He 초깃값보다 학습 진도가 느림</p>
+  </li>
+</ol>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="63-배치-정규화">6.3 배치 정규화</h1>
+
+<p>앞 절에서는 각 층의 가중치의 초깃값을 조절하여 활성화값의 분포를 관찰했는데</p>
+
+<p>이번에는 각 층이 활성화값을 적당히 퍼뜨리도록 ‘강제’해보겠다.</p>
+
+<p>배치 정규화$\mathsf{^{Batch\ Normalization}}$가 그런 아이디어에서 출발했다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="631-배치-정구화-알고리즘">6.3.1 배치 정구화 알고리즘</h2>
+
+<p>배치 정규화의 장점</p>
+
+<ol>
+  <li>학습을 빨리 진행할 수 있따. (학습 속도 개선)</li>
+  <li>초깃값에 크게 의존하지 않는다 ( 골치 아픈 초깃값 선택 장애 해결)</li>
+  <li>오버피팅을 억제한다(드롭아웃 등의 필요성 감소)</li>
+</ol>
+
+<p>배치 정규화는 학습 시 미니배치를 단위로 정규화한다.</p>
+
+<p>평균 0, 분산 1</p>
+
+\[\mu_B\leftarrow{1\over m}\sum\limits^m_{i=1}x_i\\
+\sigma^2_B\leftarrow{1\over m}\sum\limits^m_{i=1}(x_i-\mu_B)^2\\
+\hat x_i\leftarrow{x_i-\mu_B\over\sqrt{\sigma^2_B+\epsilon}}\]
+
+<p>위 식을 통해 배치 정규화를 하는데</p>
+
+<p>이 단계를 활성화 함수의 앞이나 뒤에 삽입함으로써 데이터 분포를 고르게 만들 수 있다.</p>
+
+<p>그리고 배치 정규화 계층마다 아래 수식을 통해 정규화된 데이터에 고유한 확대와 이동 변환을 수행한다.</p>
+
+\[y_i\leftarrow\gamma\hat x_i+\beta\]
+
+<p>gamma가 확대를, beta가 이동을 처리한다.</p>
+
+<p>처음에는 $\gamma = 1,\ \beta=0$ 부터 시작하고,</p>
+
+<p>학습하면서 적합한 값으로 조정해간다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="backpropagation-in-batch-normalization-layer">Backpropagation in Batch Normalization Layer</h2>
+
+<p><a href="https://kratzert.github.io/2016/02/12/understanding-the-gradient-flow-through-the-batch-normalization-layer.html">Understanding the backward pass through Batch Normalization Layer</a></p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2022.png" alt="Untitled" /></p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="632-배치-정규화의-효과">6.3.2 배치 정규화의 효과</h2>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2023.png" alt="Untitled" /></p>
+
+<p>거의 모든 경우에서 배치 정규화를 사용할 때의 학습 진도가 빠르다.</p>
+
+<p>실제로 배치 정규화를 이용하지 않는 경우엔 초깃값이 잘 분포되어 있지 않으면 학습이 전혀 진행되지 않는다.</p>
+
+<p>따라서 배치 정규화를 사용하면 학습이 빠르고,</p>
+
+<p>가중치 초깃값에 크게 의존하지 않아도 된다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="64-바른-학습을-위해">6.4 바른 학습을 위해</h1>
+
+<p>오버피팅이 문제가 되는 일이 많다.</p>
+
+<p>복잡하고 표현력이 높은 모델을 만들 수는 있지만,</p>
+
+<p>그만큼 오버피팅을 억제하는 기술도 중요하다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="641-오버피팅">6.4.1 오버피팅</h2>
+
+<p>오버피팅이 일어나는 경우</p>
+
+<ol>
+  <li>매개변수가 많고 표현력이 높은 모델</li>
+  <li>훈련 데이터가 적음</li>
+</ol>
+
+<p>이번에는 일부러 오버피팅을 일으키기 위해</p>
+
+<ol>
+  <li>7층 네트워크를 사용</li>
+  <li>60000개 MNIST 데이터셋의 훈련 데이터 중 300개만 사용</li>
+</ol>
+
+<p>해보겠다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2024.png" alt="Untitled" /></p>
+
+<p>train의 정확도는 거의 100%가 되었고</p>
+
+<p>test의 정확도는 train과 큰 차이를 보이고 있다.</p>
+
+<p>이런 정확도를 보이는 모델를 overfitting 되었다고 한다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="642-가중치-감소">6.4.2 가중치 감소</h2>
+
+<p>오버피팅 억제용으로 오래된 해결방법으로는 가중치 감소$\mathsf{^{weight\ decay}}$가 있다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h3 id="가중치-감소-weight-decay">가중치 감소 weight decay</h3>
+
+<p>오버피팅은 가중치 매개변수의 값이 커서 발생하는 경우가 많기 때문에 학습 과정에서 큰 가중치에 대해서는 그에 상응하는 큰 패널티를 부과하여 오버피팅을 피하는 방법</p>
+
+<p>신경망 학습의 목적은 손실 함수의 값을 줄이는 것이므로</p>
+
+<p>손실함수에 가중치의 L2 norm을 더해서 학습을 진행하면</p>
+
+<p>신경망은 가중치가 커지는 것을 억제할 것이다.</p>
+
+<p>그리고 앞에 lambda를 곱해 가중치에 대한 패널티를 조절한다.</p>
+
+\[L\leftarrow L+{1\over2}\lambda\mathbf{W}^2\]
+
+<p>식을 위와 같이 구성하여 역전파 과정에서는 $\lambda\mathbf{W}$를 더하면 된다.</p>
+
+<p>$\lambda$를 0.1로 적용해 가중치 감소를 사용해 학습을 하면 아래와 같은 결과가 나온다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2025.png" alt="Untitled" /></p>
+
+<p>train과 test의 정확도 차이가 줄었고 train의 정확도가 100%에 도달하지 못한다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="643-드롭아웃">6.4.3 드롭아웃</h2>
+
+<p>가중치 감소는 구현이 간단하고 어느 정도 지나친 학습을 억제하지만</p>
+
+<p>신경망 모델이 복잡해지면 가중치 감소만으로는 대응하기 어려워진다.</p>
+
+<p>이럴 때는 흔히 드롭아웃$\mathsf{^{Dropout}}$을 사용한다.</p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2026.png" alt="Untitled" /></p>
+
+<p>드롭 아웃의 역전파는 ReLu와 같다.</p>
+
+<p>순전파 때 신호를 통과시키는 뉴런은 역전파 때도 신호를 그대로 통과시키고,</p>
+
+<p>순전파 때 통과시키지 않은 뉴런은 역전파 때도 신호를 차단한다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">Dropout</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dropout_ratio</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">dropout_ratio</span> <span class="o">=</span> <span class="n">dropout_ratio</span>
+        <span class="bp">self</span><span class="p">.</span><span class="n">mask</span> <span class="o">=</span> <span class="bp">None</span>
+    
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">train_flg</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">train_flg</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">rand</span><span class="p">(</span><span class="o">*</span><span class="n">x</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="p">.</span><span class="n">dropout_ratio</span>
+            <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="bp">self</span><span class="p">.</span><span class="n">mask</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="bp">self</span><span class="p">.</span><span class="n">dropout_ratio</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">backward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dout</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">dout</span><span class="o">*</span><span class="bp">self</span><span class="p">.</span><span class="n">mask</span>
+</code></pre></div></div>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2027.png" alt="Untitled" /></p>
+
+<p>드롭아웃을 사용하니 데이터에 대한 정확도 차이가 줄고
+훈련 데이터에 대한 정확도가 100%에 도달하지 않는다.</p>
+
+<p>이처럼 드롭아웃을 이용하면 표현력을 높이면서도 오버피팅을 억제할 수 있다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h3 id="ensemble-learning">Ensemble Learning</h3>
+
+<p>앙상블 학습은 개별적으로 학습시킨 여러 모델의 출력을 평균 내어 추론하는 방식이다.</p>
+
+<p>신경망의 맥락에서 얘기하면, 가령 같은 구조의 네트워크를 5개 준비하여 따로따로 학습시키고, 시험 때는 그 5개의 출력을 평균 내어 답하는 것이다.</p>
+
+<p>앙상블 학습을 수행하면 신경망의 정확도가 몇% 정도 개선된다는 것이 실험적으로 알려져 있다.</p>
+
+<p>앙상블 학습은 드롭아웃과 밀접하다.</p>
+
+<p>드롭아웃이 학습 때 뉴런을 무작위로 삭제하는 행위를</p>
+
+<p>앙상블 학습은 다른 모델을 학습시키는 것으로 해석할 수 있기 때문</p>
+
+<p>추론 때는 뉴런의 출력에 삭제한 비율을 곱함으로써 앙상블 학습에서 여러 모델의 평균을 내는 것과 같은 효과를 얻는 것이다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="65-적절한-하이퍼파라미터-값-찾기">6.5 적절한 하이퍼파라미터 값 찾기</h1>
+
+<p>신경망에는 하이퍼파라미터가 많이 등장한다.</p>
+
+<p>하이퍼파라미터를 적절히 설정하지 않으면 모델의 성능이 크게 떨어지기도 하기 때문에 조심해야한다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="651-검증-데이터">6.5.1 검증 데이터</h2>
+
+<p>데이터를 학습 데이터와 테스트 데이터로만 나눴는데 지금부터는 하이퍼파라미터를 검증하기 위해 검증 데이터를 추가한다.</p>
+
+<p>테스트 데이터로 하이퍼파라미터 검증하면 하이퍼파라미터가 테스트 데이터에 오버피팅 되기 때문이다.</p>
+
+<p>데이터셋에 따라서는 훈련, 검증, 시험 데이터를 미리 분리해둔 것도 있는데</p>
+
+<p>지금은 훈련 데이터중 20%를 검증 데이터로 분리하겠다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="652-하이퍼파라미터-최적화">6.5.2 하이퍼파라미터 최적화</h2>
+
+<p>하이퍼파라미터 최적화할 때의 핵심은 하이퍼파라미터의 최적 값이 존재하는 범위를 조금씩 줄여간다는 것이다. 
+범위를 조금씩 줄이려면 우선 대략적인 범위를 설정하고 그 범위에서 무작위로 하이퍼파라미터 값을 골라낸(샘플링) 후, 그 값으로 정확도를 평가.</p>
+
+<p>정확도를 잘 살피면서 이 작업을 여러 번 반복하며 하이퍼파라미터의 최적 값의 범위를 좁혀가는 것이다.</p>
+
+<p>신경망의 하이퍼파라미터 최적화에서는 그리드 서치같은 규칙적인 탐색보다는 무작위로 샘플링해 탐색하는 편이 좋은 결과를 낸다고 알려져 있다.</p>
+
+<p>최종 정확도에 미치는 영향력이 하이퍼파라미터마다 다르기 때문</p>
+
+<p>하이퍼파라미터의 범위는 대략적으로 로그 스케일로 지정하는것이 효과적이다.</p>
+
+<p>딥러닝 학습에는 오랜 시간이 걸려서 나쁠 듯한 값은 일찍 포기하는 것이 좋다.</p>
+
+<p>따라서 에폭을 작게 하여, 1회 평가에 걸리는 시간을 단축하는 것이 효과적이다.</p>
+
+<ul>
+  <li>0 단계
+    <ul>
+      <li>하이퍼파라미터 값의 범위 설정 ( 로그스케일 )</li>
+    </ul>
+  </li>
+  <li>1 단계
+    <ul>
+      <li>설정된 범위에서 하이퍼파라미터의 값을 무작위로 추룰</li>
+    </ul>
+  </li>
+  <li>2 단계
+    <ul>
+      <li>1 단계에서 샘플링한 하이퍼파라미터 값을 사용하여 학습하고, 검증 데이터로 정확도를 평가한다. (에폭 작게)</li>
+    </ul>
+  </li>
+  <li>3 단계
+    <ul>
+      <li>1, 2단계를 특정 횟수 ( 100회 등 ) 반복하며, 그 정확도의 결과를 보고 하이퍼파라미터의 범위를 좁힌다.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>이 방법은 과학이라기 보다 수행자의 지혜와 직관에 의존한다.</p>
+
+<p>베이즈 정리를 중심으로 한 베이즈 최적화는 수학 이론을 구사하여 더 엄밀하고 효율적으로 최적화를 수행한다.</p>
+
+<p><a href="https://proceedings.neurips.cc/paper/2012/file/05311655a15b75fab86956663e1819cd-Paper.pdf">https://proceedings.neurips.cc/paper/2012/file/05311655a15b75fab86956663e1819cd-Paper.pdf</a></p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="653-하이퍼파라미터-최적화-구현하기">6.5.3 하이퍼파라미터 최적화 구현하기</h2>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2028.png" alt="Untitled" /></p>
+
+<p><img src="/assets/img/DeepLearning_from_scratch/Ch6/Untitled%2029.png" alt="Untitled" /></p>
+
+<p>학습이 잘 진행될 때의 학습률은 0.001~0.01,</p>
+
+<p>가주이 감소 계수는 $10^{-8}$~$10^{-6}$ 정도이다.</p>
+
+<p>이처럼 잘될 것 같은 값의 범위를 관찰하고 범위를 좁혀서 같은 작업을 반복한다.</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;DeepLearning from scratch&quot;]" /><summary type="html"><![CDATA[6.1 매개변수 갱신]]></summary></entry><entry><title type="html">Hnadling long term dependencies</title><link href="http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html" rel="alternate" type="text/html" title="Hnadling long term dependencies" /><published>2022-08-23T21:27:13+09:00</published><updated>2022-08-23T21:27:13+09:00</updated><id>http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies</id><content type="html" xml:base="http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html"><![CDATA[<h1 id="vanilla-rnn의-한계">Vanilla RNN의 한계</h1>
 <p>아래 Vanilla RNN 의 구조를 보자.<br />
 각 timestep별로 결과에 얼마나 영향을 주는지 색으로 표현했을때<br />
 색이 짙을 수록 역전파 과정에서 피드백 크기가 점점 작아져서 결과에 영향을 거의 안주게 된다.<br />
