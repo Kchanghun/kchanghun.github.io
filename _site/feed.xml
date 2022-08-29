@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-28T16:44:55+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Recurrent Neural Networks (RNNs): A gentle Introduction and Overview</title><link href="http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks-A-gentle-Introduction-and-Overview.html" rel="alternate" type="text/html" title="Recurrent Neural Networks (RNNs): A gentle Introduction and Overview" /><published>2022-08-28T16:44:13+09:00</published><updated>2022-08-28T16:44:13+09:00</updated><id>http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks:A-gentle-Introduction-and-Overview</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks-A-gentle-Introduction-and-Overview.html"><![CDATA[<h1 id="abstract">Abstract</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-30T05:10:41+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Recurrent Neural Networks (RNNs): A gentle Introduction and Overview</title><link href="http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks-A-gentle-Introduction-and-Overview.html" rel="alternate" type="text/html" title="Recurrent Neural Networks (RNNs): A gentle Introduction and Overview" /><published>2022-08-28T16:44:13+09:00</published><updated>2022-08-28T16:44:13+09:00</updated><id>http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks:A-gentle-Introduction-and-Overview</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks-A-gentle-Introduction-and-Overview.html"><![CDATA[<h1 id="abstract">Abstract</h1>
 <p>“Language Modeling &amp; Generating Text”, “Speech Recognition”, “Generating Image Descriptions” or<br />
 “Video Tagging” 분야에서 해결책을 위한 최신기술들은 RNN을 기반으로 하고있다.<br />
 따라서 현재 또는 앞으로 제시될 해결책들에 대한 구조를 이해하고 따라잡으려면<br />
@@ -234,7 +234,238 @@ H_t=O_t\odot\tanh\left(C_t\right)
 <p><img src="/assets/img/Paper_Review/RNNOverview/RNNOverview_1.png" alt="RNNOverview_1" /></p>
 
 <p>\(\begin{align*}\end{align*}\)</p>
-<h1 id="5-deep-recurrent-neural-networks-drnns">5 Deep Recurrent Neural Networks (DRNNs)</h1>]]></content><author><name>Robin M. Schmidt</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract “Language Modeling &amp; Generating Text”, “Speech Recognition”, “Generating Image Descriptions” or “Video Tagging” 분야에서 해결책을 위한 최신기술들은 RNN을 기반으로 하고있다. 따라서 현재 또는 앞으로 제시될 해결책들에 대한 구조를 이해하고 따라잡으려면 RNN에 대한 기본 개념을 이해하는 것이 매우 중요할 것이다. 이 논문에서는 BPTT, LSTM 뿐만아니라 Attention Mechanism과 Pointer Networks에 대한 개념을 독자가 쉽게 이해할 수 있도록 가장 중요한 RNN들을 살펴볼 것이다. 그리고 이와 관련해 더 복잡한 주제를 읽어보는 것을 추천한다.]]></summary></entry><entry><title type="html">Ch7 합성곱 신경망(CNN)</title><link href="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html" rel="alternate" type="text/html" title="Ch7 합성곱 신경망(CNN)" /><published>2022-08-27T20:05:47+09:00</published><updated>2022-08-27T20:05:47+09:00</updated><id>http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D</id><content type="html" xml:base="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html"><![CDATA[<h1 id="71-전체-구조">7.1 전체 구조</h1>
+<h1 id="5-deep-recurrent-neural-networks-drnns">5 Deep Recurrent Neural Networks (DRNNs)</h1>
+<p>DRRNs는 아주 쉬운 개념이다.<br />
+L개의 hidden layers를 갖는 DRNN을 만들려면<br />
+아무 타입의 RNNs를 평범하게 쌓아 올리면 된다.<br />
+각 hidden state $H_t^{\left(\ell\right)}\in\mathbb{R}^{n\times h}$는 현재 층의 다음 time step인 $H^{\left(\ell\right)}_{t+1}$으로 전달되고<br />
+똑같이 현재 time step의 다음 층인 $H^{\left(\ell+1\right)}_t$으로 전달된다.<br />
+첫 번째 층을 위해 이전 모델에서 보여준 hidden state 계산을 아래 식19에서 보여준다.<br />
+그 다음 층의 경우는 이전 층의 hidden state를 input으로 인식하여 식20을 사용한다.</p>
+
+\[\begin{align}
+H_t^{\left(1\right)}&amp;=\phi_{1}\left(X_t,H^{\left(1\right)}_{t-1}\right)\\ \notag \\
+H^{\left(\ell\right)}_t&amp;=\phi_\ell\left(H^{\left(\ell-1\right)}_{t},H^{\left(\ell\right)}_{t-1}\right)
+\end{align}\]
+
+<p>output $O_t\in\mathbb{R}^{n\times o}$에서 o는 output의 수인데<br />
+output은 현재 times step의 마지막 층에 대한 hidden state값만 이용해 계산을 하고 식21에서 보여준다.</p>
+
+\[\begin{align}
+O_t=\phi_o\left(H^{\left(L\right)}_tW_{ho}+b_o\right)
+\end{align}\]
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="6-bidirectional-recurrent-neural-networks-brnns">6 Bidirectional Recurrent Neural Networks (BRNNs)</h1>
+<p>일단 language modeling에 대한 예시를 보자.<br />
+현재 모델에서는 지금까지 봐온 내용에 근거하여 믿음이 가는 예측을 통해 다음 sequence element(i.e. the next word) 를 알아낸다.<br />
+그러나, 문장의 사이 공간을 채우거나 공간 뒤에 문장의 어느 부분을 채우는 경우에 중요한 정보를 전달하게되는데<br />
+이 정보는 이런 작업들이 잘 수행되도록 필수적인 역할을 한다.<br />
+더 일반적인 수준에서 우리는 sequence의 특성을 미리 보고 지금과 통합하고 싶다.</p>
+
+<p><img src="/assets/img/Paper_Review/RNNOverview/RNNOverview_2.png" alt="RNNOverview_2" /></p>
+
+\[\begin{align*}\end{align*}\]
+
+<p>이 미리보는 특성을 달성하기 위해 마지막 element부터 반대방향으로 sequence가 적용되는 hidden layer가 추가된 Bidirectional Recurrent Neural Networks (BRNNs)가 등장한다.<br />
+구조를 미리보여주기 위해 위에 Figure2를 삽입했다.<br />
+이제 forward hidden state $\overset{\rightarrow}{H_t}\in\mathbb{R}^{n\times h}$와 backward hidden state $\overset{\leftarrow}{H_t}\in\mathbb{R}^{n\times h}$ 를 소개하겠다.<br />
+이 두 hidden state는 각각 식22와 식23에 정리했다.</p>
+
+\[\begin{align}
+\overset{\rightarrow}{H_t}&amp;=\phi\left(X_tW^{\left(f\right)}_{xh}+\overset{\rightarrow}{H_{t-1}}W^{\left(f\right)}_{hh}+b^{\left(f\right)}_h\right)\\ \notag \\
+\overset{\leftarrow}{H_t}&amp;=\phi\left(X_tW^{\left(b\right)}_{xh}+\overset{\leftarrow}{H_{t+1}}W^{\left(b\right)}_{hh}+b^{\left(b\right)}_h\right)
+\end{align}\]
+
+<p>이전까지는 비슷한 가중치 메트릭스를 정의했지만,<br />
+지금부터는 두개로 분리된 매트릭스를 정의할 것이다.<br />
+하나는 forward hidden states를 위한 것으로 아래와 같이 정의한다.</p>
+
+\[\begin{align*}
+W^{\left(f\right)}_{xh},\ W^{\left(b\right)}_{xh}\in\mathbb{R}^{d\times h}\\
+W^{\left(f\right)}_{hh},\ W^{\left(b\right)}_{hh}\in\mathbb{R}^{h\times h}\\
+b^{\left(f\right)}_h,\ b^{\left(b\right)}_h\in\mathbb{R}^{1\times h}
+\end{align*}\]
+
+<p>이것을 통해 결과 o가 output의 수를 뜻하는 $O_t\in\mathbb{R}^{n\times o}$ 를 계산할 수 있게 된다.
+여기서 $\frown$은 두 메트릭스를 axis 0으로 concate하는 것을 의미한다.(위 아래로 쌓음)</p>
+
+\[\begin{align}
+O_t=\phi\left(\left[\overset{\rightarrow}{H_t}\frown\overset{\leftarrow}{H_t}\right]W_{ho}+b_o\right)
+\end{align}\]
+
+<p>다시말하자면, 가중치 매트릭스 $W_{ho}\in\mathbb{R}^{2h\times o},\ b_o\in\mathbb{R}^{1\times o}$를 정의한다.<br />
+두 방향은 서로 다른 수의 hidden units를 갖을 수 있다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="7-encoder-decoder-architecture---sequence-to-sequence-seq2seq">7 Encoder-Decoder Architecture &amp; <br /> Sequence to Sequence (seq2seq)</h1>
+<p>Encoder-Decoder architecture는 네트워크가 두 부분으로 이루어진 신경망 구조이다.<br />
+Encoder network는 input을 state로 encoding하고 Decoder network는 state를 output으로 decoding한다.<br />
+state는 vector나 tensor의 형태를 보인다.<br />
+구조는 Figure3에 있다.</p>
+
+<p><img src="/assets/img/Paper_Review/RNNOverview/RNNOverview_3.png" alt="RNNOverview_3" /></p>
+
+<p>이 Encoder-Decoder 구조에 근거하여<br />
+Sequence to Sequence (seq2seq)라고 불리는 모델이<br />
+sequence input에 대해 sequence output을 만들어 내도록 제안되었다.<br />
+이 모델은 RNNs를 encoder와 decoder에 사용하고<br />
+encoder의 hidden state가 decoder의 hidden state로 전달된다.<br />
+seq2seq의 일반적인 응용프로그램으로는 Google Translate, voice-enabled devices or labeling video data가 있다.<br />
+가장 초점을 두는 것은 고정된 길이의 input sequence size n을 고정된 길이의 output sequence size m으로 맞추는 것이다.<br />
+여기서 n과 m은 서로 다른 값일 수도 있지만 반드시 다를 필요은 없다.</p>
+
+<p>\(\begin{align*}\end{align*}\)
+제안된 구조를 Figure4에서 시각화 해놨다.<br />
+여기서 encoder는 RNN으로 구성되고 single element인 sequence data $X_t$를 사용한다.
+$t$는 sequence element의 순서를 뜻한다.<br />
+사용되는 RNNdms LSTM이나 GRU가 성능을 향상시키기 위해 사용된다.
+게다가, hidden state $H_t$는 LSTM이나 GRU같은 RNN에 사용되는 hidden state계산과정과 같은 방법으로 계산된다.<br />
+Encoder Vector(context)는 encoder network의 마지막 hidden state로 이전 input element들의 모든 정보를 통합하는 목적을 갖는다.<br />
+Encoder Vector는 decoder network의 첫 번째 hidden state 역할을 하고<br />
+decoder가 정확한 예측이 가능하게 한다.<br />
+Decoder network는 RNN으로 설계되었고 time step $t$에서 output $Y_t$ 를 예측한다.<br />
+만들어진 output은 또 다시 sequence이며 $t$에 대한 순차를 가진 $Y_t$가 된다.<br />
+각 time step에서 RNN은 이전 unit 으로부터 hidden state를 수용하고<br />
+자신으로부터 output과 new hidden state를 만들어낸다.</p>
+
+<p><img src="/assets/img/Paper_Review/RNNOverview/RNNOverview_4.png" alt="RNNOverview_4" /></p>
+
+<p>고정된 길이의 vector인 source sentence의 모든 정보를 포함할 필요가 있기 때문에<br />
+Encoder Vector가 특히 long sequences를 입력 받게 되면 위와 같은 구조에서는 병목현상이 발생하게 된다.<br />
+이러한 문제를 해결하기 위해 <strong>Attention</strong>을 사용해 해결을 하고있다.<br />
+다음 장에서는, 그에 대한 해결책을 살펴보겠다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="8-attention-mechanism--transformer">8 Attention Mechanism &amp; Transformer</h1>
+<p>RNNs을 위한 <strong>Attention Mechanism</strong>는 부분적으로 human visual focus와 Peripheral perception으로부터 영감을 받았다.<br />
+이것은 사람이 특정지역에 초점을 두고 고해상도로 인식을 하게 하고<br />
+주변 객체들은 저해상도로 인식하게 한다.<br />
+이 focus points와 adjacent perception을 기반으로,<br />
+사람은 자신이 focus point를 변경할 때 무엇을 인지 해야하는지 추측할 수 있게 된다고 한다.<br />
+비슷하게, 이 방법을 단어들의 sequene로 관찰된 단어들 중에서 추론이 가능하도록 변형시킬 수 있다.<br />
+예를들어, 만약 우리가 eating이라는 단어를 “She is eating a green apple”이라는 sequence에서 인지한다면,<br />
+가까운 미래에 음식이라는 객체를 찾을 것이다.</p>
+
+<p>\(\begin{align*}\end{align*}\)
+일반적으로, Attention은 두 문장을 받고 그들을 단어가 row나 column의 요소로 이루어진 메트릭스로 변형시킨다.<br />
+이 matrix layout을 기반으로 비슷한 맥락을 식별하거나 그들 사이에 연관성을 식별해 matrix를 채운다.<br />
+이 내용에 대한 예제를 Figure5에서 볼 수 있다.<br />
+Figure5는 높은 연관성을 흰색으로 낮은 연관성을 검은색으로 표현한다.</p>
+
+<p><img src="/assets/img/Paper_Review/RNNOverview/RNNOverview_5.png" alt="RNNOverview_5" /></p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="81-definition">8.1 Definition</h2>
+<p>seq2seq 모델이 long sequences를 더 잘 다루도록 하기 위해 attention mechanism이 등장한다.<br />
+encoder network의 마지막 hidden state의 결과로 Encoder Vector를 만드는 대신에,<br />
+attention은 context vector와 전체 입력 source 사이에  shortcut을 사용한다.<br />
+이 과정을 시각화 하면 Figure6가 된다.</p>
+
+<p><img src="/assets/img/Paper_Review/RNNOverview/RNNOverview_6.png" alt="RNNOverview_6" /></p>
+
+<p>여기서 n만큼의 길이를 가진 source sequence X를 갖고<br />
+m의 크기를 갖는 target sequence Y를 결과로 얻으려고 한다.<br />
+그런 점에서 그 식은 7장에서 앞서 말한 내용과 유사하다.<br />
+식25처럼 forward와 backward 방향을 concate한 전반적인 hidden state $H_{t’}$ 를 갖는다.<br />
+또한, decoder network의 hidden state는 $S_t$로 표기하고<br />
+encoder vector는 $C_t$로 표기하며 이 둘은 식26과 식27에서 정리했다.</p>
+
+\[\begin{align}
+H_{t'}=\left[\overset{\rightarrow}{H_{t'}}\frown\overset{\leftarrow}{H_{t'}}\right]\\ \notag \\
+S_t=\phi_d\left(S_{t-1},Y_{t-1},C_t\right)
+\end{align}\]
+
+<p>context vector $C_t$는 intput sequence의 hidden state들의 가중치 합이다.<br />
+여기서 가중치인 alignment score $\alpha_{t,t’}$는<br />
+$\sum\limits^T_{t’=1}\alpha_{t,t’}=1$을 만족한다.</p>
+
+\[\begin{align}
+C_t&amp;=\sum\limits^T_{t'=1}\alpha_{t,t'}\cdot H_{t'}\\ \notag \\
+\alpha_{t,t'}=\text{align}\left(Y_t,X_{t'}\right)&amp;=
+\dfrac{\exp(\text{score}\left(S_{t-1},H_{t'}\right))}{\sum\limits^T_{t'=1}\exp(\text{score}\left(S_{t-1},H_{t'}\right))}
+\end{align}\]
+
+<p>alignment $\alpha_{t,t’}$는 intput 위치 $t’$와 output 위치 $t$의 alignment score 연결한다.<br />
+이 score는 가리키는 쌍이 얼마나 잘 맞는지를 나타낸다.<br />
+모든 alignment score의 집합은 각 source hidden state가 각 output에 얼만큼 고려되었는지를 정의한다.<br />
+Apeendix B에서 더 쉽고 시각화된 seq2seq에 대한 attention mechanism 설명을 보면 좋을것이다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="82-diffrent-types-of-score-functions">8.2 Diffrent types of score functions</h2>
+<p>일반적으로, score function은 다양한 작업에서 사용될 때 여러가지 방법으로 구현된다.<br />
+Table 1은 이름, 식과 사용에 따라 정리한것이다.</p>
+
+<p><img src="/assets/img/Paper_Review/RNNOverview/RNNOverview_7.png" alt="RNNOverview_7" /></p>
+
+<p>여기 alignmnet 모델에 두개의 학습 가능한 가중치 메트릭스 $\mathbf{v}_a$와 $W_a$가 있다고 하자.<br />
+Scaled-Dot-Product 는 입력이 큰 경우 softmax 함수의 gradient가 매우 작아져서<br />
+효율적인 학습에 문제가 생기는 점에서 영감을 얻어서 현재 순서의 단어의 글자수를 곱셈에 이용한다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h2 id="83-transformer">8.3 Transformer</h2>
+<p>Attentions Mechanism을 통합함으로써 <strong>Transformer</strong>가 등장한다.<br />
+<strong>Transformer</strong>는 recurrence sequence를 attention으로 병렬화 하지만<br />
+동시에 sequence에서 각 아이템의 위치를 encoder-decoder 구조를 통해  encoding한다.<br />
+사실, 그러기 위해서는 RNNs를 쓰지 않고 성능 향상을 위해<br />
+전적으로 self-attention을 사용한다.<br />
+구조상 encoding하는 부분은 몇가지 encoder들로 만들어지고<br />
+decoder 부분은 encoder 부분과 같은 수의 decoder들로 만든다.<br />
+구조를 일반화 한 사진은 Figure7과 같다.</p>
+
+<p><img src="/assets/img/Paper_Review/RNNOverview/RNNOverview_8.png" alt="RNNOverview_8" /></p>
+
+<p>여기서, 각 encoder의 구성요소는 Self-Attention과 FeedForward Neural Network로 이루어진 2개의 하위 계층을 가진 구조로 이루어져있다.<br />
+비슷하게, 두 하위 계층은 각 decoder 구성요소에서도 발견되지만<br />
+Encoder-Decoder Attention에서 둘 사이에 하위 계층은 seq2seq에 사용된 Attention과 비슷한 일을 한다.<br />
+배치된 Attention 계층들은 평범한 attention 계층들이 아니니라  Multi-Headed Attention으로 attention 계층의 성능을 향상시킨다.<br />
+Multi-Headed Attention은 모델이 다른 위치에서 다르게 표현한 내용으로부터 정보를 읽게 한다.<br />
+쉽게 말해 병렬 구조에서 다른 블락에서 작동하고 결과를 concate한다는 것이다.<br />
+불행하게도, multi-head attention의 설계적 선택과 수학적 공식에 대한 설명을 포함하는 것은 이 논문에서 너무 지나친 내용일 수 있다.<br />
+더 많은 내용을 원한다면 밑에 참고문서를 봐라.
+Figure7에서 보인 구조는 encoder와 decoder 모두에 skip connections과 각 하위 계층에 normalisation 계층을 배치했다.<br />
+한가지 중요한 것은 입력과 결과 모두 embedding되고<br />
+positional encoding은 sequence element들의 가까운 정도를 표현하도록 적용되었다는 것이다.</p>
+
+<p>\(\begin{align*}\end{align*}\)
+마지막 linear와 softmax 층은 decoder stack을 단어로 결과를 만들어 실수 타입의 vector를 반환한다.<br />
+이것은 linear 계층을 통해 vector를 훨씬 더 큰 logits vector로 변환함으로써 완성된다.<br />
+이 logits vector는 각 cell이 고유한 단어에 대한 점수를 뜻하는 학습 데이터셋을 통해 학습된 어휘의 크기를 갖는다.<br />
+softmax를 적용함으로써 그들의 점수를 확률값으로 반환하고<br />
+특정 time step에 대해 가장 확률값이 큰 결과로써 cell(i.e. the word)을 선택할 수 있다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="9-pointer-networksptr-nets">9 Pointer Networks(Ptr-Nets)</h1>
+<p>Pointer Networks(Ptr-Nets)는 결과 dictionary에 우선순위의 분산된 범주를 고치지 않음으로써 attention과 seq2seq를 적용해 개선시켰다.<br />
+input sequence로부터 output sequence가 산출되는 대신에,<br />
+pointer network는 input series의 요소들에 단계적으로 pointer가 적용되도록 한다.<br />
+한 논문에서는 Pointer Network를 사용해 computing planar convex hulls,<br />
+Delaunay triangulations and the symmetric planar Travelling Salesman Problem(TSP)문제를 해결할 수 있다고 증명했다.<br />
+일반적으로 state사이에 추가적인 attention을 적용하고나서<br />
+softmax를 통해 모델의 결과가 확률값을 갖도록 normalize한다(식29).</p>
+
+\[\begin{align}
+Y_t=\text{softmax}(\text{score}(S_t,H_{t'}))=
+\text{softmax}(\mathbf{v}^T_a\tanh W_a[S_t;H_{t'}])
+\end{align}\]
+
+<p>Ptr-Net이 encoder state들을 attention weights가 적용된 output과 섞이지 않게 해서<br />
+attention mechanism을 단순화시킨다.<br />
+이 방법에서는 output이 위치에 대한 정보에만 반응하고 input content에 의해서는 반응하지 않는다.</p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="10-conclusion--outlook">10 Conclusion &amp; Outlook</h1>
+<p>이 논문에서는 기본적인 RNNs를 설명한다.<br />
+일반적인 RNNs의 프레임워크, BPTT, RNNs의 고질적인 문제점, LSTM, DRNNs, BRNNs와 가장 최근 연구된 Encoder Decoder Architecture와 seq2seq 모델 그리고 Attention과 Transformer와 Pointer Network에 대한 내용을 포함한다.<br />
+대부분의 주제들은 개념적으로만 다루고 구현적 특성을 다루지는 않았다.<br />
+여기서 다룬 주제들에 대한 더 넓은 이해를 하려면 original 논문을 보도록 해라.<br />
+추가적으로 가장 최근 출판된 논문에서는 최근 개념들을 다루니까 더욱 원래 논문을 보기를 권한다.</p>
+
+<p>\(\begin{align*}\end{align*}\)
+최근 출판된 논문들중 하나는 제시된 개념들을 많이 사용한다.
+“Grandmaster level in StarCraft2 using multi-agent reinforcement learning”이라는 논문이고 Vinyals가 썼다.<br />
+여기에서, 그들은 agent를 실시간으로 전략 게임 StarCraft2를 훌륭하게 학습시키는 접근 방법을 제시한다.<br />
+만약 제시된 내용들이 다소 이론적이라면 실제 환경에 적합하도록 설정되어 배포된 LSTM, Transformer와 Pointer Networks에 관한 논문을 읽어보기를 권한다.</p>]]></content><author><name>Robin M. Schmidt</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract “Language Modeling &amp; Generating Text”, “Speech Recognition”, “Generating Image Descriptions” or “Video Tagging” 분야에서 해결책을 위한 최신기술들은 RNN을 기반으로 하고있다. 따라서 현재 또는 앞으로 제시될 해결책들에 대한 구조를 이해하고 따라잡으려면 RNN에 대한 기본 개념을 이해하는 것이 매우 중요할 것이다. 이 논문에서는 BPTT, LSTM 뿐만아니라 Attention Mechanism과 Pointer Networks에 대한 개념을 독자가 쉽게 이해할 수 있도록 가장 중요한 RNN들을 살펴볼 것이다. 그리고 이와 관련해 더 복잡한 주제를 읽어보는 것을 추천한다.]]></summary></entry><entry><title type="html">Ch7 합성곱 신경망(CNN)</title><link href="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html" rel="alternate" type="text/html" title="Ch7 합성곱 신경망(CNN)" /><published>2022-08-27T20:05:47+09:00</published><updated>2022-08-27T20:05:47+09:00</updated><id>http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D</id><content type="html" xml:base="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html"><![CDATA[<h1 id="71-전체-구조">7.1 전체 구조</h1>
 
 <p>CNN = Convolutional Layer + Pooling Layer + Fully Connected Layer</p>
 
