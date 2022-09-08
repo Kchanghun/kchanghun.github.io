@@ -1,4 +1,360 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-08-30T05:10:41+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Recurrent Neural Networks (RNNs): A gentle Introduction and Overview</title><link href="http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks-A-gentle-Introduction-and-Overview.html" rel="alternate" type="text/html" title="Recurrent Neural Networks (RNNs): A gentle Introduction and Overview" /><published>2022-08-28T16:44:13+09:00</published><updated>2022-08-28T16:44:13+09:00</updated><id>http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks:A-gentle-Introduction-and-Overview</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks-A-gentle-Introduction-and-Overview.html"><![CDATA[<h1 id="abstract">Abstract</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-09-08T18:51:21+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Long Short-Term Memory Based Recurrent Neural Network Architectures for large vocabulary speech recognition</title><link href="http://localhost:4000/paper%20review/2022/08/30/LSTM-for-large-vocabulary-speech-recognition.html" rel="alternate" type="text/html" title="Long Short-Term Memory Based Recurrent Neural Network Architectures for large vocabulary speech recognition" /><published>2022-08-30T15:54:43+09:00</published><updated>2022-08-30T15:54:43+09:00</updated><id>http://localhost:4000/paper%20review/2022/08/30/LSTM-for-large-vocabulary-speech-recognition</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/08/30/LSTM-for-large-vocabulary-speech-recognition.html"><![CDATA[<h1 id="abstract">Abstract</h1>
+<p>Long Short-Term Memory (<strong>LSTM</strong>)은<br />
+<strong>Vanilla RNNs</strong>의 <strong>vanishing/exploding gradien</strong>t 문제를 다루기 위해 고안된 RNN구조다.</p>
+
+<p>feedforward 신경망과는 다르게 RNNs는 sequence 모델링이 잘 되도록 순환적인 연결을 갖는다.</p>
+
+<p>RNNs는 sequence labeling과 sequence prediction( handwriting recognition, language modeling, phonetic labeling of acoustic frames, etc.)에 사용되어 왔다.</p>
+
+<p>그러나, 심층 신경망과 다르게, speech recognition에서 RNNs의 사용은<br />
+작은 규모의 phone recognition으로 제한되었다.</p>
+
+<p>이 논문에서는 RNN구조를 기반으로 많은 단어의 음성 인식을 잘 학습하도록 새롭게 만든 LSTM을 소개한다.</p>
+
+<p>LSTM과 RNN과 DNN 모델들을 다양한 파라미터들과 구성상태로 학습하고 비교한다.</p>
+
+<p>결과적으로 LSTM은 빠르게 수렴하고 비교적 작은 크기의 모델에 최신 speech recognition 성능을 제공하는 것을 확인할 것이다.</p>
+
+<p><strong>Index Terms– Long Short-Term Memory, LSTM,</strong><br />
+                         
+<strong>recurrent neural network, RNN, speech recognition</strong></p>
+
+<p>\(\begin{align*}\end{align*}\)</p>
+<h1 id="1-introduction">1. Introduction</h1>
+<p>Deep neural network(<strong>DNN</strong>) 같은 fedforward neural networks (<strong>FFNN</strong>)와 달리,<br />
+Recurrent neural networks(RNNs)의 구조는 현재 input에 대해<br />
+결정을 만들어내기 위해 이전 time step의 활동 또한 입력으로 받는<br />
+순환적인 feeding 형태를 갖는다.</p>
+
+<p>이전 time step의 활동은 네트워크의 내부 상태에 저장되고<br />
+FFNN에서 입력으로 사용되는 고정된 맥락의 window와는 다르게<br />
+절대적이지 않은 일시적인 맥락에 대한 정보를 제공한다.</p>
+
+<p>그러므로, RNN은 전체 sequence에 걸쳐 고정된 정적인 크기의 window를 적용하지 않고<br />
+역동적으로 변하는 크기의 contextual window를 모든 sequence에 적용한다.</p>
+
+<p>이러한 능력은 RNN을 sequence prediction과 sequence labeling같은<br />
+sequence modeling 작업에 더 적합하게 만든다.</p>
+
+<p><br />
+그러나, gradient-based 방법인 Back-propagation through time (<strong>BPTT</strong>) 기술을 이용해<br />
+전통적인 RNN을 학습 시키는 것은 vanishing / exploding gradient problem 때문에 어렵다.</p>
+
+<p>게다가 이러한 문제들은 RNN이 입력과 출력 사이에 5-10개의 이산적인<br />
+tiem step을 갖는것 처럼 긴 시간에 걸친 모델이 될 능력을 제한한다.</p>
+
+<p><br />
+이러한 문제들을 다루기 위해 Long-Short-Term Memory (<strong>LSTM</strong>)이 고안 되었다.<br />
+original LSTM의 구조는 recurrent hidden layer에 <strong>memory block</strong>이라 불리는 특별한 유닛이 포함되어있다.</p>
+
+<p>Memory block들은 self-connection을 통해 <strong>memory cell</strong>을 포함하는데<br />
+이 memory cell은 네트워크의 일시적인 상태에 대한 정보를 저장하고 있다.<br />
+그 외에도 <strong>gate</strong>라 불리는 특정한 목표를 위해 늘어난 unit들로 구성된 구조를 추가해 정보의 흐름을 제어한다.</p>
+
+<p>각 memory block은 memory cell에 흘러 들어오는 input activations를 제어하는 <strong>input gate</strong>와<br />
+네트워크의 남은 부분에 흐르는 cell activation 출력을 제어하는 <strong>output gate</strong>를 포함한다.</p>
+
+<p>후에, subsequence로 segment되지 않은 연속된 입력 스트림을 처리하지 못하는<br />
+LSTM 모델의 약점을 해결하기 위해 memory block에 <strong>forget gate</strong>가 추가되었다.</p>
+
+<p><strong>forget gate</strong>는 self recurrent connection을 하는 cell에 입력되기 전에 cell의 내부 state를 scaling해서<br />
+cell의 memory를 forgetting하거나 resetting하도록 적응하는 역할을 한다.</p>
+
+<p>게다가 최근 LSTM 구조는 cell 내부에서 해당 cell의 gate에 연결이 되는 <strong>peephole connections</strong>를 추가해<br />
+결과의 정확한 시간을 학습한다.</p>
+
+<p><br />
+LSTM과 전통 RNN은 sequence prediction과 sequence labeling 작업에 잘 사용되어왔다.<br />
+LSTM은 문맥 자유 언어와 문맥 의존 언어에서 RNN보다 더 좋은 성능을 보여왔다.</p>
+
+<p><strong>Bidirectional LSTM</strong> 네트워크는 양방향 RNN과 비슷하고 현재 입력에 대한 결과를 계산하기 위해<br />
+TIMIT 음성 데이터베이스의 acoustic 프레임에 음성 라벨링을 하기 위해 고안되었다.</p>
+
+<p>온오프라인에서 필기체 인식은 분할되지 않은 sequence data를 학습하도록<br />
+forward backward 타입의 알고리즘을 사용하는 connectionist temporal classification(<strong>CTC</strong>)를 포함하는<br />
+양방향 LSTM 네트워크들이 HMM기반 최첨단 시스템의 성능을 능가하는 것을 확인했다.</p>
+
+<p>최근에는 acoustic modeling에 대한 DNN의 성공을 뒤이어,<br />
+LSTM층을 여러개 쌓은 구조인 deep LSTM RNN을<br />
+CTC output layer와 음성 sequence를 예측하는 RNN 변환기를 결합한 것이<br />
+TIMIT의 음성 인식 데이터에서 최신 기술의 결과를 보여줬다.</p>
+
+<p>language modeling에서는 전통 RNN이 표준 n-gram 모델들 중에서 아주 작은 perplexity를 얻었다.</p>
+
+<p><br />
+DNN이 음성인식과 많은 단어들의 speech 인식에서 가장 좋은 성능을 보이는 반면,<br />
+LSTM 네트워크의 적용은 TIMIT 데이터에서 음성인식에만 적용 가능했고<br />
+DNN보다 더 좋은 결과를 얻기 위해 추가적인 기술과<br />
+CTC와 RNN transducer 같은 추가적인 모델들의 사용이 요구되었다.</p>
+
+<p><br />
+이 논문에서, RNN 구조 기반의 LSTM이 많은 단어들의 speech 인식 시스템(수천개의 문맥 의존 상태를 갖는)에서 <br />
+최신 기술의 성능을 뛰어넘는것을 확인할 것이다.</p>
+
+<p>큰 네트워크에서 계산적 효율의 문제점을 해결하고 model parameter를 더 잘 사용하도록<br />
+기존의 LSTM 구조를 변경하여 새로운 구조를 제안한다.</p>
+
+<p><br />
+<br /></p>
+<h1 id="2-lstm-architectures">2. LSTM ARCHITECTURES</h1>
+<p>기존 LSTM 네트워크의 구조에는 input layer와 recurrent LSTM layer와 output layer가 있다.<br />
+input layer는 LSTM layer에 연결되어있고<br />
+LSTM layer에서 recurrent 연결들은 cell output unit에서 나와서<br />
+cell input, input gate, output gate와 forget gate로 바로 들어간다.<br />
+cell output units는 네트워크의 output layer에 연결된다.</p>
+
+<p>표준 LSTM 네트워크에서 각 memory block에 하나의 cell은 편향을 제외하고<br />
+총 parameter W의 수가 아래와 같이 계산될 수 있다 :</p>
+
+\[\begin{align*}
+W=n_c\times n_c\times 4+n_i\times n_c\times 4+n_c\times n_o+n_c\times3
+\end{align*}\]
+
+<p>$n_c$는 memory cell의 수 (여기서는 memory block의 수)<br />
+$n_i$는 input unit의 수<br />
+$n_o$는 output unit의 수</p>
+
+<p>LSTM 모델을 학습시키는데 각 가중치 당 time step 별로 SGD optimizer기술에 드는 계산 복잡도는 O(1)이다.<br />
+따라서 time step당 학습에 드는 계산 복잡도는 O(W)가 된다.<br />
+비교적 적은 수의 input을 받는 네트워크의 학습 시간은  $n_c\times(n_c+n_o)$ 항목에 의해 결정된다.<br />
+많은 수의 output unit과 일시적 문맥의 정보를 저장하기 위해 많은 수의 memory cell을 필요로하는 작업에서는<br />
+LSTM 모델을 학습시키는데 계산비용이 많이 든다.</p>
+
+<p><br />
+표준 구조에 대한 대안으로써 LSTM 모델을 학습시키는 데에 드는 계산 복잡도를 해결하기 위해<br />
+두 개의 새로운 구조를 제안한다.<br />
+두 구조들은 Figure1에서 보여준다.</p>
+
+<p><img src="/assets/img/Paper_Review/LSTM/LSTM_0.png" alt="LSTM_0" /></p>
+
+<p>구조들중 하나는 cell output unit을 cell input unit과 gate에 연결하고<br />
+이외에도 예측 결과를 나타내는 network의 output unit에도 연결이 되어있는<br />
+recurrent projection layer에 연결한다.</p>
+
+<p>그러므로 이 모델에서 파라미터의 수는</p>
+
+\[\begin{align*}
+n_c\times n_r\times 4+n_i\times n_c\times 4+n_r\times n_o+n_c\times n_r+n_c\times 3
+\end{align*}\]
+
+<p>이고 $n_r$은 recurrent projection layer의 unit의 수이다.</p>
+
+<p>다른 구조 하나는 recurrent projection layer와 더불어 output layer에 직접 연결되어있는<br />
+또 다른 non-recurrent projection layer를 추가한다.<br />
+이 구조의 모델은</p>
+
+\[\begin{align*}
+n_c\times n_r\times 4+n_i\times n_c\times 4+(n_r+n_p)\times n_o+n_c\times(n_r+n_p)+n_c\times 3
+\end{align*}\]
+
+<p>이고 $n_p$는 non-recurrent projection layer의 unit의 수이고<br />
+이것은 recurrent connection $(n_c\times n_r\times 4)$ 에서 파라미터의 증가 없이<br />
+projection layer의 unit의 수를 늘릴 수 있게 해준다.<br />
+여기서 output unit과 과련해서 projection layer를 두개 사용하는 것은<br />
+$n_r+n_p$개의 unit을 하나의 projection layer를 사용하는 것과 같은 효율을 보인다.</p>
+
+<p><br />
+하나의 LSTM 네트워크는 아래 식을 통해 네트워크 unit들을 계산하고 주된 목적은<br />
+input sequence $x=(x_1,\dots,x_T)$를 output sequence $y=(y_1,\dots,y_T)$에 mapping시키는 것이다.</p>
+
+\[\begin{align}
+i_t=\sigma(W_{ix}x_t+W_{im}m_{t-1}+W_{ic}c_{t-1}+b_i)\\
+f_t=\sigma(W_{fx}x_t+W_{mf}m_{t-1}+W_{cf}c_{t-1}+b_f)\\
+c_t=f_t\odot c_{t-1}+i_t\odot g(W_{cx}x_t+W_{cm}m_{t-1}+b_c)\\
+o_t=\sigma(W_{ox}x_t+W_{om}m_{t-1}+W_{oc}c_t+b_o)\\
+m_t=o_t\odot h(c_t)\\
+h_t=W_{ym}m_t+b_y
+\end{align}\]
+
+<p>W는 가중치 메트릭스를 나타내고
+b는 편향 벡터를 나타내고<br />
+sigma는 logistic sigmoid 함수를 나타내고<br />
+i,f,o와 c는 각각 input, forget, output gate와 cell vector를 나타내고<br />
+vector m과 같은 크기를 갖는다.<br />
+$\odot$은 element-wise product를 나타내고<br />
+g와 h는 cell input과 cell output activation 함수이고 일반적으로 tanh를 사용한다.</p>
+
+<p><br />
+두번째 구조인 recurrent와 non-recurrent projection layer를 모두 갖는 것의 식은 아래와 같다 :</p>
+
+\[\begin{align}
+i_t = \sigma(W_{ix}x_t + W_{ir}r_{t−1} + W_{ic}c_{t−1} + b_i)\\
+f_t = \sigma(W_{fx}x_t +W_{rf}r_{t−1} +W_{cf}c_{t−1} +b_f)\\
+c_t =f_t\odot c_{t−1} +i_t\odot g(W_{cx}x_t +W_{cr}r_{t−1} +b_c)\\
+o_t = \sigma(W_{ox}x_t + W_{or}r_{t−1} + W_{oc}c_t + b_o)\\
+m_t = o_t\odot h(c_t)\\
+r_t = W_{rm}m_t\\
+p_t = W_{pm}m_t\\
+y_t =W_{yr}r_t +W_{yp}p_t +b_y
+\end{align}\]
+
+<p>r과 p는 recurrent와 optional non-recurrent unit activation을 뜻한다.</p>
+
+<p><br /></p>
+<h2 id="21-implementation">2.1. Implementation</h2>
+<p>GPU를 사용하지 않고 하나의 기계에서 multicore CPU를 사용해서 새로 고안한<br />
+LSTM 구조를 구현했다.<br />
+이러한 결정은 CPU의 비교적 쉬운 구현 복잡도와 디버깅이 쉬운점을 기반으로 내려졌다.<br />
+만약 큰 네트워크의 학습 시간중에 하나의 기계에서 병목을 일으킨다면<br />
+CPU에서의 구현은 큰 군집의 기게에서 쉽게 구현되어 작동할 것이다.<br />
+매트릭스 연산은 Eigen matrix library를 사용했다.<br />
+이것은 C++라이브러리를 통해 CPU에서 벡터 명령어(SIMD - single instruction multiple data)를 통해<br />
+효율적인 매트릭스 연산을 하도록 한다.<br />
+활성함수와 gradient 계산의 구현은 SIMD 명령어를 통해 병렬적 구조의 이점을 얻어도록 구현했다.</p>
+
+<p><br />
+Asynchronous stochastic gradient descent(<strong>ASGD</strong>)를 최적화 기술로 사용했다.<br />
+gradient에 의한 파라미터 업데이트는 비동기적으로 처리되고 multi-core 기계 상에서<br />
+multiple threads를 통해 계산된다.</p>
+
+<p>각 thread는 효율성을 위해 sequence의 batch상에서 병렬적으로 연산한다.<br />
+예를 들어 vector-matrix 연산 보다 matrix-matrix 연산을 하고<br />
+더 나아가 모델 파라미터가 여러 input sequence에 의해 동시에 업데이트 되기 때문에 stochasticity한 점도 있을 것이다.</p>
+
+<p>이 외에도 하나의 thread에서 sequence를 batch로 처리하게되면,<br />
+multiple thread를 동반한 학습은 더 큰 batch를 sequence에 적용할 때<br />
+병렬적으로 처리되기 때문에 더 효율적이다.</p>
+
+<p><br />
+모델 파라미터를 업데이트하기 위해 truncated backpropagation through time(<strong>BPTT</strong>)를<br />
+학습 알고리즘으로 사용한다.</p>
+
+<p>고정된 time step $T_{bptt}$ 예를 들어 20의 값으로 사용해서<br />
+activation을 forward-propagate 시키고 gradient를 backward-propagate 한다.<br />
+학습 과정에서 input sequence를 $T_{bptt}$의 크기인 subsequence로 나눠서 vector로 만든다.<br />
+말에 대한 subsequence들은 원래 자신의 순서로 처리된다.</p>
+
+<p>우선 첫 time step부터 이전 time step까지 activation과 네트워크 입력을 가지고<br />
+반복적으로 activation들을 계산하고 forward-propagate한다.<br />
+그리고 네트워크의 error는 네트워크의 cost function을 이용하여 각 time step별로 계산한다.</p>
+
+<p>그다음에 cross-entropy 기준으로 gradient를 back-propagate하는데<br />
+각 time step별로 error값과 다음번의 time step을 이용해 gradient값을 구한다.<br />
+이 때 time step은 $T_{bptt}$부터 시작한다.</p>
+
+<p>마지막으로 네트워크의 가중치들의 graident값들은 $T_{bptt}$ time step동안 축적되고 그 가중치들이 업데이트된다.</p>
+
+<p>각 subsequence를 처리하고 난 후 Memory cell의 상태는 다음 subsequence를 위해 저장한다.<br />
+다른 입력 sequence들로부터 여러개의 subsequence를 처리하는 경우에는<br />
+모든 sequence들의 마지막까지 도달해야 하기 때문에<br />
+몇개의 subsequence들은 $T_{bptt}$보다 짧은 time step을 갖을 수 있다.<br />
+subsequence는 다음 batch에서 새로운 입력 sequence의 subsequence로 대체되고<br />
+cell state를 reset한다.</p>
+
+<p><br /></p>
+<h1 id="3-experiments">3. EXPERIMENTS</h1>
+<p>Google English Voice Search라는 많은 단어가 쓰이는 speech recognition 작업에서<br />
+DNN, RNN과 LSTM의 성능을 평가하고 비교한다.</p>
+
+<h2 id="31-systems--evaluation">3.1. Systems &amp; Evaluation</h2>
+<p>모든 네트워크들은 익명이고 손으로 번역된 Google voice search와 dictation traffic으로<br />
+구성된 데이터셋에서 1900시간동안 300만개의 말을 학습했다.<br />
+데이터셋은 10ms마다 계산되고 40차원을 가지는 25ms로 표현된다.<br />
+말들은 14247개의 CD(문맥 의존) state를 갖는 9000만개의 가중치로 구성된 FFNN에 배치된다.<br />
+출력 상태를 세개의 다른 목록으로 적용하며 네트워크들을 학습시켰다 : 126, 2000 and 8000<br />
+이것들은 14247개의 state들을 동일한 클래스를 통해 각자의 작아진 목록으로 mapping시켜서 얻는다.</p>
+
+<p>126 state set은 Context independent(CI,문맥 독립) state (3 x 42)이다.<br />
+학습하기 전에 모든 네트워크의 가중치들은 임의로 초기화시켰다.<br />
+learning rate는 각 네트워크와 구성에 맞게 안정한 수렴 결과를 얻기 위해 설정했다.<br />
+learning rate는 학습하는 동안 기하급수적으로 줄었다.</p>
+
+<p><br />
+학습하는 동안 200000 프레임 set에서  frame accuracies를 평가했다.<br />
+다시말해 phone state labeling accuracy acoustic frame 같은 것이다.</p>
+
+<p>학습된 모델드른 23000 손으로 번역된 말들로 이루어진 음성인식 시스템에 대한 test set으로 평가했고<br />
+word error rates(WERs)도 계산했다.<br />
+언어 모델에서 decoding에 사용된 단어들의 크기는 260만개이다.</p>
+
+<p><br />
+DNNs들은 200개의 프레임으로 배치를 적용해 GPU환경에서 SGD를 통해 학습했다.<br />
+각 네트워크는 logistic sigmoid 은닉층과 phone HMM state를 나타내는<br />
+softmax output layer와 전결합을 이루고있다.<br />
+LSTM 구조에서도 일관성을 위해 어떤 네트워크들은 low-rank projection layer를 갖는다.<br />
+DNN의 입력은 5 frame을 오른쪽에 10이나 15 frame을 왼쪽에 쌓아(10w5, 15w5)로<br />
+비대칭적인 window의 구성으로 이루어진다.</p>
+
+<p><br />
+LSTM과 전통적인 RNN의 다양한 구성들은 각 thread가 각 utterance에서 step별로<br />
+4개나 8개의 subsequence의 gradient를 계산하도록하여<br />
+24개의 thread로 ASGD 기법을 사용해 학습되었다.</p>
+
+<p>20번째 time step ($T_{bptt}$)이 activations의 forward-propagate와 truncated BPTT 학습 알고리즘을<br />
+gradient의 backward-propagate를 위해 사용되었다.</p>
+
+<p>RNNs의 은닉층의 unit들은 logistic sigmoid activation function을 사용했다.<br />
+Recurrent projection layer구조를 갖는 RNN은 projection layer에 선형 activation unit을 사용했다.<br />
+LSTM은 <strong>tanh</strong>를 cell inpu unit, cell output unit과<br />
+input, output forget gate의 logistic sigmoid 활성함수로 사용했다.<br />
+LSTM에서 recurrent projection layer와 optional non-recurrent projection layer에서<br />
+선형 activation unit을 사용했다.<br />
+LSTM과 RNN에 들어가는 입력은 40차원의 25ms 프레임이다.<br />
+앞으로 들어올 frame에 대한 정보는 현제 frame에 대해 더 좋은 결정을 하도록 돕기 때문에<br />
+output state label을 5 frame 연기시킨다.</p>
+
+<h2 id="32-results">3.2. Results</h2>
+<p><img src="/assets/img/Paper_Review/LSTM/LSTM_1.png" alt="LSTM_1" />
+<img src="/assets/img/Paper_Review/LSTM/LSTM_2.png" alt="LSTM_2" />
+<img src="/assets/img/Paper_Review/LSTM/LSTM_3.png" alt="LSTM_3" /></p>
+
+<p>Figure 2,3 과 4에서 각각 126, 2000과 8000 state output에 대해 frame accuracy를 보여준다.<br />
+Figure에서 네트워크 구성의 이름은 네트워크 크기와 구조에 대한 정보를 갖고있다.<br />
+cN에서 N은 LSTM에서는 memory cell의 수를 뜻하고 RNN에서는 은닉층의 unit 수를 뜻한다.<br />
+rN은 LSTM과 RNN 모두 recurrent projection unit의 수를 뜻한다.<br />
+pN은 LSTM에서 non-recurrent projection unit을 뜻한다.<br />
+DNN 구성의 이름은 10w5처럼 왼쪽과 오른쪽의 context size를 뜻하고<br />
+은닉층의 수와 각 은닉층의 unit 수<br />
+그리고 optional low-rank projection layer의 크기를 뜻한다.</p>
+
+<p>괄호 안에는 각 모델의 가중치의 수에 대한 정보가 담겨있다.<br />
+RNN이 126개의 state output에서만 실험된 이유는<br />
+126개의 state output에 대한 결과에서 이미 DNN과 LSTM보다 훨씬 뒤쳐지는 성능을 보였기 때문이다.</p>
+
+<p>Figure 2에서 보이듯 RNN들은 매우 학습 초기에 매우 불안정한 모습이고<br />
+수렴하도록 하기 위해 exploding problem 때문에 activation과 gradient를 제한했다.</p>
+
+<p>LSTM은 빠르게 수렴하면서 RNN과 DNN보다 더 높은 frame accuracy를 보였다.<br />
+Projected RNN구조를 통해 고안된 LSTM은 같은 수의 파라미터를 적용했을 때<br />
+기존 RNN기반 LSTM보다 더 높은 accuracy를 보였다.<br />
+(Figure3에서 LSTM_512 vs LSSTM_1024_256)</p>
+
+<p>Recurrent와 non-recurrent projection layer를 포함하는 LSTM 네트워크는<br />
+recurrent projection layer만 포함하는 LSTM보다 일반적으로 더 좋은 성능을 보였다.<br />
+단, 2000개의 state를 적용한 경우는 learning rate를 너무 작게 설정했기 때문에 다른 결과가 나왔다.</p>
+
+<p>Figure 5, 6과 7에서는 126, 2000과 8000 state output에 대해 같은 모델별로 WERs를 계산했다.<br />
+아직 몇몇 LSTM 네트워크들이 수렴하지 않은 상태이지만, 논문의 마지막 개정에서는 완성 시키도록 할 것이다.<br />
+음성 인식 실험에서는 문맥 의존적인(CI) 126 output state모델,<br />
+CD 2000 output state embedded size model(mobile phone processor에서 작동하기 위해 제한됨)<br />
+그리고 비교적 큰 8000 output state에서 LSTM 네트워크가 정확도가 개선되었다.</p>
+
+<p>Figure 6에서 보듯, LSTM_c1024_r256과 LSTM_c512를 비교해보면<br />
+새로 고안된 구조가 RNN보다 더 좋은 인식 정확도를 얻는데 필수적이라는 것을 알 수 있다.</p>
+
+<p>또한 DNN의 깊이가 중요하다는 것을 보이기 위한 실험도 했다.<br />
+(Figure 6에서 DNN_10w5_2_864_lr256과 DNN_10w5_5_512_lr256을 비교해라)</p>
+
+<p><img src="/assets/img/Paper_Review/LSTM/LSTM_4.png" alt="LSTM_4" />
+<img src="/assets/img/Paper_Review/LSTM/LSTM_5.png" alt="LSTM_5" />
+<img src="/assets/img/Paper_Review/LSTM/LSTM_6.png" alt="LSTM_6" /></p>
+
+<p><br /></p>
+<h1 id="4-conclusion">4. CONCLUSION</h1>
+<p>이미 알듯이 이번 논문에서 LSTM 네트워크를 large vocabulary speech recognition 작업에 적용해 보았다.</p>
+
+<p>큰 수의 output unit을 사용하는 큰 네트워크에 LSTM을 적용할 수 있는 확장성을 위하여,<br />
+기존 LSTM 구조보다 모델 파라미터를 더 효율적으로 사용할 수 있도록 새로운 두가지 구조를 만들어 소개했다.<br />
+그중 하나는 LSTM layer와 output layer 사이에 recurrent projection layer이 들어간 구조이고<br />
+다른 하나는 추가적인 recurrent 연결 없이 projection layer를 추가하기 위해 non-recurrent projection layer를 추가한 구조로<br />
+이렇게 분리하면 유연성을 얻을 수 있다.</p>
+
+<p>새로 고안된 구조들이 기존 LSTM에 비해 더 좋은 성능을 보인다고 확인했다.<br />
+또한, large vocabulary speech recognition 작업에서 더 많은 output state를 사용할 때<br />
+새로 고안한 LSTM 구조가 DNN보다 더 좋은 성능을 보이는 것을 확인했다.</p>
+
+<p>LSTM을 single multi-core machine에서 학습 시키는 것은 더 큰 네트워크로 확장할 수 없다.<br />
+후에 GPU와 분리된 CPU에서의 구현을 연구해 볼 것이다.</p>]]></content><author><name>Hasim Sak, Andrew Senior, Francoise Beaufays</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract Long Short-Term Memory (LSTM)은 Vanilla RNNs의 vanishing/exploding gradient 문제를 다루기 위해 고안된 RNN구조다.]]></summary></entry><entry><title type="html">Recurrent Neural Networks (RNNs): A gentle Introduction and Overview</title><link href="http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks-A-gentle-Introduction-and-Overview.html" rel="alternate" type="text/html" title="Recurrent Neural Networks (RNNs): A gentle Introduction and Overview" /><published>2022-08-28T16:44:13+09:00</published><updated>2022-08-28T16:44:13+09:00</updated><id>http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks:A-gentle-Introduction-and-Overview</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks-A-gentle-Introduction-and-Overview.html"><![CDATA[<h1 id="abstract">Abstract</h1>
 <p>“Language Modeling &amp; Generating Text”, “Speech Recognition”, “Generating Image Descriptions” or<br />
 “Video Tagging” 분야에서 해결책을 위한 최신기술들은 RNN을 기반으로 하고있다.<br />
 따라서 현재 또는 앞으로 제시될 해결책들에 대한 구조를 이해하고 따라잡으려면<br />
@@ -3355,404 +3711,4 @@ object detection baseline은 PASCAL VOC 2007 and 2012 and COCO를 통해 평가�
 <p>이런 이점은 단지 learned representation때문인 것이다.</p>
 
 <p>Deep residual net을 기반으로 ILSVRC &amp; COCO 2015 competition에서 몇몇 부문에서 1등을 차지했다 :
-ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation.</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[ResNet]]></summary></entry><entry><title type="html">VGGNet</title><link href="http://localhost:4000/paper%20review/2022/08/20/VGGNet.html" rel="alternate" type="text/html" title="VGGNet" /><published>2022-08-20T03:24:34+09:00</published><updated>2022-08-20T03:24:34+09:00</updated><id>http://localhost:4000/paper%20review/2022/08/20/VGGNet</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/08/20/VGGNet.html"><![CDATA[<h1 id="vggnet">VGGNet</h1>
-
-<h1 id="1-introduction">1. Introduction</h1>
-
-<p>합성곱 네트워크는 최근(2015) 대규모 공공 이미지 저장소인 ImageNet과 고성능 계산 시스템(GPU)와 대규모 cluster 덕분에 큰 규모의 이미지나 비디오 인식에 좋은 성과를 보인다.</p>
-
-<p>특히, ILSVRC는 deep visual recognition 구조들의 진보에서 중요한 역할을 했다.</p>
-
-<p>ILSVRC는 고차원 얕은 특징 인고딩에서 심층 ConvNet에 이르기까지 몇 세대에 걸친 대규모 이미지 분류 시스템의 테스트베드 역할을 했다.</p>
-
-<p>ConvNet들이 computer vision 분야에서 점점 상품화 되면서 더 높은 정확도를 달성하기위해 Krizhevsky의 original 구조(AlexNet)를 개선하려고 많은 시도들이 있었다.</p>
-
-<p>예를들어, ILSVRC-2013에서 최고의 성능은 Alexnet에서 receptive window의 크기를 줄이고 첫 번째 합성곱층에서 더 작은 stride를 사용해서 얻은 모델로부터 얻어졌다.</p>
-
-<p>다른 라인에 대한 개선은 모델이 전체 이미지나 크기가 변형된 이미지를 더 조밀하게 학습하고 시험하게 했다.</p>
-
-<p>이 논문에서, 우리는 ConvNet구조에서 또 다른 중요한 측면인 깊이에 대해 알아볼 것이다.</p>
-
-<p>논문 끝에는, 구조의 다른 매개변수들을 고정시키고 모든 층에서 합성곱 필터의 크기를 3x3으로 작게 설정하게 해서 합성곱층을 더 많이 추가하여 깊이를 꾸준히 증가시켜볼 것이다.</p>
-
-<p>결과적으로, ILSVRC classification과 localisation작업에서 최첨단 모델의 정확도를 달성할 뿐 아니라 간단한 파이프라인에 사용되더라도 다른 이미지 데이터에 대해 적용했을 때 최고의 성능을 보이는 상당히 정확한 ConvNet 구조를 만들었다.</p>
-
-<p>우리는 연구를 통해 얻은 가장 좋은 성능의 두가지 모델을 후속연구를 위해 공개했다.</p>
-
-<p>다음장에서는 ConvNet 구성을 묘사하고
-3장에서는 image classification training과 evaluation에 대한 내용을 설명하고
-4장에서는 ILSVRC classification작업에서 configuration들을 비교하고
-5장에서는 결론을 내렸다.</p>
-
-<p>ILSVRC-2014 object localisation system을 Appendix A에서 묘사하고 평가했다
-Appendix B에서는 very deep features 의 generalisation에대해 논의하고
-Appendix C에서는 주요 논문에 대한 개정 내용이 포함된다.</p>
-
-<h1 id="2-convnet-configurations">2. ConvNet Configurations</h1>
-
-<p>같은 조건에서 ConvNet depth의 증가가 가져오는 개선을 측정하려면 설계에 사용된 모든 ConvNet 층의 구성에 Ciresan과 Krizhevsky와 동일한 조건들을 적용해야 한다.</p>
-
-<p>2장에서는 먼저 ConvNet 구성에서 일반적인 내용을 서술하고 그다음 평가에서 사용된 특정한 configuration에 대해 자세하게 서술한다.</p>
-
-<p>마지막으로 설계할 때 했던 선택들을 이전 최신기술과 비교해볼것이다.</p>
-
-<h2 id="21-architecture">2.1 Architecture</h2>
-
-<p>학습하는 동안, ConvNet의 입력값은 224x224x3 형태이다.</p>
-
-<p>각 픽셀로부터 training set에서 계산한 평균 RGB값을 빼주는 전처리 이외에 다른 전처리는 하지 않았다.</p>
-
-<p>양옆과 위아래에 대한 정보를 담을 수 있는 가장 작은 사이즈인 3x3의 매우 작은 receptive field를 가지는 필터를 사용한 합성곱층의 stack에 이미지를 통과 시켰다.</p>
-
-<p>우리는 non-linearity를 따르는 1x1 합성곱 필터 또한 사용했다.</p>
-
-<p>합성곱의 stride는 1 pixel로 고정했다; convolution 연산 후에 입력과 같은 모양이 나오도록 padding은 1 pixel을 사용했다.</p>
-
-<p>Spatial pooling은 합성곱 뒤에(모든 합성곱은 아님) 5개의 max-pooling층으로 수행된다.</p>
-
-<p>Max-pooling은 2x2 pixel window가 stride=2의 값으로 연산을 한다.</p>
-
-<p>모델별로 다른 깊이를 적용해서 만든 stack of convolutional layers 뒤에는 전결합층이 나온다.</p>
-
-<p>처음 두개의 전결합층은 각각 4096개의 유닛을 가지고 세 번째 전결합층은 1000개의 유닛을 갖는다.</p>
-
-<p>마지막층은 SoftMax층이다.</p>
-
-<p>전결합층들의 구성은 모든 네트워크들이 같도록 설계했다.</p>
-
-<p>모든 은닉층들은 ReLU non-linearity를 사용한다.</p>
-
-<p>이번 연구의 네트워크들은 한 개를 제외하고 AlexNet에서 사용된 Local Response Normalisation(LRN) 을 사용하지 않았다 :
-LRN은 ILSVRC 데이터 셋에서의 성능을 개선시키지 못하면서 메모리 사용량은 증가시키고 계산시간도 증가시켰다.</p>
-
-<p>LRN이 적용된 경우 LRN층의 매개변수들은 AlexNet의 LRN층의 매개변수와 같다.</p>
-
-<h2 id="22-configurations">2.2 Configurations</h2>
-
-<p>이번 연구에서 평가할 ConvNet configuration들은 Table 1에 요약되어있고 column당 하나의 모델이다.</p>
-
-<p>지금부터는 네트워크의 이름을 A-E사이로 이름을 부르겠다.</p>
-
-<p>모든 configuration들은 2.1에서 설계한 구조를 따르고 서로 깊이만 다르게 한다: 11개의 가중치 층을 갖는 network A부터 19개의 가중치 층을 갖는 network E</p>
-
-<p>합성곱층의 채널 수는 꽤 작다, 64부터 시작해서 512가 될 때까지 2를 곱한다.</p>
-
-<p>Table 2에서는 각 configuration별로 매개변수의 수를 보여준다.</p>
-
-<p>더 깊은 구조임에도 불구하고 가중치의 수는 우리의 network들이 더 깊이가 얕은 network와 비교했을 때 합성곱층의 채널 수도 적고 receptive field도 작아서 가중치가 더 많지 않다.</p>
-
-<h2 id="23-discussion">2.3 Discussion</h2>
-
-<p>ConvNet 구성들은 ILSVRC-2012와 ILSVRC-2013에서 입상한 가장 좋은 모델과 꽤 다르게 생겼다.</p>
-
-<p>Krizhevsky의 11x11 크기의 필터를 stride 4만큼 씩 움직이는 합성곱층과 와 Zeiler&amp;Fergus의 7x7 크기의 필터를 stride 2만큼 씩 움직이는 합성곱층처럼 큰 receptive field를 사용하기 보다
-우리는 전체 네트워크에서 3x3 크기의 receptive field를 사용하고 stride는 1씩 움직였다.</p>
-
-<p>spatial pooling없이 두개의 3x3 크기의 필터를 사용하는 합성곱층을 사용하는 것은 5x5 크기의 receptive field를 사용하는 합성곱과 같다는 것을 쉽게 알 수 있다 ;
-3x3 합성곱이 3개면 7x7 receptive field와 같은 효과를 보인다.</p>
-
-<p>그렇다면 3x3 합성곱을 3개 연달아 사용하는 것이 7x7 합성곱을 1개 사용하는 것과 비교하여 우리가 어떤 이점을 얻는가?</p>
-
-<p>첫째, 하나의 non-linear rectification layer를 사용하는거보다 3개의 non-linear rectification layers를 통합하여 사용하여 decision function을 더 차별적으로 만들 수 있다.</p>
-
-<p>둘째, 매개변수의 수를 줄일 수 있다 :
-만약 3개의 3x3 합성곱 stack의 입력과 출력이 C개의 채널을 갖는다면 stack의 매개변수는 $3(3^2C^2)=27C^2$ 개가 될것이다 ;
-동시에 하나의 7x7 합성곱층은 $7^2C^2=49C^2$개의 가중치가 필요하다.
-이전에 비해 가중치 수가 81% 증가한다.</p>
-
-<p>이는 7x7 합성곱층에 regularization을 부과하여 사이사이 non-linearity가 주입된 3x3 필터들로 분해되도록 하는 것으로 보일 수 있다.</p>
-
-<p>configuration C와 같이 1x1 합성곱층을 포함시키면 receptive field에 영향을 주지 않고 decision function에 non-linearity를 추가할 수 있다.</p>
-
-<p>여기서 1x1 합성곱은 입력과 출력의 채널이 같아지도록 입력을 같은 차원에 선형 투영을 하지만
-rectification 함수에 의해 추가된 non-linearity가 도입된다.</p>
-
-<p>1x1 합성곱층은 최근 Lin의 “Network in Network” 구조에 활용되었다는 것을 알아야 한다.</p>
-
-<p>Ciresan에 의해 이전부터 작은 크기의 합성곱 필터가 사용되었지만,
-그들의 network들은 우리의 network보다 충분히 얕고 대규모 데이터셋 ILSVRC로 평가해보지 않았다.</p>
-
-<p>Goodfellow가 11개의 가중치층을 갖는 깊은 ConvNet을 거리의 숫자 인식 작업에 적용했더니 깊이가 깊어질수록 더 좋은 성능을 보였다고 한다.</p>
-
-<p>ILSVRC-2014 분류 작업에서 최고 실적을 보인 GoogLeNet은 우리와 따로 개발되었지만,
-작은 필터를 이용한 합성곱과 매우 깊은 ConvNet(22 가중치 층)라는 점에서 유사하다.
-(합성곱 필터는 3x3과 1x1 외에도 5x5를 사용했다.)</p>
-
-<p>그러나 GoogLeNet의 topology는 우리가 설계한 구조보다 복잡하고 
-feature map의 saptial resolution이 첫 번째 합성곱층에서 계산량을 줄이기 위해 더 공격적으로 줄어든다.</p>
-
-<p>우리의 모델은 GooLeNet보다 single-network classification accuracy 측면에서 뛰어나다.</p>
-
-<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet0.png" alt="VGGNet0" /></p>
-
-<h1 id="3-classification-framework">3. Classification Framework</h1>
-
-<p>이전 장에서 우리의 네트워크의 구성을 자세하게 살펴보았다.</p>
-
-<p>이번장에서는 classification ConvNet training과 evaluation을 자세하게 살펴보겠다.</p>
-
-<h2 id="31-training">3.1 Training</h2>
-
-<p>ConvNet 학습과정은 일반적으로 Krizhevsky를 따라했다.(나중에 설명하지만 학습 이미지의 크기를 키우고 잘라서 만든 샘플은 사용하지 않았다.)</p>
-
-<p>즉, 학습은 multinomial logistic regression을 목적으로 mini-batch gradient descent(LeCun의 역전파를 기반으로)를 momentum과 함께 사용해 optimising 했다.</p>
-
-<p>batch size는 256
-momentum은 0.9으로 설정했다.</p>
-
-<p>0.0005값을 weight decay로 설정한 L2 regularization과 dropout ratio를 0.5로 설정하여 첫 두개의 전결합층에 Dropout regularization을 적용했다.</p>
-
-<p>학습률은 0.02로 초기설정을 했고 validation set accuracy가 높아지지 않을 때 10씩 나눠줬다.</p>
-
-<p>전체적으로, 학습률은 3번 감소했고 학습은 370000iteration 뒤에 멈췄다(74epoch).</p>
-
-<p>AlexNet과 비교해 우리 구조가 더 많은 매개변수와 더 깊은 네트워크임에도 더 적은 epoch수로 수렴할 수 있었던 이유는</p>
-
-<ol>
-  <li>더 깊지만 작은 합성곱 필터가 주는 암시적 정규화</li>
-  <li>특정 층의 pre-initialisation</li>
-</ol>
-
-<p>네트워크 가중치의 초기설정은 중요하다,
-왜냐하면 안좋은 초기설정은 deep net에서 gradient의 불안정한 성질 때문에 학습을 멈추게 하기 때문이다.</p>
-
-<p>이 문제를 해결하기 위해 random 초기설정으로 학습하기에 충분히 얕은 configuration A부터 학습 시켰다.</p>
-
-<p>그리고나서, 더 깊은 구조를 학습시킬 때, 첫 4개의 합성곱 층과 뒤에 3개의 전결합 층의 가중치를 A의 결과와 똑같이 설정해주고 중간 층은 random initialisation했다.</p>
-
-<p>사전 초기설정된 층의 학습률을 줄이지 않고, 학습하는 동안 변경하도록 했다.</p>
-
-<p>random initialisation의 경우, 가중치들이 평균이 0이고 표준편차가 0.01인 분포를 따르는 표본에서 추출했다.</p>
-
-<p>편향들은 0으로 초기설정했다.</p>
-
-<p>논문 출판 후에 우리는 Glorot&amp;Bengio(Xavier)의 random initialisation procedure를 통해 사전학습 없이 임의 설정된 가중치를 사용하는것이 가능하다는 것을 알았는데 이는 주목할만 하다.</p>
-
-<p>224x224크기의 입력 이미지를 받기 위해서 학습 이미지들의 크기를 조절하고 임의로 잘랐다.(한번 crop하면 한 iteration동안 사용된다.)</p>
-
-<p>학습 데이터를 더 증가시키기 위해서, crop하기 전에 임의로 horizontal flipping과 RGB colour shift를 했다.(AlexNet과 같이)</p>
-
-<p>학습 이미지의 크기 조절은 밑에서 설명한다.</p>
-
-<h3 id="학습-이미지-크기">학습 이미지 크기</h3>
-
-<p>S를 학습이미지를 isotropically-rescaled 했을 때 짧은 쪽이라고 하자.(S를 training scale이라고도 한다)</p>
-
-<p>자를 크기가 224x224로 고정된 반면,
-원칙적으로 S는 224 이상의 값을 받을 수 있다. :</p>
-
-<p>S=224라면 crop은 전체 이미지를 capture한다,  학습 이미지의 짧은 부분을 완전히 사용한다;
-S»224라면 crop은 작은 객체나 객체의 일부를 포함하는 이미지의 작은 부분일 것이다.</p>
-
-<p>training scale S를 정하기 위해 두가지 접근을 고려한다.</p>
-
-<p>먼저 S를 single-scale training(한개의 값)과 같이 고정하는 것이다.</p>
-
-<p>연구에서, AlexNet과 같이 256의 값으로도 해보고 384로도 고정해 보았다.</p>
-
-<p>주어진 ConvNet 구성에서, 우리는 첫 번째 네트워크를 S=256으로 학습시켰다.</p>
-
-<p>S=384인 네트워크의 학습 속도를 높이기 위해,
-S=256일때 학습한 가중치로 초기설정을 하고 학습률을 0.001로 초기설정을 했다.</p>
-
-<p>두번째 접근은 S를 multi-scale training(범위 지정)으로 설정하는 것이다.
-각 이미지는 개별적으로 S의 범위에서 무작위로 한 값을 정해 크기조절을 진행한다.</p>
-
-<p>S의 범위는 256~512로 정했다.</p>
-
-<p>이미지 안에 객체들이 크기가 다를 수 있기 때문에,
-학습 중에 이를 계산하는 것이 좋다.</p>
-
-<p>이것은 하나의 모델이 넓은 범위에 걸쳐 객체를 인식하도록(scale jittering) 학습 데이터를 늘린 것처럼 보일 수 있다.</p>
-
-<p>속도 문제 때문에 S=384인 single-scale model이 사전 학습한 모든 층의 가중치를 fine-tuning해서 같은 configuration인 multi-scale model을 학습 시켰다.</p>
-
-<h2 id="32-testing">3.2 Testing</h2>
-
-<p>test scale Q를 사용해 이미지를 isotropically rescale한다.</p>
-
-<p>Q는 S와 같을 필요는 없다.</p>
-
-<p>그리고나서, 네트워크를 조밀하게 rescale된 test image에 적용한다.</p>
-
-<p>전결합 층들은 먼저 합성곱 층으로 전환된다.
-첫번째 FC는 7x7 합성곱으로
-두번째 FC는 1x1 합성곱으로 전환.</p>
-
-<p>네트워크의 모든층을 합성곱층으로 만든 네트워크를 uncropped인 전체 이미지에 적용한다.</p>
-
-<p>결과는 입력 이미지의 크기에 따른 variable spatial resolution과 class score map이고 채널의 수는 클래스의 수와 같다.</p>
-
-<p>마지막으로, 이미지의 고정된 크기의 vector of class scores를 얻기 위해, class score map은 공간적 평균을 취한다. (sum-pooled)</p>
-
-<p>또한, test set을 horizontal flipping으로 증가시킨다;
-원본과 뒤집은 사진의 soft-max class posteriors를 평균내서 최종 수치를 얻는다.</p>
-
-<p>합성곱 네트워크는 전체 이미지에 적용되기 때문에 test 때 여러개의 자른 sample은 필요없다.
-각 crop별로 네트워크가 계산을 다시 하는것은 효율이 적다.</p>
-
-<p>동시에, Szegedy에 의하면 큰 crop 집합을 사용하는 것은 입력 이미지를 미세하게 추출하기 때문에 합성곱 네트워크를 사용하는 것보다 정확도를 향상시킨다고 한다.</p>
-
-<p>또한, multi-crop 평가는 합성곱의 결정 조건이 다르기 때문에 세밀한 평가가 가능하다:
-ConvNet을 crop에 적용하면, padding을 하지 않는다, 반면 dense evaluation의 경우 같은 crop에 대한 padding은 이미지의 이웃 부분에서 합성곱과 공간 pooling으로 자연스럽게 생긴다, 그래서 실질적으로 전반적인 네트워크의 수용영역이 커지고 많은 context가 capture된다.</p>
-
-<p>multiple crops로 인한 계산 시간 증가는 실제로 정확도를 올리지 못한다고 생각하지만,
-추론을 위해 네트워크를 스케일당 50crop(5x5 regular grid with 2flips)을 사용해 평가했다.
-이때 Szegedy의 4 스케일에 걸친 144crops에 비교할만한 3스케일에 걸쳐 150crops를 평가함.</p>
-
-<h2 id="33-implementation-details">3.3 Implementation Details</h2>
-
-<p>구현은 C++ Caffe toolbox를 사용했다.</p>
-
-<p>대신 충분히 많은 변경사항을 적용했다.</p>
-
-<p>여러개의 GPU를 하나의 시스템에 설치하여 학습과 평가를 수행하고
-학습과 평가는 자르지 않은 전체 사이즈의 이미지를 여러개의 크기인 상태로 진행했다.</p>
-
-<p>다중 GPU 학습은 데이터의 수평성을 이용하여 각 학습 이미지의 batch를 몇개의 GPU batch로 나누어 수행했다.</p>
-
-<p>GPU batch gradient가 계산되고 난 뒤,
-그들 전체 batch의 gradient를 얻기 위해 평균 계산을 했다.</p>
-
-<p>Gradient계산은 GPU들 사이에서 동시에 일어나서 결과는 한개의 GPU를 사용한 경우와 같게 나온다.</p>
-
-<p>ConvNet의 학습 속도를 높이는 많은 정교한 방법들이 제안되었지만(네트워크에서 다른 계층에 모델과 데이터의 병렬 처리),
-개념적으로 더 간단한 내용인 우리 네트워크가 한개의 GPU보다 4개의 GPU로 학습해서 3.75배의 속도 향상을 시켰다.</p>
-
-<p>4개의 NVIDIA Titan Black GPU를 장착한 시스템에서 하나의 네트워크를 학습 시키는 경우 구조에 따라 2-3주가 걸렸다.</p>
-
-<h1 id="4-classification-experiments">4. Classification Experiments</h1>
-
-<h3 id="dataset">Dataset</h3>
-
-<p>4장에서는 이미지 분류 결과 얻기 위해 ILSVRC 2012-2014에 사용된 데이터를 사용했다.</p>
-
-<p>데이터에는 1000개의 클래스가 있고
-130만개의 학습 데이터셋과 validation을 위한 5만개 그리고 평가를 위한 10만개로 나눴다.</p>
-
-<p>분류 성능 평가는 top-1과 top-5를 통해 이루어졌다.</p>
-
-<p>top-1은 잘못 분류된 이미지의 비율을 구하고;
-top-5는 ILSVRC에서 주로 사용하는 평가 기준으로 예측한 5개의 범주에 실제 class가 있는 비율을 계산한다.</p>
-
-<p>대부분의 실험을 위해, validation set을 test set으로 사용했다.</p>
-
-<p>특정 실험들은 test set을 사용했고
-ILSVRC-2014에 “VGG”팀으로 입상하여 ILSVRC서버에 공식적으로 제출됐다.</p>
-
-<h2 id="41-single-scale-evaluation">4.1 Single Scale Evaluation</h2>
-
-<p>각 모델을 single scale로 성능을 평가한다.</p>
-
-<p>test 이미지의 크기는 
-$Q=S=0.5(S_{min}+S_{max})$로 설정했다.</p>
-
-<p>먼저, local response normalisation은 normalisation층이 없는 모델 A를 향상시키지 못했기 때문에 다른 더 깊은 구조에도 normalisation을 적용하지 않았다.</p>
-
-<p>다음으로, ConvNet이 깊어질수록 classification error가 감소하는 것을 관찰했다 :
-A의 11층부터 E의 19층까지 실험했다.</p>
-
-<p>같은 깊이임에도, C(1x1 conv)가 D(3x3 conv)보다 성능이 안좋았다.</p>
-
-<p>C&gt;B : 추가적인 non-linearity가 도움이 된다</p>
-
-<p>D&gt;C : trivial 하지않은(1보다 크기가 큰)합성곱 필터를 사용해 capture spatial context하는 것도 중요하다.</p>
-
-<p>error rate는 모델의 깊이가 19층일 때 포화 되었지만 더 깊은 모델은 더 큰 데이터셋에서 효과적일지 모른다.</p>
-
-<p>또한 B와 B의 3x3 필터를 쓰는 합성곱층의 쌍을 5x5 필터를 쓰는 합성곱으로 대체한 네트워크와 비교를 해보았다.</p>
-
-<p>얕아진 네트워크의 top-1 error가 B보다 7% 높아진것으로 보아
-깊고 작은 필터를 사용한 네트워크가 얕고 큰 필터를 사용한 네트워크보다 뛰어나다는 것을 확인했다.</p>
-
-<p>마지막으로, 학습할 때 $S\in[256;512]$에서 scale jittering 하게 되면 test time에서 single scale을 사용하더라도 S가 256이나 384로 고정된 값을 갖는 것 보다 상당히 더 좋은 결과를 보인다.</p>
-
-<p>따라서 training set augmentation by scale jittering은 capturing multi-scale image statistics에 도움을 준다는 것을 알 수 있다.</p>
-
-<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet1.png" alt="VGGNet1" /></p>
-
-<h2 id="42-multi-scale-evaluation">4.2 Multi-Scale Evaluation</h2>
-
-<p>ConvNet 모델을 single scale로 평가한 후,
-scale jittering이 test time에 미치는 영향을 평가해보겠다.</p>
-
-<p>이것은 모델을 Q를 다른값들로 바꿔보는 것과 같이 test image를 여러 크기의 버전으로 모델을 실행시킨다, 그 다음에 결과 클래스의 posterior에 대해 평균을 계산한다.</p>
-
-<p>training고 testing scale의 차이가 성능저하를 일으킨다는 점을 고려하여 고정된 S로 학습한 모델들을 S와 비슷한 3개의 Q로 평가 했다 :
-$Q=\left{S-32,\ S,\ S+32\right}$</p>
-
-<p>동시에, 학습 때 scale jittering은 네트워크가 test time에서 광범위한 크기에 적용되도록 하기 때문에 모델은 $S\in\left[S_{min};S_{max}\right]$인 다양성으로 학습하고 
-$Q=\left{S_{min},\ 0.5(S_{min}+S_{max}),\ S_{max}\right}$
-로 더 큰 범위에 걸쳐 평가했다.</p>
-
-<p>결과를 보면 test time에서 scale jittering은 더 좋은 성능으로 이끈다(같은 모델을 single scale에서 평가한것과 비교하여).</p>
-
-<p>이전처럼, 더 깊은 네트워크(D and E)가 최고의 성능을 보여주고 scale jittering으로 학습한 것은 고정된 S로 학습한 모델보다 더 좋다.</p>
-
-<p>가장 좋은 네트워크 성능은 validation에서 top-1 : 24.8% / top-5 : 7.5%이다.</p>
-
-<p>test set에서 E 네트워크의 top-5 error는 7.3%가 나왔다.</p>
-
-<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet2.png" alt="VGGNet2" /></p>
-
-<h2 id="43-multi-crop-evaluation">4.3 Multi-Crop Evaluation</h2>
-
-<p>dense ConvNet evaluation과 mult-crop evaluation을 비교했다.</p>
-
-<p>또한, 이 둘의 soft-max 결과를 평균내어 두가지 방법을 보완한 방법도 평가했다.</p>
-
-<p>보이는 바와 같이 multiple crops를 사용해 평가하게 되면 dense evaluation보다 더 좋은 결과가 나오고 두가지를 조합해서 사용하면 더 좋은 결과가 나온다.</p>
-
-<p>위에서 말했듯이 이것은 합성곱 결정 조건이 다르게 나타나기 때문이다.</p>
-
-<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet3.png" alt="VGGNet3" /></p>
-
-<h2 id="44-convnet-fusion">4.4 ConvNet Fusion</h2>
-
-<p>지금까지, 각 ConvNet별로 성능을 평가했다.</p>
-
-<p>이번에는 몇가지 모델의 soft-max class posteriors를 평균내어 결과를 조합해보겠다.</p>
-
-<p>이 과정은 모델들을 보완해주기 때문에 성능을 개선시키고 ILSVRC-2012에서 Krizhevsky가 사용했었고 2013에는 Zeiler&amp;Fergus가 사용했다.</p>
-
-<p>ILSVRC 제출 당시 우리는 single-scale 네트워크와 multi-scale model D(전결합 층만 미세조정을 한)만 학습 시켰다.</p>
-
-<p>7개의 네트워크를 조합한 결과 ILSVRC test error는 7.3%였다.</p>
-
-<p>그 뒤, multi-scale 모델중 최고 성능을 보이는 D와 E만 조합했더니 test error는 dense evaluation에서 7.0%이고 dense와 multi-crop을 합쳐서 평가하니 6.8%였다.</p>
-
-<p>참고로 가장 좋은 single model 은 7.1%의 error를 보였다.</p>
-
-<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet4.png" alt="VGGNet4" /></p>
-
-<h2 id="45-comparison-with-the-state-of-the-art">4.5 Comparison with the State-of-the-art</h2>
-
-<p>마지막으로, 우리의 결과를 최신 기술과 비교해 보겠다.</p>
-
-<p>ILSVRC-2014때 분류작업에서, VGG팀은 7개의 모델을 조합해서 7.3%의 test error를 나타내며 2등을 차지했다.</p>
-
-<p>그 뒤, 우리는 D&amp;E의 조합으로 error를 6.8까지 낮췄다.</p>
-
-<p>결과에서 보이듯 이전 세대(ILSVRC-2012,2013)의 최고 모델과 비교해 상당히 좋은 결과를 우리 very deep ConvNet이 달성했다.</p>
-
-<p>우리의 결과는 분류작업 우승자인 GoogLeNet(6.7%)과 비교할 수 있을정도이고
-실제로 ILSVRC-2013의 우승자 Clarifai(외부 학습 데이터로 11.2% 외부학습 데이터 없이 11.7%)를 능가했다.</p>
-
-<p>ILSVRC에 제출된 대부분의 모델들보다 상당히 적은 양인 2개의 모델을 조합해서 얻은 최고의 결과라는 점에서 매우 놀랍다.</p>
-
-<p>single-net performance를 보면, 우리의 구조가 최고의 결과를 달성한다(test error 7.0%), single GoogLeNet를 0.9% 능가하는 수치다.</p>
-
-<p>참고로, 우리는 LeCun의 구조에서 많이 벗어나지 않고 실질적으로 깊이만 증가시켰다.</p>
-
-<p><img src="/assets/img/Paper_Review/VGGNet/VGGNet5.png" alt="VGGNet5" /></p>
-
-<h1 id="5-conclusion">5. Conclusion</h1>
-
-<p>이번 연구에서 우리는 매우 깊은 신경망(최대 19의 가중치 층)을 대규모 이미지 분류를 통해 평가했다.</p>
-
-<p>이것으로 표현깊이는 분류 정확도에 이점이 된다는 것과
-ImageNet challenge dataset에서 최첨단 모델의 성능은 ConvNet구조의 실질적 깊이를 깊게 함으로써 얻을 수 있다는 것을 확인했다.</p>
-
-<p>부록에서, 우리는 또한 우리의 모델이 광범위한 작업과 data set으로 잘 일반화되어 덜 깊은 구조로 구축된 더 복잡한 인식 파이프라인과 성능이 같거나 능가한다는 것을 보였다.</p>
-
-<p>이 결과로 visual representation에서 depth의 중요성을 다시한번 확인했다.</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[VGGNet]]></summary></entry></feed>
+ImageNet detection, ImageNet localization, COCO detection, and COCO segmentation.</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[ResNet]]></summary></entry></feed>
