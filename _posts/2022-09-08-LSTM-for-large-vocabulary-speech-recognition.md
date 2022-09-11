@@ -2,7 +2,7 @@
 layout: post
 title: Long Short-Term Memory Based Recurrent Neural Network Architectures for large vocabulary speech recognition
 author: Hasim Sak, Andrew Senior, Francoise Beaufays
-date: 2022-08-30 15:54:43 +0900
+date: 2022-09-08 18:54:43 +0900
 category: [Paper Review]
 ---
 # Abstract
