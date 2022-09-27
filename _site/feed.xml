@@ -1,4 +1,91 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-09-11T17:20:27+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation</title><link href="http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation.html" rel="alternate" type="text/html" title="Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation" /><published>2022-09-11T17:17:23+09:00</published><updated>2022-09-11T17:17:23+09:00</updated><id>http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder%E2%80%93Decoder-for-Statistical-Machine-Translation</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation.html"><![CDATA[<h1 id="abstract">Abstract</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-09-27T18:30:11+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Attention Is All You Need</title><link href="http://localhost:4000/paper%20review/2022/09/11/Attention-Is-All-You-Need.html" rel="alternate" type="text/html" title="Attention Is All You Need" /><published>2022-09-11T17:35:12+09:00</published><updated>2022-09-11T17:35:12+09:00</updated><id>http://localhost:4000/paper%20review/2022/09/11/Attention-Is-All-You-Need</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/09/11/Attention-Is-All-You-Need.html"><![CDATA[<h1 id="abstract">Abstract</h1>
+<p>대부분의 sequence 변환 모델들은 encoder와 decoder를 갖는<br />
+복잡한 recurrent나 convolutional neural network를 기반으로 한다.<br />
+가장 잘 수행하는 모델들은 encoder와 decoder를 attention mechanism으로 연결하는 것이다.<br />
+우리는 Transformer라는 새로운 신경망 구조를 제안한다.<br />
+Transformer는 attention mechanism에만 기반을 두고 recurrent와 convolution로만 나눴다.<br />
+번역 작업에서 두가지 기계에 대한 실험은<br />
+이 두 모델들이 더 병렬적이고 더 적은 학습시간을 요구하면서 더 좋은 결과를 나타낸다는 것을 보인다.<br />
+우리의 모델은 WMT 2014 English-to-German 번역 작업에서 28.4 BLEU를 달성했다.<br />
+이는 앙상블을 이용한 기존에 최고로 여겨지던 결과와 비교해 2 BLEU를 넘는 결과였다.<br />
+WMT 2014 English-to-German 번역 작업에서<br />
+우리 모델은 새로운 단일 모델 최신 기술로 BLEU 점수가 41.8을 달성했고,<br />
+3.5일동안 8개의 GPU를 사용해 학습 시켰고 이는 가장 좋은 모델에 대한 학습 비용과 비교해 더 적게 들었다.<br />
+Transformer는 영어 구문의 일과성을 큰 학습 데이터와 작은 학습 데이터에서 성공적으로 이해함으로써<br />
+일반적으로 다른 작업에서도 잘 사용되는것을 보일것이다.</p>
+
+<p><br /></p>
+<h1 id="introduction">Introduction</h1>
+<p>RNN, LSTM 과 GRU 신경망들은 특히 sequence modeling과 변환 문제(language modeling and<br />
+machine trnaslation)에 있어 최신 기술의 접근법으로 만들어졌다.<br />
+Recurrent language model과 encoder-decoder 구조가 갖는 경계를 허물기 위해 많은 노력들이 지속되어왔다.</p>
+
+<p>RNN 모델은 전형적으로 입력과 출력의 sequence가 갖는 symbol의 위치들을 통해 계산하는 것이다.<br />
+그 위치들을 계산 시간동안 time step에 배치하여 RNN 모델들이 hidden states $h_t$의 sequence를 만든다.<br />
+여기서 사용되는 함수는 이전 hidden state인 $h_{t-1}$를 입력으로 받고 입력을 위치 $t$로 처리한다.<br />
+이러한 순차적 본성은 내적으로 학습하는 동안 병렬화를 배제한다.<br />
+그렇게 되면 샘플들에 대해 메모리 제약이 걸려 더 긴 sequence 길이를 처리할 때 문제가 발생하게 된다.<br />
+최근 연구에서 factorization trick들을 통한 계산 효율에서의 많은 개선과<br />
+모델 성능을 개선시키는 조건부 계산이 사용되고 있다.<br />
+그러나 여전히 sequential 계산에 대한 제약들이 남아있다.</p>
+
+<p>Attention mechnism은 입력과 출력 sequence의 길이에 상관없이 종속성을 통해 모델링을 하도록<br />
+다양한 작업에서 강력한 sequence modeling과 변환 모델들의 중요한 부분이 되었다.<br />
+그러나 몇가지 경우를 제외하고 대부분의 경우 attention mechanism은 RNN과 같이 사용된다.</p>
+
+<p>이번 논문에서 우리는 Transformer를 제안한다.<br />
+Transformer는 Recurrence를 피한는 모델 구조로 입력과 출력 사이의 전역적 종속성을 끌어내기 위해<br />
+attention mechanism에 전적으로 의존한다.<br />
+Transformer는 막대한 병렬화를 가능하게 하고 8개의 P100 GPU들을 통해 12시간 정도 학습하면<br />
+번역 작업에서 새로운 최신 기술력에 도달할 수 있다.</p>
+
+<p><br /></p>
+<h1 id="2-background">2 Background</h1>
+<p>Sequential computation을 줄이는 목표는 Extended Neural GPU, ByteNet과 ConvS2S 그리고<br />
+입력과 출력의 모든 위치의 은닉표현을 병렬적으로 계산하는 CNN을<br />
+기본적인 block으로 사용하는 모든 것들의 기초가 된다.<br />
+이런 모델들의 경우 계산 수는 임의의 입력과 출력의 길이와 관련해 늘어나고 선형적인 경우에 ConvS2S이고<br />
+log적으로는 ByteNet이 해당된다.<br />
+이러한 내용 때문에 먼 위치 사이의 종속성은 학습하기 더 어렵다.<br />
+Transformer는 계산수가 상수값으로 줄어든다.<br />
+Attention-weighted positions를 평균내어 해결력이 줄어들기는 하지만 앞서 말했듯 계산수가 줄어들고<br />
+이런 효과는 3.2절에서 말할 내용으로 <strong>Multi-Head Attention</strong>을 사용해 대응한 것이다.</p>
+
+<p>때때로 Intra-attention으로도 불리는 <strong>Self Attention</strong>은<br />
+sequence의 표현을 계산하기 위해 sequence마다 다른 position들과 관련된 개념인 attention mechanism이다.<br />
+Self-attention은 다양한 작업에서 잘 사용되어왔다.<br />
+Reading comprehension(독해력), abstractive summarization, textual entailment와<br />
+learning task-independent sentence representation에 사용되었다.</p>
+
+<p>End-to-end memory network들은 sequence-aligned recurrence 기반의 개념보다<br />
+recurrent attention mechanism에 기반을 두고 언어를 통한 간단한 질문에 대한 대답과<br />
+language modeling 작업에서 좋은 성능을 보여왔다.</p>
+
+<p>그러나 우리가 아는 선에서 가장 좋다고 여겨지는 <strong>Transformer</strong>는 Sequence-aligned RNN이나<br />
+convolution을 사용하지 않고 입력과 출력의 표현을 계산하기 위해<br />
+전적으로 self-attention에 의존하는 첫번째 변환 모델이다.<br />
+뒤에 나오는 절들에서 우리는 Transformer를 묘사하고<br />
+self-attention의 동기와 모델들에서 그것의 이점을 논할 것이다.</p>
+
+<p><br /></p>
+<h1 id="3-model-architecture">3 Model Architecture</h1>
+<p>대부분의 경쟁력있는 neural sequence transduction model들은 encoder-decoder 구조를 가지고 있다.<br />
+여기서 encoder는 symbol representations($x_1,\dots,x_n$)의 입력 sequence를 연속적인 표현<br />
+$\mathbf{z}=(z_1,\dots,z_n)$의 sequence로 mapping한다.<br />
+Decoder는 $\mathbf{z}$가 주어지고 나서 출력 sequence($y_1,\dots,y_m$)의 symbol들을<br />
+한번에 한개의 element씩 만들어 나간다.<br />
+각 step에서 모델은 다음 symbol들을 만들기 위해 이전에 만들어진 symbol들을 추가적인 입력으로써 사용하며<br />
+auto-regressive하게 작동한다.</p>
+
+<p>Transformer는 이런 전반적인 구조를 self-attention과 encoder,decoder에 전결합층을<br />
+point-wise하게 쌓아서 설계한다.<br />
+Figure 1을 참고해라.</p>
+
+<p><img src="/assets/img/Paper_Review/Transformer/Transformer_0.png" alt="Transforemr_0" /></p>
+
+<p><br /></p>
+<h2 id="31-encoder-and-decoder-stacks">3.1 Encoder and Decoder Stacks</h2>
+<p><strong>Encoder</strong>: Encoder</p>]]></content><author><name>Ashish Vaswani, Noam Shazeer, Niki Parmar, etc.</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract 대부분의 sequence 변환 모델들은 encoder와 decoder를 갖는 복잡한 recurrent나 convolutional neural network를 기반으로 한다. 가장 잘 수행하는 모델들은 encoder와 decoder를 attention mechanism으로 연결하는 것이다. 우리는 Transformer라는 새로운 신경망 구조를 제안한다. Transformer는 attention mechanism에만 기반을 두고 recurrent와 convolution로만 나눴다. 번역 작업에서 두가지 기계에 대한 실험은 이 두 모델들이 더 병렬적이고 더 적은 학습시간을 요구하면서 더 좋은 결과를 나타낸다는 것을 보인다. 우리의 모델은 WMT 2014 English-to-German 번역 작업에서 28.4 BLEU를 달성했다. 이는 앙상블을 이용한 기존에 최고로 여겨지던 결과와 비교해 2 BLEU를 넘는 결과였다. WMT 2014 English-to-German 번역 작업에서 우리 모델은 새로운 단일 모델 최신 기술로 BLEU 점수가 41.8을 달성했고, 3.5일동안 8개의 GPU를 사용해 학습 시켰고 이는 가장 좋은 모델에 대한 학습 비용과 비교해 더 적게 들었다. Transformer는 영어 구문의 일과성을 큰 학습 데이터와 작은 학습 데이터에서 성공적으로 이해함으로써 일반적으로 다른 작업에서도 잘 사용되는것을 보일것이다.]]></summary></entry><entry><title type="html">Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation</title><link href="http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation.html" rel="alternate" type="text/html" title="Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation" /><published>2022-09-11T17:17:23+09:00</published><updated>2022-09-11T17:17:23+09:00</updated><id>http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder%E2%80%93Decoder-for-Statistical-Machine-Translation</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation.html"><![CDATA[<h1 id="abstract">Abstract</h1>
 <p>이번 논문에서 새로운 신경망 모델을 소개한다.<br />
 RNN Encoder-Decoder라는 이름으로 두개의 RNN으로 구성되어있다.</p>
 
@@ -3177,376 +3264,4 @@ y_1&amp;={e^{a_1}\over S}\quad y_2={e^{a_2}\over S}\quad y_3={e^{a_3}\over S}
   </tbody>
 </table>
 
-<p>때문에 수치 미분 값과 오차역전파법의 결과를 비교하여 제대로 구현 되었는지 확인한다. → 기울기 확인$\mathsf{^{gradient\ check}}$</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;DeepLearning from scratch&quot;]" /><summary type="html"><![CDATA[Ch5 오차역전파법]]></summary></entry><entry><title type="html">Ch4 신경망 학습</title><link href="http://localhost:4000/deeplearning%20from%20scratch/2022/08/21/Ch4-%EC%8B%A0%EA%B2%BD%EB%A7%9D-%ED%95%99%EC%8A%B5.html" rel="alternate" type="text/html" title="Ch4 신경망 학습" /><published>2022-08-21T01:10:34+09:00</published><updated>2022-08-21T01:10:34+09:00</updated><id>http://localhost:4000/deeplearning%20from%20scratch/2022/08/21/Ch4-%EC%8B%A0%EA%B2%BD%EB%A7%9D-%ED%95%99%EC%8A%B5</id><content type="html" xml:base="http://localhost:4000/deeplearning%20from%20scratch/2022/08/21/Ch4-%EC%8B%A0%EA%B2%BD%EB%A7%9D-%ED%95%99%EC%8A%B5.html"><![CDATA[<h1 id="ch4-신경망-학습">Ch4 신경망 학습</h1>
-
-<h3 id="학습">학습</h3>
-
-<p>훈련 데이터로부터 가중치 매개변수의 최적값을 자동으로 획득하는 것을 뜻함</p>
-
-<p>신경망이 학습하는 것을 나타내는 지표로 손실 함수를 사용한다.</p>
-
-<p>이 때 손실 함수의 값이 작을수록 학습이 잘 된것이라 한다.</p>
-
-<h1 id="41-데이터에서-학습한다">4.1 데이터에서 학습한다.</h1>
-
-<p>신경망의 특징은 데이터를 보고 가중치 매개변수의 값을 데이터를 보고 자동으로 결정한다는 것이다.</p>
-
-<h2 id="411-데이터-주도-학습">4.1.1 데이터 주도 학습</h2>
-
-<p>학습 파이프라인의 전환</p>
-
-<p><img src="/assets/img/DeepLearning_from_scratch/Ch4/ch4_0.png" alt="ch4_0" /></p>
-
-<ol>
-  <li>첫 번째 방법에서는 알고리즘을 만들어내기 매우 어려움</li>
-  <li>두 번째 기계학습을 통해 효율을 높였지만 여전히 사람이 특징을 적절하게 뽑아야함</li>
-  <li>
-    <p>세 번째 방법에서는 신경망이 직접 데이터를 통해 학습한다.</p>
-
-    <p>따라서 숫자5를 인식하는 문제든 강아지를 인식하는 문제든 사람의 얼굴을 인식하는 문제든</p>
-
-    <p>사람의 개입없이 문제를 해결할 수 있음 ( end-to-end machine learning )</p>
-  </li>
-</ol>
-
-<h2 id="412-훈련-데이터와-시험-데이터">4.1.2 훈련 데이터와 시험 데이터</h2>
-
-<p>학습에 사용하는 데이터는 훈련 데이터(training data)와 시험 데이터(test data)로 나뉜다.</p>
-
-<p>좋은 모델은 새로운 데이터로도 문제를 올바르게 풀어내는 능력이 중요하기 때문에</p>
-
-<p>모델을 평가할 때는 학습에 사용된 훈련 데이터말고 훈련에 사용되지 않은 시험 데이터로 평가한다.</p>
-
-<p>갖고 있는 모든 데이터를 학습 데이터로 사용하면 데이터셋에 Overfitting이 일어나도 확인 할 수 없다.</p>
-
-<h1 id="42-손실-함수--loss-function-">4.2 손실 함수 ( Loss Function )</h1>
-
-<p>신경망의 성능을 나타내는 지표를 손실 함수라 하고</p>
-
-<p>오차제곱합( Sum of Squares for error, SSE )과 교차 엔트로피 오차( Cross Entropy Error, CEE )가 일반적</p>
-
-<h2 id="421-오차제곱합--sse-">4.2.1 오차제곱합 ( SSE )</h2>
-
-\[\begin{align*}E=&amp;\frac{1}{2}\sum\limits_k(y_k-t_k)^2\\
-y_k\ &amp;:\ \mathsf{output}\\
-t_k\ &amp;:\ \mathsf{answer\ \ label}\\
-k\ &amp;:\ \mathsf{dimension\ \ of\ \ data}\end{align*}\]
-
-<h3 id="one-hot-encoding">*one-hot encoding</h3>
-
-<p>한 원소만 1로하고 그 외는 0으로 나타내는 표기법</p>
-
-<h2 id="422-교차-엔트로피-오차--cee-">4.2.2 교차 엔트로피 오차 ( CEE )</h2>
-
-\[\begin{align*}E=&amp;-\sum\limits_kt_k\log(y_k)\\
-y_k\ &amp;:\ \mathsf{output}\\
-t_k\ &amp;:\ \mathsf{answer\ \ label\ (one-hot\ \ encoding)}\\
-k\ &amp;:\ \mathsf{dimension\ \ of\ \ data}\end{align*}\]
-
-<h2 id="423-미니배치-학습">4.2.3 미니배치 학습</h2>
-
-<p>기계학습은 훈련 데이터를 사용해 학습한다.</p>
-
-<p>훈련 데이터에 대한 손실 함수의 값을 구하고, 그 값을 최대한 줄여주는 매개변수를 찾아낸다.</p>
-
-<p>따라서 모든 훈련 데이터를 대상으로 오차를 구하고 그 합을 지표로 삼는다.</p>
-
-<p>( 훈련 데이터가 1000개면 1000번의 손실 함수를 실행해야함 )</p>
-
-<p>빅데이터 수준에서는 데이터의 수가 수백만개 수천만개가 넘기 때문에</p>
-
-<p>데이터 전체에 대한 손실 함수를 계산하기 어렵기 때문에 일부(미니배치$\mathsf{^{mini-batch}}$)만 골라서 학습.</p>
-
-<p>이렇게 학습하는 방법을 <strong>미니배치 학습</strong> 이라고 한다.</p>
-
-<h2 id="424-배치용-교차-엔트로피-오차">4.2.4 (배치용) 교차 엔트로피 오차</h2>
-
-<h3 id="평균-손실-함수">평균 손실 함수</h3>
-
-\[\begin{align*}
-E&amp;=-\frac{1}{N}\sum\limits_n\sum\limits_kt_{nk}\log y_{nk}\\
-\mathsf{N}\ &amp;:\ \mathsf{the\ \ number\ \ of\ \ Data}\\
-t_{nk}\ &amp;:\mathsf{\ k_{th}\ answer\ of \ \ n_{th}\ \ data}\\
-y_{nk}\ &amp;:\mathsf{\ k_{th}\ output\ of\ \ n_{th}\ \ data}
-\end{align*}\]
-
-<p>N으로 나눠서 정규화하면</p>
-
-<ol>
-  <li>범위를 0~1로 조절</li>
-  <li>훈련 데이터의 개수와 관계없이 통일된 지표를 얻음</li>
-</ol>
-
-<h2 id="425-왜-손실-함수를-설정하는가">4.2.5 왜 손실 함수를 설정하는가?</h2>
-
-<p>신경망 학습의 궁극적인 목표는 높은 정확도 이지만</p>
-
-<p>학습 방법으로 정확도를 지표로 사용하지 않고 손실 함수를 사용한다.</p>
-
-<p>학습을 통해 신경망에 사용되는 매개변수를 조절할 때 미분 값을 사용하는데</p>
-
-<p>정확도를 지표로 삼는 함수의 미분 값은 대부분의 장소에서 0이되어 매개변수 조절이 불가능하기 때문이다.</p>
-
-<p>또한, 정확도는 매개변수의 변화에 의해 값이 이산적으로 변하는데</p>
-
-<p>그것은 매개변수의 변화가 주는 변화를 정확도가 무시하고 있다는 것입니다.</p>
-
-<p>반면 손실 함수는 미분 값이 0인 경우 학습이 종료되고 매개변수의 변화에 의해 손실 함숫값은 연속적으로 변해</p>
-
-<p>매개변수 변화에 민감하게 반응해 최적의 매개변수를 구하기 좋다.</p>
-
-<p>같은 맥락에서 step 함수를 활성 함수로 쓰지 않는다.</p>
-
-<p>step 함수는 대부분의 장소에서 미분 값이 0이고 그 함숫값이 이산적이어서</p>
-
-<p>모델의 학습 지표를 손실 함수로 삼는다 하더라도 학습이 되지 않기 때문이다.</p>
-
-<h1 id="43-수치-미분">4.3 수치 미분</h1>
-
-<p>경사법에서는 기울기(미분 값)을 기준으로 매개변수를 조절한다.</p>
-
-<h2 id="431-미분">4.3.1 미분</h2>
-
-<p>미분이란 한순간의 변화량</p>
-
-<h3 id="전방-차분--forward-difference-">전방 차분 ( Forward Difference )</h3>
-
-\[\begin{align*}
-\dfrac{d\ f(x)}{dx}=\lim_{h\rightarrow 0}\dfrac{f(x+h)-f(x)}{h}
-\end{align*}\]
-
-<p>위와 같은 미분 방법을 전방 차분이라 하고 수치 미분법 중 하나이다.</p>
-
-<p>또 다른 수치 미분법으로는</p>
-
-<h3 id="중앙-차분-central-difference-">중앙 차분( Central Difference )</h3>
-
-\[\begin{align*}
-\dfrac{d\ f(x)}{dx}=\lim_{h\rightarrow 0}\dfrac{f(x+h)-f(x-h)}{2h}
-\end{align*}\]
-
-<h3 id="후방-차분--backward-difference-">후방 차분 ( Backward Difference )</h3>
-
-\[\begin{align*}
-\dfrac{d\ f(x)}{dx}=\lim_{h\rightarrow 0}\dfrac{f(x)-f(x-h)}{h}
-\end{align*}\]
-
-<p>사람이 직접 수학 문제를 풀 때 사용하는  전개해서 미분하는 방법을 해석적 미분이라고 하는데</p>
-
-\[\begin{align*}
-y=x^2
-\\{dy \over dx}=2x
-\end{align*}\]
-
-<p>이런 해석적 미분은 전개식을 통해 미분하는데 프로그래밍 할 때는</p>
-
-<ol>
-  <li>함수를 정의했을 경우 그 함수의 전개식을 따로 저장해둬야 한다. (ex&gt; string)</li>
-</ol>
-
-<p>그래도 미분을 위해 전개식을 string으로 저장했다 하더라도 정규 문법을 정하기 어렵다.</p>
-
-<ol>
-  <li>다변수 함수까지 처리하려면 정규 문법을 정하는 것도 쉽지않다.</li>
-</ol>
-
-<p>때문에 오차 값을 감안하고 프로그래밍 할 때는 수치 미분을 한다.</p>
-
-<p>해석적 미분을 하면 참값이 나오지만 수치 미분을 하면 오차가 생길 수밖에 없다.</p>
-
-<p>그래서 그 오차를 최대한 줄이기 위해서는 차분의 간격을 최대한 좁히는 것이다.</p>
-
-<p>그렇게해서 구현을 하게 되면 아래와 같은데 먼저 잘못된 예를 보면</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">bad_numerical_diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
-	<span class="n">h</span> <span class="o">=</span> <span class="mf">1e-50</span>
-	<span class="k">return</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="o">/</span> <span class="n">h</span>
-</code></pre></div></div>
-
-<p>차분의 간격을 줄이려고 h값을 너무 작게 설정하면</p>
-
-<p>python이 그 값을 반올림을 해서 그 값이 무시되는(0으로 되는) 반올림 오차$\mathsf{^{rounding\ error}}$가 발생한다.</p>
-
-<p>따라서 h값은 $10^{-4}$정도의 값으로 사용한다.</p>
-
-<p>그리고 차분은 두 점의 기울기 값 이기고 3개의 방법 중 중앙 차분을 이용해 구현해 보면 아래와 같다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">central_numerical_diff</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
-	<span class="n">h</span> <span class="o">=</span> <span class="mf">1e-4</span> <span class="c1"># 0.0001
-</span>	<span class="k">return</span> <span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="n">h</span><span class="p">)</span> <span class="o">-</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">h</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)</span>
-</code></pre></div></div>
-
-<h2 id="432-수치-미분의-예">4.3.2 수치 미분의 예</h2>
-
-\[y=0.01x^2+0.1x\]
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">function_1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-	<span class="k">return</span> <span class="mf">0.01</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mf">0.1</span><span class="o">*</span><span class="n">x</span>
-</code></pre></div></div>
-
-<h2 id="433-편미분">4.3.3 편미분</h2>
-
-\[f(x_0,\ x_1)=x^2_0+x^2_1\]
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">function_2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-	<span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span>
-	<span class="c1"># or return np.sum(x**2)
-</span></code></pre></div></div>
-
-\[{\partial f\over\partial x_0}=2x_0\ \ \ \ \ \ 
-{\partial f\over\partial x_1}=2x_1\]
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># x0=3, x1=4 일 때, x0에 대한 편미분
-</span><span class="k">def</span> <span class="nf">function_tmp1</span><span class="p">(</span><span class="n">x0</span><span class="p">):</span>
-	<span class="k">return</span> <span class="n">x0</span><span class="o">*</span><span class="n">x0</span> <span class="o">+</span> <span class="mf">4.0</span><span class="o">**</span><span class="mf">2.0</span>
-
-<span class="c1"># x1에 대한 편미분
-</span><span class="k">def</span> <span class="nf">function_tmp2</span><span class="p">(</span><span class="n">x1</span><span class="p">):</span>
-	<span class="k">return</span> <span class="mf">3.0</span><span class="o">**</span><span class="mf">2.0</span> <span class="o">+</span> <span class="n">x1</span><span class="o">*</span><span class="n">x1</span>
-</code></pre></div></div>
-
-<p>편미분 하려는 변수를 제외한 나머지 변수는 고정값을 대입하여</p>
-
-<p>새로운 함수를 정의한다.</p>
-
-<h1 id="44-기울기">4.4 기울기</h1>
-
-<p>한 함수를 통해 모든 변수에 대한 편미분 결과를 벡터로 정리한 것을 기울기$\mathsf{^{gradient}}$라고 한다.</p>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">numerical_gradient</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
-	<span class="n">h</span> <span class="o">=</span> <span class="mf">1e-4</span>
-	<span class="n">grad</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-	
-	<span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">size</span><span class="p">):</span>
-		<span class="n">tmp_val</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-		
-		<span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_val</span> <span class="o">+</span> <span class="n">h</span>
-		<span class="n">fxh1</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-		<span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_val</span> <span class="o">-</span> <span class="n">h</span>
-		<span class="n">fxh2</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-
-		<span class="n">grad</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">fxh1</span> <span class="o">-</span> <span class="n">fxh2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">)</span>
-		<span class="n">x</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp_val</span>
-
-	<span class="k">return</span> <span class="n">grad</span>
-</code></pre></div></div>
-
-<p>기울기가 가리키는 쪽은 각 장소에서 함수의 출력 값을 가장 크게 줄이는 방향</p>
-
-<p><img src="/assets/img/DeepLearning_from_scratch/Ch4/ch4_1.png" alt="ch4_1" /></p>
-
-<p>*잘못된 함수 구현</p>
-
-<p>결과의 차이는 없지만 제대로 구하는 건 아니라 생각</p>
-
-<p><img src="/assets/img/DeepLearning_from_scratch/Ch4/ch4_2.png" alt="ch4_2" /></p>
-
-<p><img src="/assets/img/DeepLearning_from_scratch/Ch4/ch4_3.png" alt="ch4_3" /></p>
-
-<h2 id="441-경사법-gradient-method-">4.4.1 경사법( Gradient method )</h2>
-
-<p>광대한 매개변수 공간에서 어디가 손실함수를 최솟값으로 만드는 곳인지</p>
-
-<p>기울기를 이용여 찾는 방법</p>
-
-<p>기울기를 지표로 최적의 매개변수를 찾으러 움직이지만</p>
-
-<p>기울기가 가리키는 곳에 정말 함수의 최솟값이 있는지는 보장되지 않는다.</p>
-
-<p>함수의 기울기가 0인 지점은 최솟값, 극솟값, 안장점이 될 수 있다.</p>
-
-<p>복잡하고 찌그러진 모양의 함수라면 평평한 곳으로 파고들면서 고원$\mathsf{^{plateau,플라토}}$라 하는 학습 정체기에 빠질 수 있다.</p>
-
-<p>기울기의 방향이 반드시 최솟값을 가리키지는 않지만</p>
-
-<p>그 방향으로 가야 함수의 값을 줄일 수 있다.</p>
-
-<p>경사법에는 경사 하강법$\mathsf{^{gradient\ descent\ method}}$과 경사 상승법$\mathsf{^{gradient\ ascent\ method}}$이 있는데</p>
-
-<p>기울기가 가리키는 방향으로 일정 거리만큼 이동하면서 함수의 값을 점차 줄여나가는 방법을 경사 하강법이라 한다.</p>
-
-\[\begin{align*}
-x_0&amp;=x_0-\eta{\partial f\over\partial x_0}\\
-x_1&amp;=x_1-\eta{\partial f\over\partial x_1}\\
-\eta&amp;\ :\ \mathsf{learning\ rate}
-\end{align*}\]
-
-<p>에타는 학습률을 뜻하는데 기울기 방향으로 이동할 거리를 조절하고</p>
-
-<p>에타가 너무 크면 빠른 학습을 하지만 최솟값에 수렴하지 못할 수도 있고</p>
-
-<p>에타가 너무 작으면 학습 속도가 너무 느려 시간 비용이 크게 들어가서</p>
-
-<p>조절하면서 학습을 진행한다.</p>
-
-<h3 id="경사-하강법">경사 하강법</h3>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">gradient_descent</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">init_x</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">step_num</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">init_x</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">step_num</span><span class="p">):</span>
-        <span class="n">grad</span> <span class="o">=</span> <span class="n">numerical_gradient</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
-        <span class="n">x</span> <span class="o">-=</span> <span class="n">lr</span><span class="o">*</span><span class="n">grad</span>
-    <span class="k">return</span> <span class="n">x</span>
-</code></pre></div></div>
-
-<p>f : 최적화 하려는 함수</p>
-
-<p>init_x : 학습을 시작할 위치</p>
-
-<p>step_num : 경사법 반복 수</p>
-
-<p><img src="/assets/img/DeepLearning_from_scratch/Ch4/ch4_4.png" alt="ch4_4" /></p>
-
-<p>학습률 같은 매개변수를 하이퍼파라미터$\mathsf{^{hyper\ parameter,\ 초매개변수}}$라고 한다.</p>
-
-<p>학습 과정에서 스스로 값이 설정되는 매개변수인 가중치와 편향과 달리</p>
-
-<p>하이퍼파라미터는 사람이 직접 조절하면서 잘 맞는 값을 찾아야 한다.</p>
-
-<h2 id="442-신경망에서의-기울기">4.4.2 신경망에서의 기울기</h2>
-
-<p>가중치 $W$, 손실함수 $L$인 신경망에서</p>
-
-\[\begin{align*}
-W&amp;=\begin{pmatrix}
-w_{11}&amp;w_{12}&amp;w_{13}\\
-w_{21}&amp;w_{22}&amp;w_{23}
-\end{pmatrix}\\
-{\partial L\over\partial W}&amp;=
-\begin{pmatrix}
-{\partial L\over\partial w_{11}}&amp;{\partial L\over\partial w_{12}}&amp;{\partial L\over\partial w_{13}}\\{\partial L\over\partial w_{21}}&amp;{\partial L\over\partial w_{22}}&amp;{\partial L\over\partial w_{23}}
-\end{pmatrix}
-\end{align*}\]
-
-<p>${\partial L\over\partial w_{11}}$는 $w_{11}$의 값을 변경했을 때 손실 함수 $L$이 얼마나 변화하는지를 나타낸다.</p>
-
-<h1 id="45-학습-알고리즘-구현하기">4.5 학습 알고리즘 구현하기</h1>
-
-<p>전체</p>
-
-<p>신경망에는 적응 가능한 가중치와 편향이 있고</p>
-
-<p>이 가중치와 편향을 훈련 데이터에 적응하도록 조정하는 과정을 ‘학습’이라고 한다.</p>
-
-<p>신경망 학습은 4단계로 수행된다.</p>
-
-<p>1단계 - 미니배치</p>
-
-<p>훈련 데이터 중 일부를 무작위로 가져온다.</p>
-
-<p>이렇게 선별한 데이터를 미니배치라 하며, 그 미니배치의 손실 함수를 줄이는것이 목표다.</p>
-
-<p>2단계 - 기울기 산출</p>
-
-<p>미니배치의 손실 함수 값을 줄이기 위해 각 가중치 매개변수의 기울기를 구한다.</p>
-
-<p>기울기는 손실 함수의 값을 가장 작게 하는 방향을 제시한다.</p>
-
-<p>3단계 - 매개변수 갱신</p>
-
-<p>가중치 매개변수를 기울기 방향으로 아주 조금 갱신한다.</p>
-
-<p>4단계 - 반복</p>
-
-<p>1~3단계를 반복한다.</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;DeepLearning from scratch&quot;]" /><summary type="html"><![CDATA[Ch4 신경망 학습]]></summary></entry></feed>
+<p>때문에 수치 미분 값과 오차역전파법의 결과를 비교하여 제대로 구현 되었는지 확인한다. → 기울기 확인$\mathsf{^{gradient\ check}}$</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;DeepLearning from scratch&quot;]" /><summary type="html"><![CDATA[Ch5 오차역전파법]]></summary></entry></feed>
