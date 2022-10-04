@@ -1,1 +1,1 @@
-# [goto my github page](http://kchanghun.github.io/)
+# [goto this github page](http://kchanghun.github.io/)
