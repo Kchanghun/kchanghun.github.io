@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-10-05T06:45:52+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Emotion Recognition From EEG Signal Focusing on Deep Learning and Shallow Learning Techniques</title><link href="http://localhost:4000/paper%20review/2022/10/05/Emotion-Recognition-from-EEG-signal-focusing-on-Deep-Learning-and-Shallow-Learning-Techniques.html" rel="alternate" type="text/html" title="Emotion Recognition From EEG Signal Focusing on Deep Learning and Shallow Learning Techniques" /><published>2022-10-05T06:43:27+09:00</published><updated>2022-10-05T06:43:27+09:00</updated><id>http://localhost:4000/paper%20review/2022/10/05/Emotion-Recognition-from-EEG-signal-focusing-on-Deep-Learning-and-Shallow-Learning-Techniques</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/10/05/Emotion-Recognition-from-EEG-signal-focusing-on-Deep-Learning-and-Shallow-Learning-Techniques.html"><![CDATA[<h1 id="abstract">Abstract</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-01-03T11:41:22+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Emotion Recognition From EEG Signal Focusing on Deep Learning and Shallow Learning Techniques</title><link href="http://localhost:4000/paper%20review/2022/10/05/Emotion-Recognition-from-EEG-signal-focusing-on-Deep-Learning-and-Shallow-Learning-Techniques.html" rel="alternate" type="text/html" title="Emotion Recognition From EEG Signal Focusing on Deep Learning and Shallow Learning Techniques" /><published>2022-10-05T06:43:27+09:00</published><updated>2022-10-05T06:43:27+09:00</updated><id>http://localhost:4000/paper%20review/2022/10/05/Emotion-Recognition-from-EEG-signal-focusing-on-Deep-Learning-and-Shallow-Learning-Techniques</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/10/05/Emotion-Recognition-from-EEG-signal-focusing-on-Deep-Learning-and-Shallow-Learning-Techniques.html"><![CDATA[<h1 id="abstract">Abstract</h1>
 <p>최근 <strong>electoencephalogram 기반의 감정 인식</strong>은 <strong>Human-Computer Interaction(HCI)</strong> 시스템이<br />
 더 지능화 되게 해주는 덕에 중요하게 평가되고있다.<br />
 Person-based decision making, mind-machine interfacing, cognitive interaction, affect detection,<br />
@@ -920,94 +920,7 @@ BCI 등 그 적용 범위가 확대될 것으로 예측된다.<br />
 BCI 시스템 개발 시 필요한 뇌파에 대한 기초 지식과 특성을 알아보았다.<br />
 이는 의학이 아닌 공학 기반의 연구자들이 뇌파를 기반으로하는 다양한 시스템 개발시 유용한 참고자료가 될 것이다.<br />
 향후 연구에서는 다양한 환경에서 여러 영역의 뇌파를 실제 측정하고 서로 비교하여<br />
-사용자의 의도와 뇌파 간의 상관도가 높은 뇌파 내의 특징들을 발견하여 효과적인 BCI 시스템 개발에 활용하도록 한다.</p>]]></content><author><name>Gi-Chul Yang</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[요약 뇌파에 관한 많은 기술적 발전에도 불구하고 정확한 뇌파의 측정은 오늘날에도 쉽지 않다. 더욱이 비침습형 뇌파인식기를 이용한 외파의 측정은 정확도가 떨어진다. 하지만 실용적인 뇌-컴퓨터 인터페이스 활용 시스템 개발을 위해서는 사용의 편의성 때문에 비침습형 뇌파인식기를 이용하는 경우가 많다. 특히, 가장 사용하기 편한 비침습형 건식 최파인식기인 경우 뇌파 측정의 정확도가 가장 떨어진다. 본 논문에서는 임상 응용보다는 뇌-컴퓨터 인터페이스 시스템 개발 시 뇌파 측정을 통한 사용자 의도 파악의 정확도를 높이는데 필요한 뇌파에 대한 기초 지식과 특성에 대해 알아본다. 뇌파 측정을 통한 사용자 의도 파악이 정해지면 다양한 분야에서 뇌파의 활용도가 높아지고 새로운 응용 분야도 개척될 것이다.]]></summary></entry><entry><title type="html">Attention Is All You Need</title><link href="http://localhost:4000/paper%20review/2022/09/11/Attention-Is-All-You-Need.html" rel="alternate" type="text/html" title="Attention Is All You Need" /><published>2022-09-11T17:35:12+09:00</published><updated>2022-09-11T17:35:12+09:00</updated><id>http://localhost:4000/paper%20review/2022/09/11/Attention-Is-All-You-Need</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/09/11/Attention-Is-All-You-Need.html"><![CDATA[<h1 id="abstract">Abstract</h1>
-<p>대부분의 sequence 변환 모델들은 encoder와 decoder를 갖는<br />
-복잡한 recurrent나 convolutional neural network를 기반으로 한다.<br />
-가장 잘 수행하는 모델들은 encoder와 decoder를 attention mechanism으로 연결하는 것이다.<br />
-우리는 Transformer라는 새로운 신경망 구조를 제안한다.<br />
-Transformer는 attention mechanism에만 기반을 두고 recurrent와 convolution로만 나눴다.<br />
-번역 작업에서 두가지 기계에 대한 실험은<br />
-이 두 모델들이 더 병렬적이고 더 적은 학습시간을 요구하면서 더 좋은 결과를 나타낸다는 것을 보인다.<br />
-우리의 모델은 WMT 2014 English-to-German 번역 작업에서 28.4 BLEU를 달성했다.<br />
-이는 앙상블을 이용한 기존에 최고로 여겨지던 결과와 비교해 2 BLEU를 넘는 결과였다.<br />
-WMT 2014 English-to-German 번역 작업에서<br />
-우리 모델은 새로운 단일 모델 최신 기술로 BLEU 점수가 41.8을 달성했고,<br />
-3.5일동안 8개의 GPU를 사용해 학습 시켰고 이는 가장 좋은 모델에 대한 학습 비용과 비교해 더 적게 들었다.<br />
-Transformer는 영어 구문의 일과성을 큰 학습 데이터와 작은 학습 데이터에서 성공적으로 이해함으로써<br />
-일반적으로 다른 작업에서도 잘 사용되는것을 보일것이다.</p>
-
-<p><br /></p>
-<h1 id="introduction">Introduction</h1>
-<p>RNN, LSTM 과 GRU 신경망들은 특히 sequence modeling과 변환 문제(language modeling and<br />
-machine trnaslation)에 있어 최신 기술의 접근법으로 만들어졌다.<br />
-Recurrent language model과 encoder-decoder 구조가 갖는 경계를 허물기 위해 많은 노력들이 지속되어왔다.</p>
-
-<p>RNN 모델은 전형적으로 입력과 출력의 sequence가 갖는 symbol의 위치들을 통해 계산하는 것이다.<br />
-그 위치들을 계산 시간동안 time step에 배치하여 RNN 모델들이 hidden states $h_t$의 sequence를 만든다.<br />
-여기서 사용되는 함수는 이전 hidden state인 $h_{t-1}$를 입력으로 받고 입력을 위치 $t$로 처리한다.<br />
-이러한 순차적 본성은 내적으로 학습하는 동안 병렬화를 배제한다.<br />
-그렇게 되면 샘플들에 대해 메모리 제약이 걸려 더 긴 sequence 길이를 처리할 때 문제가 발생하게 된다.<br />
-최근 연구에서 factorization trick들을 통한 계산 효율에서의 많은 개선과<br />
-모델 성능을 개선시키는 조건부 계산이 사용되고 있다.<br />
-그러나 여전히 sequential 계산에 대한 제약들이 남아있다.</p>
-
-<p>Attention mechnism은 입력과 출력 sequence의 길이에 상관없이 종속성을 통해 모델링을 하도록<br />
-다양한 작업에서 강력한 sequence modeling과 변환 모델들의 중요한 부분이 되었다.<br />
-그러나 몇가지 경우를 제외하고 대부분의 경우 attention mechanism은 RNN과 같이 사용된다.</p>
-
-<p>이번 논문에서 우리는 Transformer를 제안한다.<br />
-Transformer는 Recurrence를 피한는 모델 구조로 입력과 출력 사이의 전역적 종속성을 끌어내기 위해<br />
-attention mechanism에 전적으로 의존한다.<br />
-Transformer는 막대한 병렬화를 가능하게 하고 8개의 P100 GPU들을 통해 12시간 정도 학습하면<br />
-번역 작업에서 새로운 최신 기술력에 도달할 수 있다.</p>
-
-<p><br /></p>
-<h1 id="2-background">2 Background</h1>
-<p>Sequential computation을 줄이는 목표는 Extended Neural GPU, ByteNet과 ConvS2S 그리고<br />
-입력과 출력의 모든 위치의 은닉표현을 병렬적으로 계산하는 CNN을<br />
-기본적인 block으로 사용하는 모든 것들의 기초가 된다.<br />
-이런 모델들의 경우 계산 수는 임의의 입력과 출력의 길이와 관련해 늘어나고 선형적인 경우에 ConvS2S이고<br />
-log적으로는 ByteNet이 해당된다.<br />
-이러한 내용 때문에 먼 위치 사이의 종속성은 학습하기 더 어렵다.<br />
-Transformer는 계산수가 상수값으로 줄어든다.<br />
-Attention-weighted positions를 평균내어 해결력이 줄어들기는 하지만 앞서 말했듯 계산수가 줄어들고<br />
-이런 효과는 3.2절에서 말할 내용으로 <strong>Multi-Head Attention</strong>을 사용해 대응한 것이다.</p>
-
-<p>때때로 Intra-attention으로도 불리는 <strong>Self Attention</strong>은<br />
-sequence의 표현을 계산하기 위해 sequence마다 다른 position들과 관련된 개념인 attention mechanism이다.<br />
-Self-attention은 다양한 작업에서 잘 사용되어왔다.<br />
-Reading comprehension(독해력), abstractive summarization, textual entailment와<br />
-learning task-independent sentence representation에 사용되었다.</p>
-
-<p>End-to-end memory network들은 sequence-aligned recurrence 기반의 개념보다<br />
-recurrent attention mechanism에 기반을 두고 언어를 통한 간단한 질문에 대한 대답과<br />
-language modeling 작업에서 좋은 성능을 보여왔다.</p>
-
-<p>그러나 우리가 아는 선에서 가장 좋다고 여겨지는 <strong>Transformer</strong>는 Sequence-aligned RNN이나<br />
-convolution을 사용하지 않고 입력과 출력의 표현을 계산하기 위해<br />
-전적으로 self-attention에 의존하는 첫번째 변환 모델이다.<br />
-뒤에 나오는 절들에서 우리는 Transformer를 묘사하고<br />
-self-attention의 동기와 모델들에서 그것의 이점을 논할 것이다.</p>
-
-<p><br /></p>
-<h1 id="3-model-architecture">3 Model Architecture</h1>
-<p>대부분의 경쟁력있는 neural sequence transduction model들은 encoder-decoder 구조를 가지고 있다.<br />
-여기서 encoder는 symbol representations($x_1,\dots,x_n$)의 입력 sequence를 연속적인 표현<br />
-$\mathbf{z}=(z_1,\dots,z_n)$의 sequence로 mapping한다.<br />
-Decoder는 $\mathbf{z}$가 주어지고 나서 출력 sequence($y_1,\dots,y_m$)의 symbol들을<br />
-한번에 한개의 element씩 만들어 나간다.<br />
-각 step에서 모델은 다음 symbol들을 만들기 위해 이전에 만들어진 symbol들을 추가적인 입력으로써 사용하며<br />
-auto-regressive하게 작동한다.</p>
-
-<p>Transformer는 이런 전반적인 구조를 self-attention과 encoder,decoder에 전결합층을<br />
-point-wise하게 쌓아서 설계한다.<br />
-Figure 1을 참고해라.</p>
-
-<p><img src="/assets/img/Paper_Review/Transformer/Transformer_0.png" alt="Transforemr_0" /></p>
-
-<p><br /></p>
-<h2 id="31-encoder-and-decoder-stacks">3.1 Encoder and Decoder Stacks</h2>
-<p><strong>Encoder</strong>: Encoder</p>]]></content><author><name>Ashish Vaswani, Noam Shazeer, Niki Parmar, etc.</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract 대부분의 sequence 변환 모델들은 encoder와 decoder를 갖는 복잡한 recurrent나 convolutional neural network를 기반으로 한다. 가장 잘 수행하는 모델들은 encoder와 decoder를 attention mechanism으로 연결하는 것이다. 우리는 Transformer라는 새로운 신경망 구조를 제안한다. Transformer는 attention mechanism에만 기반을 두고 recurrent와 convolution로만 나눴다. 번역 작업에서 두가지 기계에 대한 실험은 이 두 모델들이 더 병렬적이고 더 적은 학습시간을 요구하면서 더 좋은 결과를 나타낸다는 것을 보인다. 우리의 모델은 WMT 2014 English-to-German 번역 작업에서 28.4 BLEU를 달성했다. 이는 앙상블을 이용한 기존에 최고로 여겨지던 결과와 비교해 2 BLEU를 넘는 결과였다. WMT 2014 English-to-German 번역 작업에서 우리 모델은 새로운 단일 모델 최신 기술로 BLEU 점수가 41.8을 달성했고, 3.5일동안 8개의 GPU를 사용해 학습 시켰고 이는 가장 좋은 모델에 대한 학습 비용과 비교해 더 적게 들었다. Transformer는 영어 구문의 일과성을 큰 학습 데이터와 작은 학습 데이터에서 성공적으로 이해함으로써 일반적으로 다른 작업에서도 잘 사용되는것을 보일것이다.]]></summary></entry><entry><title type="html">Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation</title><link href="http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation.html" rel="alternate" type="text/html" title="Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation" /><published>2022-09-11T17:17:23+09:00</published><updated>2022-09-11T17:17:23+09:00</updated><id>http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder%E2%80%93Decoder-for-Statistical-Machine-Translation</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation.html"><![CDATA[<h1 id="abstract">Abstract</h1>
+사용자의 의도와 뇌파 간의 상관도가 높은 뇌파 내의 특징들을 발견하여 효과적인 BCI 시스템 개발에 활용하도록 한다.</p>]]></content><author><name>Gi-Chul Yang</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[요약 뇌파에 관한 많은 기술적 발전에도 불구하고 정확한 뇌파의 측정은 오늘날에도 쉽지 않다. 더욱이 비침습형 뇌파인식기를 이용한 외파의 측정은 정확도가 떨어진다. 하지만 실용적인 뇌-컴퓨터 인터페이스 활용 시스템 개발을 위해서는 사용의 편의성 때문에 비침습형 뇌파인식기를 이용하는 경우가 많다. 특히, 가장 사용하기 편한 비침습형 건식 최파인식기인 경우 뇌파 측정의 정확도가 가장 떨어진다. 본 논문에서는 임상 응용보다는 뇌-컴퓨터 인터페이스 시스템 개발 시 뇌파 측정을 통한 사용자 의도 파악의 정확도를 높이는데 필요한 뇌파에 대한 기초 지식과 특성에 대해 알아본다. 뇌파 측정을 통한 사용자 의도 파악이 정해지면 다양한 분야에서 뇌파의 활용도가 높아지고 새로운 응용 분야도 개척될 것이다.]]></summary></entry><entry><title type="html">Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation</title><link href="http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation.html" rel="alternate" type="text/html" title="Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation" /><published>2022-09-11T17:17:23+09:00</published><updated>2022-09-11T17:17:23+09:00</updated><id>http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder%E2%80%93Decoder-for-Statistical-Machine-Translation</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation.html"><![CDATA[<h1 id="abstract">Abstract</h1>
 <p>이번 논문에서 새로운 신경망 모델을 소개한다.<br />
 RNN Encoder-Decoder라는 이름으로 두개의 RNN으로 구성되어있다.</p>
 
@@ -3609,4 +3522,13 @@ ${\partial\ \mathcal{L}\over\partial\ W}$ 는 아래와 같이 구한다.</p>
 <h4 id="michigan-online"><a href="https://www.youtube.com/watch?v=dUzLD91Sj-o&amp;list=PL5-TkQAfAZFbzxjBHtzdVCWE0Zbhomg7r&amp;index=12">Michigan Online</a>,</h4>
 <h4 id="cs-230"><a href="https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-recurrent-neural-networks">CS 230</a>,</h4>
 <h4 id="wiki-docs"><a href="https://wikidocs.net/22886">Wiki Docs</a></h4>
-<h4 id="nptel-noc-iitm"><a href="https://www.youtube.com/watch?v=Xeb6OjnVn8g">NPTEL-NOC IITM</a></h4>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;RNN Note&quot;]" /><summary type="html"><![CDATA[Architecture of a traditional RNN RNN에서는 은닉층에서 활성화 함수를 통해 결과를 내보내는 역할을 하는 노드를 cell(메모리 셀, RNN 셀) 이라고 한다.]]></summary></entry></feed>
+<h4 id="nptel-noc-iitm"><a href="https://www.youtube.com/watch?v=Xeb6OjnVn8g">NPTEL-NOC IITM</a></h4>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;RNN Note&quot;]" /><summary type="html"><![CDATA[Architecture of a traditional RNN RNN에서는 은닉층에서 활성화 함수를 통해 결과를 내보내는 역할을 하는 노드를 cell(메모리 셀, RNN 셀) 이라고 한다.]]></summary></entry><entry><title type="html">Vector Differential</title><link href="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html" rel="alternate" type="text/html" title="Vector Differential" /><published>2022-08-21T15:08:13+09:00</published><updated>2022-08-21T15:08:13+09:00</updated><id>http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98%20%EB%AF%B8%EB%B6%84</id><content type="html" xml:base="http://localhost:4000/math%20note/2022/08/21/%EB%B2%A1%ED%84%B0%EC%9D%98-%EB%AF%B8%EB%B6%84.html"><![CDATA[<p><img src="/assets/img/Math_Note/VectorDifferential/vector_diff_0.jpg" alt="vector_diff_0" /></p>
+
+<p><img src="/assets/img/Math_Note/VectorDifferential/vector_diff_1.jpg" alt="vector_diff_1" /></p>
+
+<p><img src="/assets/img/Math_Note/VectorDifferential/vector_diff_2.jpg" alt="vector_diff_2" /></p>
+
+<p><img src="/assets/img/Math_Note/VectorDifferential/vector_diff_3.jpg" alt="vector_diff_3" /></p>
+
+<h3 id="참고자료">참고자료</h3>
+<h4 id="michigan-online"><a href="https://www.youtube.com/watch?v=dB-u77Y5a6A">Michigan Online</a></h4>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;Math Note&quot;]" /><summary type="html"><![CDATA[]]></summary></entry></feed>

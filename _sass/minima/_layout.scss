@@ -105,8 +105,18 @@
 */
 .category_box{
   float: left;
-  margin-top: 10%;
-  padding-inline: 2%;
+  width: 20%;
+  position: fixed;
+  top: 25%;
+  left: 3%;
+  // padding-inline: 2%;
+}
+.categorybox_empty_space{
+  float: left;
+  width: 13%;
+  color: aqua;
+  opacity: 0;
+  // padding-inline: 2%;
 }
 
 /**
@@ -184,8 +194,8 @@
  */
 .page-content {
   padding: $spacing-unit 0;
-  // flex: 1;
-  // float: left;
+  float: left;
+  width: 80%;
 }
 
 .page-heading {
