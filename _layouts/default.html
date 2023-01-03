@@ -8,13 +8,16 @@
     {%- include header.html -%}
 
     <div class="container">
-      {% include categorybox.html%}
-      <div class="categorybox_empty_space">empty space</div>
-      <main class="page-content" aria-label="Content">
-        <div class="wrapper">
-          {{ content }}
-        </div>
-      </main>
+      <div class="row">
+
+        {% include categorybox.html%}
+        <div class="categorybox_empty_space">empty space</div>
+        <main class="page-content" aria-label="Content">
+            <div class="wrapper">
+              {{ content }}
+            </div>
+        </main>
+      </div>
     </div>
 
     {%- include footer.html -%}

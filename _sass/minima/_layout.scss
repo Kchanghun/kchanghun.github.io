@@ -105,16 +105,18 @@
 */
 .category_box{
   float: left;
-  width: 20%;
+  width: 15%;
   position: fixed;
   top: 25%;
   left: 3%;
+  // background-color: coral;
   // padding-inline: 2%;
 }
 .categorybox_empty_space{
   float: left;
-  width: 13%;
-  color: aqua;
+  width: 15%;
+  background-color: aqua;
+  margin-left: 3%;
   opacity: 0;
   // padding-inline: 2%;
 }
@@ -196,6 +198,7 @@
   padding: $spacing-unit 0;
   float: left;
   width: 80%;
+  // background-color: rgb(0, 85, 0)
 }
 
 .page-heading {
