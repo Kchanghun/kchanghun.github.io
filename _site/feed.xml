@@ -1,4 +1,183 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://192.168.0.41:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://192.168.0.41:4000/" rel="alternate" type="text/html" /><updated>2023-01-05T21:22:29+09:00</updated><id>http://192.168.0.41:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">Convolutional RNN: an Enhanced Model for Extracting Feauters from Sequential Data</title><link href="http://192.168.0.41:4000/paper%20review/2023/01/05/Ensemble-Adversarial-Training-Attacks-And-Defenses.html" rel="alternate" type="text/html" title="Convolutional RNN: an Enhanced Model for Extracting Feauters from Sequential Data" /><published>2023-01-05T15:20:27+09:00</published><updated>2023-01-05T15:20:27+09:00</updated><id>http://192.168.0.41:4000/paper%20review/2023/01/05/Ensemble-Adversarial-Training-Attacks-And-Defenses</id><content type="html" xml:base="http://192.168.0.41:4000/paper%20review/2023/01/05/Ensemble-Adversarial-Training-Attacks-And-Defenses.html"><![CDATA[<h1 id="abstract">Abstract</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-02-06T16:59:37+09:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">No Free Knowledge</title><subtitle>There is No Free Knowledge when we study something.</subtitle><author><name>Chang Hun Kang</name></author><entry><title type="html">INTELLIGENCE LEVEL MIGHT BE PREDICTED BY THE CHARACTERISTICS OF EEG SIGNALS AT SPECIFIC FREQUENCIES AND BRAIN REGIONS</title><link href="http://localhost:4000/paper%20review/2023/02/06/Intelligence-level-might-be-predicted-by-the-characteristics-of-eeg-signals-at-specific-frequencies-and-brain-regions.html" rel="alternate" type="text/html" title="INTELLIGENCE LEVEL MIGHT BE PREDICTED BY THE CHARACTERISTICS OF EEG SIGNALS AT SPECIFIC FREQUENCIES AND BRAIN REGIONS" /><published>2023-02-06T10:55:27+09:00</published><updated>2023-02-06T10:55:27+09:00</updated><id>http://localhost:4000/paper%20review/2023/02/06/Intelligence-level-might-be-predicted-by-the-characteristics-of-eeg-signals-at-specific-frequencies-and-brain-regions</id><content type="html" xml:base="http://localhost:4000/paper%20review/2023/02/06/Intelligence-level-might-be-predicted-by-the-characteristics-of-eeg-signals-at-specific-frequencies-and-brain-regions.html"><![CDATA[<p>뇌가 소비하는 에너지와 지능적 확동을 할 때 뇌의 부위별 정보의 흐름에 대한 강도로 각자의 지능 척도를 설명할 수 있을 것이다. 이 가정을 증명하기 위해 18~25살 사이에 43명의 학생들을 피험자로 모집했다. 그들의 intelligence quotients(IQ)는 Wechsler Adult Intelligence Scale(WAIS)에 의해 측정되었다. 그러면서 Neuroscan system을 통해 그들의 EEG signal을 동시에 기록했다. 전체 에너지와 EEG 신호 패턴의 분포는 Curry 8.0을 통해 얻었다. 뇌 부위별 정보 흐름의 강도는 <strong>Phase Slope Index(PSI)</strong>를 통해 측정했다. 20개의 채널들을 통해 190개의 결합이 데이터 분석에 선택되었다. 결과는 IQ 지수가 EEG 에너지와 반비례하고 특정 채널 쌍에서 얻은 특정 주파수 영역에서 측정한 정보 흐름의 강도와는 정비례 하였다. 특히 긴 채널쌍일 수록 높은 연관성을 보였다.</p>
+
+<p><strong>Keywords</strong>: Electroencephalogram; intelligence quotients; phase slope index; information flow; efficiency; correlation.</p>
+
+<h1 id="1-introduction">1. Introduction</h1>
+<p>오랜 기간동안 다양한 규칙들을 통해 인간 지능에 대한 연구가 폭 넓게 고려되어왔다. 지능을 측정하기 위해서는 두가지 classic한 방법이 있는데 Raven’s Standard Progressive Matrices(RSPM)과 Weschsler Adult Intelligence Scale(WAIS)가 있다. 두 방법 모두 지능을 정량적으로 측정하여 흔히 말하는 IQ값을 계산한다. 이전 연구들은 IQ가 시간과 주파수 도메인의 brain wave 특정들과 neural network의 복잡성 그리고 뇌의 정보처리 효율성과 관련이 있다고 보여주고 있다. Discriminant 분석과 multi-variate regression의 결과들은 EEG와 IQ의 연광성에 영향을 주는 EEG의 특성이 다음과 같다고 말한다 : EEG phase &gt; EEG coherence &gt; EEG amplitude asymmetry &gt; absolutepower &gt; relative power and power ratios;
+Frontal과 posterior cortical 영역의 phase의 delay와 함께 EEG의 일관성 감소는 IQ와 강한 연관성이 있다.
+뇌의 구조적 연결은 diffusion tensor imaging과 살아있거나 거의 죽은 개인에 있어서 비슷한 특성을 보이는 structural magnetic resonance imaging(MRI)을 통해 증명할 수 있다.
+구조적 연결성 너머 각각의 뇌 부위들은 기능적으로 연결되어있다. EEG 신호의 coherence와 특정 부위에 따른 fMRI의 연관성을 측정함으로써 뇌 부위와 연관된 공유되는 기능들을 증명할 수 있다. 최근 brain wave 연구들은 IQ가 brain network의 복잡성과 효율성에 정비례하는 연관성이 있다고 말한다. Thatcher는 brain resources의 효율적인 분포를 다루어 뇌와 지능지수와의 연광성을 묘사하는 특정한 모델을 제안했다. 의심할 여지없이 brain wave 분야에서 뇌의 기능적 연결은 앞으로 주목받을 내용인것은 확실하다. 이번 논문에서 우리는 IQ와 시간과 주파수 도메인에서 EEG 특성(특히 정보의 흐름)의 연관성을 이 둘사이의 잠재적 연결성을 발견하기 위해 연구했다.</p>
+
+<p>\(\)</p>
+<h1 id="2-materials-and-methods">2. Materials and Methods</h1>
+<h2 id="21-wechslers-iq-test-and-eeg-signal-acquisition">2.1. Wechsler’s IQ test and EEG signal acquisition</h2>
+<p>18명의 남자와 25명의 여자로 이루어진 총 43명의 학생들은 모두 18~25세로 실험에 피험자로 모집되었다. 모든 피험자들은 신경계 질병 기록이 없으며 실험 24시간 안에 어떤 약도 섭취하지 않았다. 실험 전에 피험자들은 실험에 대해 세부사항까지 명확하게 인지하고 있었다. 기록 과정은 피험자들이 취하지 않고 차분한 상태에서 눈을 뜬 상태에서 시작했다. Wechsler’s IQ test는 60초동안 피험자들에게 빈 화면을 보여준 뒤에 시작되었다. test 동안 10-20시스템을 따르며 서로다른 위치에 부착된 59개의 electrode들로부터 EEG 신호를 기록했다. Postauricular mastoid가 reference spot으로 사용되었다. Sampling Frequency는 1000Hz로 진행했고 impedance값은 $10 \text{K}\Omega$ 아래 값으로 조절하며 수행했다. Wechsler test가 끝나고 피험자들은 차분한 상태가 되도록 하며 EEG recording을 1분 더 진행했다. 실험 과정은 E-Prime program으로 우리가 직접 만든 것으로 통제되었다. 전체 EEG 신호의 길이는 약 25분정도이다.</p>
+<h2 id="22-data-preprocessing">2.2 Data Preprocessing</h2>
+<p>Original EEG신호들은 눈 깜빡임, 팔다리 움직임 등등으로 인해 쉽게 오염될 수 있다. 그러므로 원 신호에서 잡음과 artifact들을 제거하는 것은 필수적이다. 전처리는 Matlab에서 진행되었다.</p>
+<h2 id="23-fast-fourier-transform">2.3 Fast Fourier transform</h2>
+<p>전처리된 EEG 신호들은 푸리에 변환을 진행했다. $\delta, \theta, \alpha, \beta$ band에 분포된 패턴들을 관찰하고 분석했다.</p>
+<h2 id="24-phase-slope-index-psi">2.4 Phase Slope Index (PSI)</h2>
+<p>Phase Slope Index (PSI)는 Nolte가 2008년도에 제안했다. PSI는 두개의 time series 사이의 cross spectrum phase의 slope를 기반으로 계산되었다. 두 상호작용하는 시스템들에서 정해진 시간의 delay는 다른 방식으로 주파수 성분에 영향을 줄것이다. 따라서 여러 time series에서 연관성을 감지가 가능하도록 만들어야 한다. PSI는 연관이 없는 신호들에 반응을 보이지 않기 때문에 PSI가 연관성 있는 신호들 사이에 delay 연관성을 표현하기 더 적잘하다. 이번 연구에서 두피에 분포한 20개의 채널들을 선택해 PSI value를 계산해따. 모든 들을 2개씩 짝지음으로써 190개의 결함이 형성되었다. 각 결합에서의 PSI value는 정보의 흐름을 나타내는 특성이 될것이다. 이번 실험에서 관찰된 신호는 다음과 같이 표현할 수 있다:</p>
+
+\[\begin{align}
+y(t) = x(t) + B\eta(t)
+\end{align}\]
+
+<p>$x(t)$는 time series에서 정보를 표현한다; $\eta(t)$는 M개의 독립적인 noise source들이다, B는 2 x M의 형태로 잡은과 특정할 채널의 혼합체이다.</p>
+
+<p>두 채널들의 cross spectrum은 아래와 같이 표현한다:</p>
+
+\[\begin{align}
+S_{ij}(f)=\left\langle \left( \hat{y}_i(f)\hat{y}^*_j(f) \right) \right\rangle
+\end{align}\]
+
+<p>여기서 $\left\langle\right\rangle$은 expectation operator이다.
+최종적으로 PSI는 다음과 같이 정의된다:</p>
+
+\[\begin{align}
+\tilde\psi_{ij}=\Im\left(\sum_{f\in F}C^*_{ij}(f)C_{ij}(f+\delta f)\right)\\
+C_{ij}(f) = \dfrac{S_{ij}(f)}{\sqrt{S_{ii}(f)S_{jj}(f)}}
+\end{align}\]
+
+<p>여기서 $C_{ij}(f)$는 complexity correlation이고 S는 cross-spectrum matrix이고 $\delta f$는 frequency resolution이고 $\Im(\cdot)$은 Imaginary part만 남기는 부분이고 $F$는 모든 주파수 영역을 뜻한다.</p>
+
+<p>Average slope인 $\tilde{\psi}_{ij}$는 아래와 같이 표현할 수 있다:
+\(\begin{align}
+\tilde{\psi}_{ij}=\sum_{f\in F}\alpha_{ij}(f)\alpha_{ij}(f+\delta f)\sin{(\Phi(f+\delta f)-\Phi(f))}
+\end{align}\)</p>
+
+<p>여기서 $\alpha_{ij}(f)=|C_{ij}(f)|$는 해당 주파수의 가중치이다.
+Phase spectrum을 smooth하기 위해 $\sin{(\Phi(f+\delta f)-\Phi(f))}\approx \Phi(f+\delta f)-\Phi(f)$로 추정하므로 $\tilde\Psi_{ij}$는 slope의 가중치 평균이다.
+마지막으로 $\tilde\Psi$는 std값을 통해 표준화한다.</p>
+
+\[\begin{align}
+\Psi = \dfrac{\tilde\Psi}{\text{std}(\tilde\Psi)}
+\end{align}\]
+
+<p>여기서 $\text{std}(\tilde\Psi)$는 Jackknife 방법으로 평가했다.
+\(\)
+만약 $\tilde\Psi&gt;0$인 경우 정보 흐름의 방향은 i -&gt; j 방향이고 그렇지 않다면 j-&gt;i일 것이다. 이번 연구에서 정보 흐름의 방향은 $\Psi$ 절댓값이 2보다 큰 경우에만 타당하도록 고려했다.
+\(\)
+이번 연구를 위해 190개의 채널 결합들의 PSI 값들은 아래 주파수 band에 따라 계산되었다.</p>
+
+\[\begin{align*}
+\delta \quad &amp;band (1-4Hz)\\
+\theta \quad &amp;band (4-8Hz)\\
+\alpha 1 \quad &amp;band (8-19Hz)\\
+\alpha 2 \quad &amp;band (10-13Hz)\\
+\beta 1 \quad &amp;band (13-15Hz)\\
+\beta 2 \quad &amp;band (15-18Hz)\\
+\beta 3 \quad &amp;band (18-25Hz)\\
+\text{hi-}\beta \quad &amp;band (25-30Hz)
+\end{align*}\]
+
+<h2 id="25-eeg-signal-stadardization">2.5 EEG signal stadardization</h2>
+<p>통제할 수 없는 많은 요인들 예를들어 두피의 두께, 머리카락의 밀도, impedance 등등 때문에 EEG 신호 수집에 어려움이 있기 때문에 신호의 질이 영향을 받는다. 통제할 수 없는 요인들의 영향을 제거하기 위해 수집된 EEG 신호들을 아래와 같이 표준화 한다.</p>
+
+\[\begin{align}
+X_n=\dfrac{x_n}{m}
+\end{align}\]
+
+<p>여기서 $x_n$ 은 특정 채널의 EEG 신호이고 $m$은 해당 채널의 mean of absolute value이고 $X_n$은 표준화된 EEG신호이다.</p>
+
+<p>\(\)</p>
+<h1 id="3-results">3. Results</h1>
+<h2 id="31-the-eeg-energy-distribution-in-the-process-of-intellectual-activity">3.1 The EEG energy distribution in the process of intellectual activity</h2>
+<p>Curry 8.0으로 그린 EEG topography로부터 뇌 활동 영역의 분포와 위치는 피험자마다 다르다는 것을 알 수 있다. EEG 에너지들은 18개의 eletrode들에 집중되어있다. 31명의 피험자들은 FC6에서 높은 EEG energy를 보였고 피험자 절반은 다음 17개의 electrode에서 높은 EEG energy를 보였다 : F6, F8, FC5, Fc4, FT8, C5, C3, C2, C4, C6, T8, CP2, CP4, CP6, TP8, P6, PO7.</p>
+
+<p align="center"><img style="width: 90%" src="../../../../assets/img/Paper_Review/IntelligenceEEG/intelligenceEEG_1.png" /></p>
+
+<p align="center"><img style="width: 90%" src="../../../../assets/img/Paper_Review/IntelligenceEEG/intelligenceEEG_2.png" /></p>
+
+<h2 id="32-iq-and-eeg-energy">3.2 IQ and EEG energy</h2>
+<p>머리 전체에서 나온 total EEG energy는 모든 피험자에 대해 계산되었다. 결과는 EEG energy와 IQ의 연관성을 특정짓기 위해 분석되었다. 아래 사진으로부터 total EEG energy의 평균값은 낮을수록 IQ가 높은 경향을 보였다. 즉 EEG energy와 IQ는 반비례한다는 것이다.</p>
+
+<p align="center"><img style="width: 90%" src="../../../../assets/img/Paper_Review/IntelligenceEEG/intelligenceEEG_3.png" /></p>
+
+<h2 id="33-iq-and-eeg-frequency">3.3 IQ and EEG frequency</h2>
+<p>FFT의 결과에서는 지능적 활동 과정에서 $\alpha, \beta$ band에서 EEG 신호의 amplitude가 높게 측정되었다. $\alpha$ band는 보통 사람에게 있어서 EEG의 기본적인 rythm으로 피험자가 취하지 않은 상태이고 차분한 상태일 때 감지된다. $\beta$ wave는 사람이 자극을 받은 뒤에 나타나는 wave로 뇌가 집중이다 고도의 긴장상태 임을 뜻한다.
+\(\)
+모든 참여자들은 $\alpha, \beta$ band에서 높은 amplitude를 보였다. 피험자들은 그들의 WAIS 점수를 통해 high, medium 그리고 low IQ group으로 나뉘었다. ANOVA 분석을 수행하여 각 IQ group간에 $\alpha, \beta$ band에서의 의미있는 차이를 찾도록 헸다($P&lt;0.05$). 의미있는 값은 $\alpha, \beta, \text{both}\ \alpha\ \text{and}\ \beta$ band 각각에서 $P(\alpha), P(\beta), P(\alpha+\beta)$로 표기하도록 했다. 결과는 $P(\alpha), P(\beta), P(\alpha+\beta)$ 값들이 모두 0.05보다 큰 값을 보인다는 것이고 이것은 서로 다른 IQ group 끼리 $\alpha, \beta$ band에서 의미있는 차이가 없다는 것을 나타낸다.</p>
+
+<p align="center"><img style="width: 90%" src="../../../../assets/img/Paper_Review/IntelligenceEEG/intelligenceEEG_4.png" /></p>
+
+<h2 id="34-number-of-valid-psis-in-each-frequency-band">3.4 Number of valid PSIs in each frequency band</h2>
+<p>피험자들의 PSI 값들을 각 주파수에 따라 표준화 한 다음, PSI의 절댓값이 2보다 큰 경우에만 타당한 PSI 값으로 고려했다. 타당한 PSI 값의 수는 각 주파수 영역에 따라 피험자마다 달랐다. 가장 큰 타당한 PSI의 평균값은 $\beta 3$ band에서 나타났으며 이는 $\beta 3$가 IQ와 높은 연관성을 가질 수 있다는 것을 뜻한다.</p>
+
+<p align="center"><img style="width: 90%" src="../../../../assets/img/Paper_Review/IntelligenceEEG/intelligenceEEG_5.png" /></p>
+
+<p>하지만 각 IQ group에서 수행한 ANOVA 분석은 통계적으로 타당한 PSI 값에는 유의미한 차이가 없다고 말하고 있다.</p>
+
+<p align="center"><img style="width: 90%" src="../../../../assets/img/Paper_Review/IntelligenceEEG/intelligenceEEG_6.png" /></p>
+
+<p>타당한 PSI 값은 brain network complexity로 고려할 수 있다. 이 결과는 brain network의 complexity와 지능적 성능과는 연관이 없다는 것을 말하고 있다.</p>
+
+<h2 id="35-iq-and-the-mean-value-of-psi">3.5 IQ and the mean value of PSI</h2>
+<p>Absolute PSI value들은 low와 high IQ group간에 상당한 차이가 있다. PSI의 variation값은 brain network의 복잡성과 인간 신경계에서 정보전달 메카니즘 과의 연관성을 나타낼 수 있다. 아래 그림에서 low IQ group과 high IQ group 간에 absolute PSI value 차이를 나타냈다.</p>
+
+<p align="center"><img style="width: 90%" src="../../../../assets/img/Paper_Review/IntelligenceEEG/intelligenceEEG_7.png" /></p>
+
+<h2 id="36-iq-and-information-flow-path-of-different-distance">3.6 IQ and information flow path of different distance</h2>
+<p>정보가 흐르는 거리는 long(&gt;12cm)와 short(&lt;=12cm) group으로 나누었다. t-test를 통해 서로 다른 거리를 갖는 채널 쌍에서 얻은 정보의 흐름과 IQ 간의 연관성을 계산했다. 그 결과에서 high IQ group과 low IQ group 각각에서 얻은 PSI value들이 충분한 차이를 보였는데 짧은 거리를 갖는 채널 결합들은 17개에서 긴 거리를 갖는 채널 결합들에서는 24개에서 충분한 결과를 얻었다.</p>
+
+<p align="center"><img style="width: 90%" src="../../../../assets/img/Paper_Review/IntelligenceEEG/intelligenceEEG_8.png" /></p>
+
+<p>이러한 결과들은 특히 긴 거리를 갖는 채널 쌍에서 두 채널간의 소통의 효율이 IQ와 연관이 있다고 말한다. PSI 값들은 좌반구냐 우반구냐에 따라서도 IQ group마다 달랐다. 좌반구에서는 한개의 채널쌍이 alpha1 band에서, 2개의 채널쌍이 alpha2 band에서 그리고 4개의 채널쌍이 hi-beta band에서 high IQ group과 low IQ group이 유의미한 차이(p&lt;0.05)를 보였다. 우반구에서는 2개의 채널쌍이 theta band에서, 1개의 채널쌍이 alpha1 band에서, 2개의 채널쌍이 alpha2 band에서, 2개의 채널쌍이 beta1 band에서 3개의 채널쌍이 beta3 band에서 그리고 1개의 채널쌍이 hi-beta band에서 유의미한 차이를 보였다. 전체적으로 좌반구와 우반구에서 각각 7개와 11개의 채널쌍이 IQ와 PSI 값 사이의 연관성을 강하게 나타냈다.</p>
+
+<p align="center"><img style="width: 90%" src="../../../../assets/img/Paper_Review/IntelligenceEEG/intelligenceEEG_9.png" /></p>
+
+<h2 id="37-multivariate-linear-regression">3.7 Multivariate linear regression</h2>
+<p>High IQ group과 low IQ group 사이에 거리와 주파수에 따라 유의미한 차이를 보이는 채널쌍은 41개이다. 그들 중에서 5개의 채널 쌍(C3/PO7, F7/TP8, F7/FC6, F3/P4 and F4/P3)이 반복적으로 나타났다. 우리는 step-wise multivariate linear regresesion을 5개의 채널쌍에서 다른 주파수를 적용하여 PSI값들로 진행했다. 그렇게 해서 만들어진 식은 아래와 같다.</p>
+
+\[\begin{align}
+Y=6.75*X1-19.63*X2+263.58*X3-252.04*X4-14.36*X5+135.26
+\end{align}\]
+
+<p>여기서</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">variable</th>
+      <th style="text-align: center">PSI</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">X1</td>
+      <td style="text-align: center">hi-beta of C3/PO7</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">X2</td>
+      <td style="text-align: center">beta1 of F7/TP8</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">X3</td>
+      <td style="text-align: center">beta1 of F7/FC6</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">X4</td>
+      <td style="text-align: center">beta1 of F3/P4</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">X5</td>
+      <td style="text-align: center">hi-beta of F4/P3</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>에 대한 변수이고 Y는 IQ score에 대한 변수이다. R, R2 그리고 adjusted R2 값들은 각각 0.96, 0.93, 0.86이고 이것은 이 방정식이 상대적으로 믿을만하게 IQ score를 예측하는 모델이라는 것을 말한다.</p>
+
+<h1 id="discussion">Discussion</h1>
+<p>이번 연구에서 지능적 활동 과정에서 EEG 특성을 연구했다. 그 결과 EEG signal의 energy는 두피에 비균등하게 분포하고 있다는 것을 알았다. High energy는 FC6에서 높은 주파수로 나타났고 다른 위치로는 F6, F8, FC5, FC4, FT8, C5, C3, C2, C4, C6, T8, CP2, CP4, CP6, TP8, P6, PO7이 있다. 이전 연구를 통해 알고 있듯이 뇌의 좌반구는 음성 처리와 논리적 사고의 중추이다. 즉 continuous, ordered and analytic task를 다루는 역할을 하며 사람의 speech, reading, writing, calculation, arrangement, classification, language recall and time feeling등이 있다. 우뇌는 image thinking과 divergent thinking의 중추이다. 우뇌는 주로 perception, image memory, complex perceptual model cognition, spatial relationship cognition, imagination, music, emotion 등등 불연속적이고 확산과 통합적인 특성이 수반된다. 사람들은 좌뇌를 continuous, ordered and analytic task와 관련되 routine live에서 더 사용한다. 그러므로 좌뇌는 더 개발되었기 때문에 우뇌의 발전이 IQ 향상에 중요하다고 합리적인 유추가 가능하다. 이번 연구에서 <strong>high EEG energy는 주로 우뇌에 집중되어있고 이것은 우뇌의 활성상태가 지적 활동과 IQ와 밀접한 관련이 있다는 뜻이다.</strong>
+\(\)
+이번연구에 참여한 피험자들은 그들의 IQ 지수에 따라 low부터 high까지 group으로 나누었다. 놀랍게도 EEG 에너지가 감소하면 IQ score가 올라가는 명백한 경향성을 볼 수 있었다. 즉 높은 지능을 가진 사람일수록 문제 해결에 있어서 더 적은 brain energy를 소비한다는 것이다. 이러한 사실은 에너지 이용의 효율성은 지능 수준에 많은 영향을 줄것이라 여겨진다. 같은 문제를 당면했을 때, 낮은 지능의 사람은 뇌 전체에 걸쳐 많은 뉴런들을 수집하여 유용한 정보를 찾고 그들을 최종 정답의 형태로 만들지만 비교적 높은 지능의 사람은 fast cognition, analytic thinking 또는 memory searching을 통해 효율적으로 유용한 정보를 수집한다. 어떤 작업은 다른 지능 수준에 따라 다양한 사람들에 의해 “쉬움” 또는 “어려움”으로 나뉠 수 있다. 문제를 해결하는 과정에 사람이 더 많은 노력을 기울이면 두피 전체에 걸쳐 더 높은 EEG energy가 나타나게 된다.
+Brain network의 효율은 아마도 뇌의 구조, knowledge reserve, functional coordination 등등의 영향을 받을 것이고 이 효율은 지적 수준을 결정하는 중요한 요인일 것이다. 지적 활동을 하는 동안 수집된 EEG signal에서 alpha와 beta band에서 비교적 높은 amplitude가 기록되었다. 그러나 alpha와 beta 주파수와 지능 사이에 강한 연관성은 발견되지 않았다고 다른 사람들도 말하고 이 연구에서도 보여지고 있다. alpha와 beta 주파수에서의 power를 통한 IQ score를 선형 회귀했더니 이들 사이에는 약한 연관성이 나타난다는 것을 알 수 있었다.
+Brain network에서 정보의 흐름은 PSI 값을 통해 측정할 수 있다. 그리고 그 PSI 값의 절댓값이 2보다 큰 경우 그것이 타당하다고 할 수 있다. 비록 타당한 PSI 값들의 수는 band에 따라 다양하지만 그들은 beta3 band에 집중되어있다. Beta3 band에서 valid PSI의 평균 수치는 78.65였다. 모든 band에 있어서 PSI 값들의 평균치를 계산했더니 그 결과는 PSI 값들의 평균치는 high IQ group이 low IQ group보다 더 높게 측정이 되고있었고 이것은 PSI value와 IQ score가 정비례하는 연관성을 갖는다고 해석할 수 있다. 전체 두상에 걸쳐 긴 거리를 통해 흐르는 정보를 분석하면 특히 alpha2와 beta1 band에서 low IQ group과 high IQ group사이에 PSI value에 있어서 충분한 차이를 나타냈다.
+게다가 각 반구에 따라 연구를 진행했더니 좌뇌에서 alpha2, hi-beta band에서 low group과 high group 사이에 충분한 차이를 보였고 우뇌에서는 정보의 흐름이 theta, alpha1, alpha2, beta1, beta3, hi-beta에서 두 지능 그룹에서 큰 차이를 보였다. 일반적으로 PSI 값을 통해 측정된 정보의 흐름은 brain network의 효율성에 대한 지표로 고려될 수 있다. 이번 연구의 결과는 IQ score와 좌뇌와 우뇌 사이에 이루어지는 소통의 효율성이 정비례하는 연관성을 보여주고 있다. 그럼에도 우리가 여기서 효율성으로 간주한 뇌의 부위별 정보의 소통 속도와 질을 보장된 정보의 전달 다시말해 마치 방해받지 않는 고속도로로 여기고 있다는 것을 지적해야 한다. 효율성은 정보의 소통이 정확하다고 보장하지 않는다. Knowledge reserve와 constant study는 어쩌면 개인의 지적 수준에 더 큰 영향을 미칠 수 있다. 왜냐하면 학습 과정과 지식의 축적은 인지와 brain network의 형태를 향상시키므로 지속적으로 효율성을 향상시키기 때문이다. 게다가 이번 연구에서 만들어진 regression equation(R=0.96, R2=0.93, adjusted R2=0.86)은 피험자들의 IQ score를 예측하는 모델이 될 수 있다.</p>
+
+<h1 id="5-conclusions">5. Conclusions</h1>
+<p>이번 연구에서 time과 frequency 도메인에서 EEG의 특성과 IQ 사이에 연관성을 조사했다. 각 채널 쌍에 의한 PSI value들은 IQ score이 brain nework의 효율성과 연관 있다고 증명했다. 그리고 지적 활동에서 EEG 신호의 에너지는 IQ 지수와 반비례 연관성이 있음을 찾아냈다. 그에 대한 타당한 이유로는 높은 지능의 사람은 낮은 지능의 사람보다 정신적 작업을 더 가볍게 특정짓기 때문이라고 생각해 볼 수 있다; 따라서 머리가 좋은 사람은 정신적 작업을 수행하기 위해서 더 적은 에너지를 사용한다. PSI value들은 정보의 흐름에 대한 지표로 그 특성을 나타낸다. 이번 연구에서 우리는 특정 주파수에서 긴 거리를 갖는 채널의 결합으로 부터 발생한 정보의 흐름은 IQ score와 정비례하는 특성이 있다고 찾아냈다. 그리고 긴거리를 통해 얻은 정보의 흐름은 짧은 거리를 통해 얻은 정보의 흐름보다 더 IQ에 영향을 준다고 결과를 통해 알게 되었는데 이는 이전 연구들과는 일관성 있는 결과가 아니었다.</p>]]></content><author><name>Song Luo, Rui Chen, Zhengting Yang and Kun Li</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[뇌가 소비하는 에너지와 지능적 확동을 할 때 뇌의 부위별 정보의 흐름에 대한 강도로 각자의 지능 척도를 설명할 수 있을 것이다. 이 가정을 증명하기 위해 18~25살 사이에 43명의 학생들을 피험자로 모집했다. 그들의 intelligence quotients(IQ)는 Wechsler Adult Intelligence Scale(WAIS)에 의해 측정되었다. 그러면서 Neuroscan system을 통해 그들의 EEG signal을 동시에 기록했다. 전체 에너지와 EEG 신호 패턴의 분포는 Curry 8.0을 통해 얻었다. 뇌 부위별 정보 흐름의 강도는 Phase Slope Index(PSI)를 통해 측정했다. 20개의 채널들을 통해 190개의 결합이 데이터 분석에 선택되었다. 결과는 IQ 지수가 EEG 에너지와 반비례하고 특정 채널 쌍에서 얻은 특정 주파수 영역에서 측정한 정보 흐름의 강도와는 정비례 하였다. 특히 긴 채널쌍일 수록 높은 연관성을 보였다.]]></summary></entry><entry><title type="html">Convolutional RNN: an Enhanced Model for Extracting Feauters from Sequential Data</title><link href="http://localhost:4000/paper%20review/2023/01/05/Ensemble-Adversarial-Training-Attacks-And-Defenses.html" rel="alternate" type="text/html" title="Convolutional RNN: an Enhanced Model for Extracting Feauters from Sequential Data" /><published>2023-01-05T15:20:27+09:00</published><updated>2023-01-05T15:20:27+09:00</updated><id>http://localhost:4000/paper%20review/2023/01/05/Ensemble-Adversarial-Training-Attacks-And-Defenses</id><content type="html" xml:base="http://localhost:4000/paper%20review/2023/01/05/Ensemble-Adversarial-Training-Attacks-And-Defenses.html"><![CDATA[<h1 id="abstract">Abstract</h1>
 <p>전통적인 합성곱층들은 입력값에 affine 함수를 통해 비선형성을 적용해 데이터의 패치들로부터 특징을 추출한다.<br />
 우리는 이러한 특징 추출 과정에서 데이터의 패치들을 RNN에 feeding하고 그것의 output이나 hidden state들을<br />
 추출된 특징으로 사용하여 더 향상된 모델을 제안한다.<br />
@@ -53,7 +232,7 @@ convolutional layer와 비교해 잠재적으로 더 좋은 특징을 추출할 
 <br />
 <br /></p>
 <h1 id="ii-related-work">II. Related Work</h1>
-<p>hi</p>]]></content><author><name>Gil Keren, Bjorn Schuller</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract 전통적인 합성곱층들은 입력값에 affine 함수를 통해 비선형성을 적용해 데이터의 패치들로부터 특징을 추출한다. 우리는 이러한 특징 추출 과정에서 데이터의 패치들을 RNN에 feeding하고 그것의 output이나 hidden state들을 추출된 특징으로 사용하여 더 향상된 모델을 제안한다. 그렇게 해서 우리는 sequential data가 가지고 있는 몇개의 프레임들이 포함된 window를 그 자체가 sequential 인 것으로 간주하여 이러한 추가적인 구조가 데이터의 중요한 정보를 잃지 않을 것이라는 사실을 이용 할 것이다. 추가적으로 우리는 비선형성이 도입된 affine 함수는 매우 간단한 특징만 얻을 수 있으므로 affine과 비슷한 잠재적 이점을 가진 몇가지 추가적인 계산 과정을 허용 할 것이다. 우리는 convolutional rnn을 사용하여 기존의 cnn을 통한 결과보다 더 좋은 성능을 two audio 분류 작업에서 얻을 수 있었다. 해당 모델의 Tensorflow 코드는 다음에서 확인 할 수 있다. https://github.com/cruvadom/Convolutional-RNN]]></summary></entry><entry><title type="html">Emotion Recognition From EEG Signal Focusing on Deep Learning and Shallow Learning Techniques</title><link href="http://192.168.0.41:4000/paper%20review/2022/10/05/Emotion-Recognition-from-EEG-signal-focusing-on-Deep-Learning-and-Shallow-Learning-Techniques.html" rel="alternate" type="text/html" title="Emotion Recognition From EEG Signal Focusing on Deep Learning and Shallow Learning Techniques" /><published>2022-10-05T06:43:27+09:00</published><updated>2022-10-05T06:43:27+09:00</updated><id>http://192.168.0.41:4000/paper%20review/2022/10/05/Emotion-Recognition-from-EEG-signal-focusing-on-Deep-Learning-and-Shallow-Learning-Techniques</id><content type="html" xml:base="http://192.168.0.41:4000/paper%20review/2022/10/05/Emotion-Recognition-from-EEG-signal-focusing-on-Deep-Learning-and-Shallow-Learning-Techniques.html"><![CDATA[<h1 id="abstract">Abstract</h1>
+<p>hi</p>]]></content><author><name>Gil Keren, Bjorn Schuller</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract 전통적인 합성곱층들은 입력값에 affine 함수를 통해 비선형성을 적용해 데이터의 패치들로부터 특징을 추출한다. 우리는 이러한 특징 추출 과정에서 데이터의 패치들을 RNN에 feeding하고 그것의 output이나 hidden state들을 추출된 특징으로 사용하여 더 향상된 모델을 제안한다. 그렇게 해서 우리는 sequential data가 가지고 있는 몇개의 프레임들이 포함된 window를 그 자체가 sequential 인 것으로 간주하여 이러한 추가적인 구조가 데이터의 중요한 정보를 잃지 않을 것이라는 사실을 이용 할 것이다. 추가적으로 우리는 비선형성이 도입된 affine 함수는 매우 간단한 특징만 얻을 수 있으므로 affine과 비슷한 잠재적 이점을 가진 몇가지 추가적인 계산 과정을 허용 할 것이다. 우리는 convolutional rnn을 사용하여 기존의 cnn을 통한 결과보다 더 좋은 성능을 two audio 분류 작업에서 얻을 수 있었다. 해당 모델의 Tensorflow 코드는 다음에서 확인 할 수 있다. https://github.com/cruvadom/Convolutional-RNN]]></summary></entry><entry><title type="html">Emotion Recognition From EEG Signal Focusing on Deep Learning and Shallow Learning Techniques</title><link href="http://localhost:4000/paper%20review/2022/10/05/Emotion-Recognition-from-EEG-signal-focusing-on-Deep-Learning-and-Shallow-Learning-Techniques.html" rel="alternate" type="text/html" title="Emotion Recognition From EEG Signal Focusing on Deep Learning and Shallow Learning Techniques" /><published>2022-10-05T06:43:27+09:00</published><updated>2022-10-05T06:43:27+09:00</updated><id>http://localhost:4000/paper%20review/2022/10/05/Emotion-Recognition-from-EEG-signal-focusing-on-Deep-Learning-and-Shallow-Learning-Techniques</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/10/05/Emotion-Recognition-from-EEG-signal-focusing-on-Deep-Learning-and-Shallow-Learning-Techniques.html"><![CDATA[<h1 id="abstract">Abstract</h1>
 <p>최근 <strong>electoencephalogram 기반의 감정 인식</strong>은 <strong>Human-Computer Interaction(HCI)</strong> 시스템이<br />
 더 지능화 되게 해주는 덕에 중요하게 평가되고있다.<br />
 Person-based decision making, mind-machine interfacing, cognitive interaction, affect detection,<br />
@@ -728,7 +907,7 @@ feature, feature extraction technique, system performance, algorithms 들을 정
 <p>Comparison table과 performance graph를 보여주고 공적으로 사용 가능한 데이터셋의 정보를 알게하고<br />
 분석을 위한 소프트웨어나 tool들의 이름을 알게하는것으로 당신의 열정에 도움이 되었으면 좋겠다.<br />
 실생활에 적용하기 위해 기계학습을 사용한 감정 인식 시스템을 효과적으로 설계하기 위해<br />
-앞으로 연구자들에게 완벽한 방향을 제시해 주었다.</p>]]></content><author><name>Md. Rabiul Islam, Mohammad Ali Moni, Md Rashed-Al-Mahfuz, Md. Saiful Islam, etc.</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract 최근 electoencephalogram 기반의 감정 인식은 Human-Computer Interaction(HCI) 시스템이 더 지능화 되게 해주는 덕에 중요하게 평가되고있다. Person-based decision making, mind-machine interfacing, cognitive interaction, affect detection, feeling detection 등과 같이 감정 인식 기술의 놀라운 적용들 때문에 감정 인식이 과대 평가로 최근 AI 기반 연구들을 끌어들이는데 성공했다. 그러므로 많은 연구들은 어떤 작업에서 그것에 맞는 feature set들과 기술들로 방법론적 시스템 상의 검토가 이루어지는 다양한 방법의 접근을 해보는 방법으로 많은 연구가 되고 있다. 이것은 효과적인 감정 인식 시스템을 구성하는 지침서로 작용해 초보자들이 학습하도록 용이하게 쓰일 것이다. 이 논문에서 우리는 최근 출판된 감정 인식에서 최신 기술에 대한 엄격한 검토를 수행하고 적절한 프레임워크를 개발하도록 핵심적인 내용을 제공하도록 몇몇 공통된 감정인식의 단계들을 관련된 정의와 관련된 이론과 관련된 분석들을 요약할 것이다. 게다가 여기서 진행한 연구에는 두개의 카테고리로 이분화 된다. Deep Learning Based Emotion Recognition system Shallow Machine Learning Based Emotion Recognition system]]></summary></entry><entry><title type="html">Basics of Electroencephalography for Brain-Computer Interface Developer</title><link href="http://192.168.0.41:4000/paper%20review/2022/09/27/Basics-of-Electroencephalography-for-Brain-Computer_interface-Developer.html" rel="alternate" type="text/html" title="Basics of Electroencephalography for Brain-Computer Interface Developer" /><published>2022-09-27T18:37:17+09:00</published><updated>2022-09-27T18:37:17+09:00</updated><id>http://192.168.0.41:4000/paper%20review/2022/09/27/Basics-of-Electroencephalography-for-Brain-Computer_interface-Developer</id><content type="html" xml:base="http://192.168.0.41:4000/paper%20review/2022/09/27/Basics-of-Electroencephalography-for-Brain-Computer_interface-Developer.html"><![CDATA[<p><strong>요약</strong><br />
+앞으로 연구자들에게 완벽한 방향을 제시해 주었다.</p>]]></content><author><name>Md. Rabiul Islam, Mohammad Ali Moni, Md Rashed-Al-Mahfuz, Md. Saiful Islam, etc.</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract 최근 electoencephalogram 기반의 감정 인식은 Human-Computer Interaction(HCI) 시스템이 더 지능화 되게 해주는 덕에 중요하게 평가되고있다. Person-based decision making, mind-machine interfacing, cognitive interaction, affect detection, feeling detection 등과 같이 감정 인식 기술의 놀라운 적용들 때문에 감정 인식이 과대 평가로 최근 AI 기반 연구들을 끌어들이는데 성공했다. 그러므로 많은 연구들은 어떤 작업에서 그것에 맞는 feature set들과 기술들로 방법론적 시스템 상의 검토가 이루어지는 다양한 방법의 접근을 해보는 방법으로 많은 연구가 되고 있다. 이것은 효과적인 감정 인식 시스템을 구성하는 지침서로 작용해 초보자들이 학습하도록 용이하게 쓰일 것이다. 이 논문에서 우리는 최근 출판된 감정 인식에서 최신 기술에 대한 엄격한 검토를 수행하고 적절한 프레임워크를 개발하도록 핵심적인 내용을 제공하도록 몇몇 공통된 감정인식의 단계들을 관련된 정의와 관련된 이론과 관련된 분석들을 요약할 것이다. 게다가 여기서 진행한 연구에는 두개의 카테고리로 이분화 된다. Deep Learning Based Emotion Recognition system Shallow Machine Learning Based Emotion Recognition system]]></summary></entry><entry><title type="html">Basics of Electroencephalography for Brain-Computer Interface Developer</title><link href="http://localhost:4000/paper%20review/2022/09/27/Basics-of-Electroencephalography-for-Brain-Computer_interface-Developer.html" rel="alternate" type="text/html" title="Basics of Electroencephalography for Brain-Computer Interface Developer" /><published>2022-09-27T18:37:17+09:00</published><updated>2022-09-27T18:37:17+09:00</updated><id>http://localhost:4000/paper%20review/2022/09/27/Basics-of-Electroencephalography-for-Brain-Computer_interface-Developer</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/09/27/Basics-of-Electroencephalography-for-Brain-Computer_interface-Developer.html"><![CDATA[<p><strong>요약</strong><br />
 뇌파에 관한 많은 기술적 발전에도 불구하고 정확한 뇌파의 측정은 오늘날에도 쉽지 않다.<br />
 더욱이 비침습형 뇌파인식기를 이용한 외파의 측정은 정확도가 떨어진다.<br />
 하지만 실용적인 뇌-컴퓨터 인터페이스 활용 시스템 개발을 위해서는 사용의 편의성 때문에 비침습형 뇌파인식기를 이용하는 경우가 많다.<br />
@@ -975,7 +1154,7 @@ BCI 등 그 적용 범위가 확대될 것으로 예측된다.<br />
 BCI 시스템 개발 시 필요한 뇌파에 대한 기초 지식과 특성을 알아보았다.<br />
 이는 의학이 아닌 공학 기반의 연구자들이 뇌파를 기반으로하는 다양한 시스템 개발시 유용한 참고자료가 될 것이다.<br />
 향후 연구에서는 다양한 환경에서 여러 영역의 뇌파를 실제 측정하고 서로 비교하여<br />
-사용자의 의도와 뇌파 간의 상관도가 높은 뇌파 내의 특징들을 발견하여 효과적인 BCI 시스템 개발에 활용하도록 한다.</p>]]></content><author><name>Gi-Chul Yang</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[요약 뇌파에 관한 많은 기술적 발전에도 불구하고 정확한 뇌파의 측정은 오늘날에도 쉽지 않다. 더욱이 비침습형 뇌파인식기를 이용한 외파의 측정은 정확도가 떨어진다. 하지만 실용적인 뇌-컴퓨터 인터페이스 활용 시스템 개발을 위해서는 사용의 편의성 때문에 비침습형 뇌파인식기를 이용하는 경우가 많다. 특히, 가장 사용하기 편한 비침습형 건식 최파인식기인 경우 뇌파 측정의 정확도가 가장 떨어진다. 본 논문에서는 임상 응용보다는 뇌-컴퓨터 인터페이스 시스템 개발 시 뇌파 측정을 통한 사용자 의도 파악의 정확도를 높이는데 필요한 뇌파에 대한 기초 지식과 특성에 대해 알아본다. 뇌파 측정을 통한 사용자 의도 파악이 정해지면 다양한 분야에서 뇌파의 활용도가 높아지고 새로운 응용 분야도 개척될 것이다.]]></summary></entry><entry><title type="html">Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation</title><link href="http://192.168.0.41:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation.html" rel="alternate" type="text/html" title="Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation" /><published>2022-09-11T17:17:23+09:00</published><updated>2022-09-11T17:17:23+09:00</updated><id>http://192.168.0.41:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder%E2%80%93Decoder-for-Statistical-Machine-Translation</id><content type="html" xml:base="http://192.168.0.41:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation.html"><![CDATA[<h1 id="abstract">Abstract</h1>
+사용자의 의도와 뇌파 간의 상관도가 높은 뇌파 내의 특징들을 발견하여 효과적인 BCI 시스템 개발에 활용하도록 한다.</p>]]></content><author><name>Gi-Chul Yang</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[요약 뇌파에 관한 많은 기술적 발전에도 불구하고 정확한 뇌파의 측정은 오늘날에도 쉽지 않다. 더욱이 비침습형 뇌파인식기를 이용한 외파의 측정은 정확도가 떨어진다. 하지만 실용적인 뇌-컴퓨터 인터페이스 활용 시스템 개발을 위해서는 사용의 편의성 때문에 비침습형 뇌파인식기를 이용하는 경우가 많다. 특히, 가장 사용하기 편한 비침습형 건식 최파인식기인 경우 뇌파 측정의 정확도가 가장 떨어진다. 본 논문에서는 임상 응용보다는 뇌-컴퓨터 인터페이스 시스템 개발 시 뇌파 측정을 통한 사용자 의도 파악의 정확도를 높이는데 필요한 뇌파에 대한 기초 지식과 특성에 대해 알아본다. 뇌파 측정을 통한 사용자 의도 파악이 정해지면 다양한 분야에서 뇌파의 활용도가 높아지고 새로운 응용 분야도 개척될 것이다.]]></summary></entry><entry><title type="html">Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation</title><link href="http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation.html" rel="alternate" type="text/html" title="Learning Phrase Representations using RNN Encoder–Decoder for Statistical Machine Translation" /><published>2022-09-11T17:17:23+09:00</published><updated>2022-09-11T17:17:23+09:00</updated><id>http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder%E2%80%93Decoder-for-Statistical-Machine-Translation</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/09/11/Learning-Phrase-Representations-using-RNN-Encoder-Decoder-for-Statistical-Machine-Translation.html"><![CDATA[<h1 id="abstract">Abstract</h1>
 <p>이번 논문에서 새로운 신경망 모델을 소개한다.<br />
 RNN Encoder-Decoder라는 이름으로 두개의 RNN으로 구성되어있다.</p>
 
@@ -1497,7 +1676,7 @@ RNN Encoder-Decoder가 target 구문을 잘 만들어서 제안하는 것을 관
 여기서 조사한 것은 아니지만 어떤 접근에서는 RNN Encoder-Decoder가 제안한 target 구문을<br />
 구문 테이블의 일부나 전체를 대체하는 방법을 사용했다.<br />
 또한, 제안된 모델은 글로된 언어에만 제한되지 않고,<br />
-음성 내용같은 곳에 이 구조를 적용하는 것이 앞으로 중요한 연구가 될 것이다.</p>]]></content><author><name>Kyunghyun Cho, Bart van Merrienboer, Caglar Gulcehre, etc.</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract 이번 논문에서 새로운 신경망 모델을 소개한다. RNN Encoder-Decoder라는 이름으로 두개의 RNN으로 구성되어있다.]]></summary></entry><entry><title type="html">Long Short-Term Memory Based Recurrent Neural Network Architectures for large vocabulary speech recognition</title><link href="http://192.168.0.41:4000/paper%20review/2022/09/08/LSTM-for-large-vocabulary-speech-recognition.html" rel="alternate" type="text/html" title="Long Short-Term Memory Based Recurrent Neural Network Architectures for large vocabulary speech recognition" /><published>2022-09-08T18:54:43+09:00</published><updated>2022-09-08T18:54:43+09:00</updated><id>http://192.168.0.41:4000/paper%20review/2022/09/08/LSTM-for-large-vocabulary-speech-recognition</id><content type="html" xml:base="http://192.168.0.41:4000/paper%20review/2022/09/08/LSTM-for-large-vocabulary-speech-recognition.html"><![CDATA[<h1 id="abstract">Abstract</h1>
+음성 내용같은 곳에 이 구조를 적용하는 것이 앞으로 중요한 연구가 될 것이다.</p>]]></content><author><name>Kyunghyun Cho, Bart van Merrienboer, Caglar Gulcehre, etc.</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract 이번 논문에서 새로운 신경망 모델을 소개한다. RNN Encoder-Decoder라는 이름으로 두개의 RNN으로 구성되어있다.]]></summary></entry><entry><title type="html">Long Short-Term Memory Based Recurrent Neural Network Architectures for large vocabulary speech recognition</title><link href="http://localhost:4000/paper%20review/2022/09/08/LSTM-for-large-vocabulary-speech-recognition.html" rel="alternate" type="text/html" title="Long Short-Term Memory Based Recurrent Neural Network Architectures for large vocabulary speech recognition" /><published>2022-09-08T18:54:43+09:00</published><updated>2022-09-08T18:54:43+09:00</updated><id>http://localhost:4000/paper%20review/2022/09/08/LSTM-for-large-vocabulary-speech-recognition</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/09/08/LSTM-for-large-vocabulary-speech-recognition.html"><![CDATA[<h1 id="abstract">Abstract</h1>
 <p>Long Short-Term Memory (<strong>LSTM</strong>)은<br />
 <strong>Vanilla RNNs</strong>의 <strong>vanishing/exploding gradien</strong>t 문제를 다루기 위해 고안된 RNN구조다.</p>
 
@@ -1853,7 +2032,7 @@ CD 2000 output state embedded size model(mobile phone processor에서 작동하�
 새로 고안한 LSTM 구조가 DNN보다 더 좋은 성능을 보이는 것을 확인했다.</p>
 
 <p>LSTM을 single multi-core machine에서 학습 시키는 것은 더 큰 네트워크로 확장할 수 없다.<br />
-후에 GPU와 분리된 CPU에서의 구현을 연구해 볼 것이다.</p>]]></content><author><name>Hasim Sak, Andrew Senior, Francoise Beaufays</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract Long Short-Term Memory (LSTM)은 Vanilla RNNs의 vanishing/exploding gradient 문제를 다루기 위해 고안된 RNN구조다.]]></summary></entry><entry><title type="html">Recurrent Neural Networks (RNNs): A gentle Introduction and Overview</title><link href="http://192.168.0.41:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks-A-gentle-Introduction-and-Overview.html" rel="alternate" type="text/html" title="Recurrent Neural Networks (RNNs): A gentle Introduction and Overview" /><published>2022-08-28T16:44:13+09:00</published><updated>2022-08-28T16:44:13+09:00</updated><id>http://192.168.0.41:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks:A-gentle-Introduction-and-Overview</id><content type="html" xml:base="http://192.168.0.41:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks-A-gentle-Introduction-and-Overview.html"><![CDATA[<h1 id="abstract">Abstract</h1>
+후에 GPU와 분리된 CPU에서의 구현을 연구해 볼 것이다.</p>]]></content><author><name>Hasim Sak, Andrew Senior, Francoise Beaufays</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract Long Short-Term Memory (LSTM)은 Vanilla RNNs의 vanishing/exploding gradient 문제를 다루기 위해 고안된 RNN구조다.]]></summary></entry><entry><title type="html">Recurrent Neural Networks (RNNs): A gentle Introduction and Overview</title><link href="http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks-A-gentle-Introduction-and-Overview.html" rel="alternate" type="text/html" title="Recurrent Neural Networks (RNNs): A gentle Introduction and Overview" /><published>2022-08-28T16:44:13+09:00</published><updated>2022-08-28T16:44:13+09:00</updated><id>http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks:A-gentle-Introduction-and-Overview</id><content type="html" xml:base="http://localhost:4000/paper%20review/2022/08/28/Recurrent-Neural-Networks-A-gentle-Introduction-and-Overview.html"><![CDATA[<h1 id="abstract">Abstract</h1>
 <p>“Language Modeling &amp; Generating Text”, “Speech Recognition”, “Generating Image Descriptions” or<br />
 “Video Tagging” 분야에서 해결책을 위한 최신기술들은 RNN을 기반으로 하고있다.<br />
 따라서 현재 또는 앞으로 제시될 해결책들에 대한 구조를 이해하고 따라잡으려면<br />
@@ -2320,7 +2499,7 @@ attention mechanism을 단순화시킨다.<br />
 최근 출판된 논문들중 하나는 제시된 개념들을 많이 사용한다.
 “Grandmaster level in StarCraft2 using multi-agent reinforcement learning”이라는 논문이고 Vinyals가 썼다.<br />
 여기에서, 그들은 agent를 실시간으로 전략 게임 StarCraft2를 훌륭하게 학습시키는 접근 방법을 제시한다.<br />
-만약 제시된 내용들이 다소 이론적이라면 실제 환경에 적합하도록 설정되어 배포된 LSTM, Transformer와 Pointer Networks에 관한 논문을 읽어보기를 권한다.</p>]]></content><author><name>Robin M. Schmidt</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract “Language Modeling &amp; Generating Text”, “Speech Recognition”, “Generating Image Descriptions” or “Video Tagging” 분야에서 해결책을 위한 최신기술들은 RNN을 기반으로 하고있다. 따라서 현재 또는 앞으로 제시될 해결책들에 대한 구조를 이해하고 따라잡으려면 RNN에 대한 기본 개념을 이해하는 것이 매우 중요할 것이다. 이 논문에서는 BPTT, LSTM 뿐만아니라 Attention Mechanism과 Pointer Networks에 대한 개념을 독자가 쉽게 이해할 수 있도록 가장 중요한 RNN들을 살펴볼 것이다. 그리고 이와 관련해 더 복잡한 주제를 읽어보는 것을 추천한다.]]></summary></entry><entry><title type="html">Ch7 합성곱 신경망(CNN)</title><link href="http://192.168.0.41:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html" rel="alternate" type="text/html" title="Ch7 합성곱 신경망(CNN)" /><published>2022-08-27T20:05:47+09:00</published><updated>2022-08-27T20:05:47+09:00</updated><id>http://192.168.0.41:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D</id><content type="html" xml:base="http://192.168.0.41:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html"><![CDATA[<h1 id="71-전체-구조">7.1 전체 구조</h1>
+만약 제시된 내용들이 다소 이론적이라면 실제 환경에 적합하도록 설정되어 배포된 LSTM, Transformer와 Pointer Networks에 관한 논문을 읽어보기를 권한다.</p>]]></content><author><name>Robin M. Schmidt</name></author><category term="[&quot;Paper Review&quot;]" /><summary type="html"><![CDATA[Abstract “Language Modeling &amp; Generating Text”, “Speech Recognition”, “Generating Image Descriptions” or “Video Tagging” 분야에서 해결책을 위한 최신기술들은 RNN을 기반으로 하고있다. 따라서 현재 또는 앞으로 제시될 해결책들에 대한 구조를 이해하고 따라잡으려면 RNN에 대한 기본 개념을 이해하는 것이 매우 중요할 것이다. 이 논문에서는 BPTT, LSTM 뿐만아니라 Attention Mechanism과 Pointer Networks에 대한 개념을 독자가 쉽게 이해할 수 있도록 가장 중요한 RNN들을 살펴볼 것이다. 그리고 이와 관련해 더 복잡한 주제를 읽어보는 것을 추천한다.]]></summary></entry><entry><title type="html">Ch7 합성곱 신경망(CNN)</title><link href="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html" rel="alternate" type="text/html" title="Ch7 합성곱 신경망(CNN)" /><published>2022-08-27T20:05:47+09:00</published><updated>2022-08-27T20:05:47+09:00</updated><id>http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D</id><content type="html" xml:base="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch7-%ED%95%A9%EC%84%B1%EA%B3%B1-%EC%8B%A0%EA%B2%BD%EB%A7%9D.html"><![CDATA[<h1 id="71-전체-구조">7.1 전체 구조</h1>
 
 <p>CNN = Convolutional Layer + Pooling Layer + Fully Connected Layer</p>
 
@@ -2685,7 +2864,7 @@ OW={W+2P-FW\over S}+1\]
       <li>epochs는 몇으로 할건지, 조기종료 조건은 어떻게 할건지</li>
     </ul>
   </li>
-</ul>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;DeepLearning from scratch&quot;]" /><summary type="html"><![CDATA[7.1 전체 구조]]></summary></entry><entry><title type="html">Ch6 학습 관련 기술들</title><link href="http://192.168.0.41:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4.html" rel="alternate" type="text/html" title="Ch6 학습 관련 기술들" /><published>2022-08-27T19:40:27+09:00</published><updated>2022-08-27T19:40:27+09:00</updated><id>http://192.168.0.41:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4</id><content type="html" xml:base="http://192.168.0.41:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4.html"><![CDATA[<h1 id="61-매개변수-갱신">6.1 매개변수 갱신</h1>
+</ul>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;DeepLearning from scratch&quot;]" /><summary type="html"><![CDATA[7.1 전체 구조]]></summary></entry><entry><title type="html">Ch6 학습 관련 기술들</title><link href="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4.html" rel="alternate" type="text/html" title="Ch6 학습 관련 기술들" /><published>2022-08-27T19:40:27+09:00</published><updated>2022-08-27T19:40:27+09:00</updated><id>http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4</id><content type="html" xml:base="http://localhost:4000/deeplearning%20from%20scratch/2022/08/27/Ch6-%ED%95%99%EC%8A%B5%EA%B4%80%EB%A0%A8%EA%B8%B0%EC%88%A0%EB%93%A4.html"><![CDATA[<h1 id="61-매개변수-갱신">6.1 매개변수 갱신</h1>
 
 <p>최적화$\mathsf{^{optimization}}$ : 손실 함수의 값을 가능한 한 낮추는 매개변수를 찾는 것</p>
 
@@ -3324,7 +3503,7 @@ ReLu는 음의 영역에서 결과값이 0이라</p>
 
 <p>가주이 감소 계수는 $10^{-8}$~$10^{-6}$ 정도이다.</p>
 
-<p>이처럼 잘될 것 같은 값의 범위를 관찰하고 범위를 좁혀서 같은 작업을 반복한다.</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;DeepLearning from scratch&quot;]" /><summary type="html"><![CDATA[6.1 매개변수 갱신]]></summary></entry><entry><title type="html">Hnadling long term dependencies</title><link href="http://192.168.0.41:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html" rel="alternate" type="text/html" title="Hnadling long term dependencies" /><published>2022-08-23T21:27:13+09:00</published><updated>2022-08-23T21:27:13+09:00</updated><id>http://192.168.0.41:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies</id><content type="html" xml:base="http://192.168.0.41:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html"><![CDATA[<h1 id="vanilla-rnn의-한계">Vanilla RNN의 한계</h1>
+<p>이처럼 잘될 것 같은 값의 범위를 관찰하고 범위를 좁혀서 같은 작업을 반복한다.</p>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;DeepLearning from scratch&quot;]" /><summary type="html"><![CDATA[6.1 매개변수 갱신]]></summary></entry><entry><title type="html">Hnadling long term dependencies</title><link href="http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html" rel="alternate" type="text/html" title="Hnadling long term dependencies" /><published>2022-08-23T21:27:13+09:00</published><updated>2022-08-23T21:27:13+09:00</updated><id>http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies</id><content type="html" xml:base="http://localhost:4000/rnn%20note/2022/08/23/Handling-long-term-dependencies.html"><![CDATA[<h1 id="vanilla-rnn의-한계">Vanilla RNN의 한계</h1>
 <p>아래 Vanilla RNN 의 구조를 보자.<br />
 각 timestep별로 결과에 얼마나 영향을 주는지 색으로 표현했을때<br />
 색이 짙을 수록 역전파 과정에서 피드백 크기가 점점 작아져서 결과에 영향을 거의 안주게 된다.<br />
@@ -3439,142 +3618,4 @@ exploding gradient 문제에 대응하기 위해 사용된다.</p>
 <h4 id="mit-6s191-recurrent-neural-networks-and-transformers"><a href="https://www.youtube.com/watch?v=QvkQ1B3FBqA">MIT 6.S191: Recurrent Neural Networks and Transformers</a>,</h4>
 <h4 id="explain-lstm--gru"><a href="https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21">Explain LSTM &amp; GRU</a>,</h4>
 <h4 id="pytorch-lstm"><a href="https://pytorch.org/docs/stable/generated/torch.nn.LSTM.html?highlight=lstm#torch.nn.LSTM">pytorch LSTM</a>,</h4>
-<h4 id="pytorch-gru"><a href="https://pytorch.org/docs/stable/generated/torch.nn.GRU.html?highlight=gru#torch.nn.GRU">pytorch GRU</a></h4>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;RNN Note&quot;]" /><summary type="html"><![CDATA[Vanilla RNN의 한계 아래 Vanilla RNN 의 구조를 보자. 각 timestep별로 결과에 얼마나 영향을 주는지 색으로 표현했을때 색이 짙을 수록 역전파 과정에서 피드백 크기가 점점 작아져서 결과에 영향을 거의 안주게 된다. 만약 앞에 입력이 결과에 영향을 줘야하는 경우라면 현재 timestep으로부터 먼 앞에 입력을 기억하고 있지 않다면 Long Term Dependencies problem 이 발생하게 된다.]]></summary></entry><entry><title type="html">RNN Overview</title><link href="http://192.168.0.41:4000/rnn%20note/2022/08/22/RNN.html" rel="alternate" type="text/html" title="RNN Overview" /><published>2022-08-22T15:16:15+09:00</published><updated>2022-08-22T15:16:15+09:00</updated><id>http://192.168.0.41:4000/rnn%20note/2022/08/22/RNN</id><content type="html" xml:base="http://192.168.0.41:4000/rnn%20note/2022/08/22/RNN.html"><![CDATA[<h1 id="architecture-of-a-traditional-rnn">Architecture of a traditional RNN</h1>
-<p><strong>RNN</strong>에서는 은닉층에서 활성화 함수를 통해 결과를 내보내는 역할을 하는 노드를 <strong>cell</strong>(메모리 셀, RNN 셀) 이라고 한다.</p>
-
-<p>regular feed-forward network에서 hidden layer라고 부르던 뉴런은</p>
-
-<p>RNN에서 <strong>hidden state</strong>라고 부른다.<br />
-\(\begin{align*}\end{align*}\)</p>
-
-<p><strong>hidden state</strong>에서는 이전 <strong>time step</strong>의 <strong>hidden state</strong> 로부터 얻은 출력값을 현재 <strong>time step</strong>의 <strong>hidden state</strong> 에서 입력값으로 사용한다.</p>
-
-<p><img src="/assets/img/RNN%20Note/RNN_overview/RNN_0.png" alt="RNN_0" /></p>
-<h5><center>출처: CS 230</center></h5>
-
-<p><strong>timestep</strong> $t$ 에서 activation \(a^{&lt;t&gt;}\)와 output \(y^{&lt;t&gt;}\)는 아래와 같이 표현한다.</p>
-
-\[\begin{align*}
-a^{&lt;t&gt;}&amp;=g_1(W_{aa}a^{&lt;t-1&gt;}+W_{ax}x^{&lt;t&gt;}+b_a)\\
-y^{&lt;t&gt;}&amp;=g_2(W_{ya}a^{&lt;t&gt;}+b_y)
-\end{align*}\]
-
-<p>$W_{ax},\ W_{aa},\ W_{ya},\ b_a,\ b_y$는 모든 <strong>timestep</strong>에서 변하지 않는 계수이고<br />
-$g_1,\ g_2$는 활성함수들이다.<br />
-\(\begin{align*}\end{align*}\)</p>
-
-<p><img src="/assets/img/RNN%20Note/RNN_overview/RNN_1.png" alt="RNN_1" /></p>
-<h5><center>출처: CS 230</center></h5>
-
-<h2 id="rnn의-장점과-단점">RNN의 장점과 단점</h2>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: left">Advantages</th>
-      <th style="text-align: left">Drawbacks</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: left">$\cdot$ 어떤 길이의 입력도 처리 가능</td>
-      <td style="text-align: left">$\cdot$ 계산이 느림</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">$\cdot$ 입력 크기에 따라 모델 크기가 커지지 않음</td>
-      <td style="text-align: left">$\cdot$ 오래된 <strong>timestep</strong>에 접근하기 어려움</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">$\cdot$ 시간에 대한 결과를 고려한 계산</td>
-      <td style="text-align: left">$\cdot$ 현재 state에서는 미래의 입력을 고려하지 못함</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">$\cdot$ 전체 시간동안 가중치가 공유됨</td>
-      <td style="text-align: left"> </td>
-    </tr>
-  </tbody>
-</table>
-
-<p>\(\begin{align*}\end{align*}\)</p>
-<h1 id="applications-of-rnns">Applications of RNNs</h1>
-<p>RNN model들은 NLP와 speech recognition 처럼 sequential data를 다루기 위해 사용된다.</p>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">Type of RNN</th>
-      <th style="text-align: center">Illustration</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center">One-to-one                              </td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_2.png" alt="RNN_2" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center">One-to-many</td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_3.png" alt="RNN_3" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Many-to-one</td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_4.png" alt="RNN_4" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Many-to-many</td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_5.png" alt="RNN_5" /></td>
-    </tr>
-    <tr>
-      <td style="text-align: center">Many-to-many</td>
-      <td style="text-align: center"><img src="/assets/img/RNN%20Note/RNN_overview/RNN_6.png" alt="RNN_6" /></td>
-    </tr>
-  </tbody>
-</table>
-
-<h5><center>출처: CS 230</center></h5>
-
-<p>\(\begin{align*}\end{align*}\)</p>
-<h1 id="loss-function">Loss function</h1>
-<p>RNN의 경우 모든 timestep에서 loss function $\mathcal{L}$ 은 각 timestep 별 loss를 더하는 것으로 정의한다.</p>
-
-\[\mathcal{L}(\hat y,y)=\sum\limits^{T_y}_{t=1}\mathcal{L}\left(\hat y^{&lt;t&gt;},y^{&lt;t&gt;}\right)\]
-
-<p>\(\begin{align*}\end{align*}\)</p>
-<h1 id="backpropagation-through-time">Backpropagation through time</h1>
-<p>역전파는 각 시간별로 진행된다.<br />
-timestep $T$ 인 경우, ${\partial\mathcal{L}^{(T)}\over\partial W}$ 는 아래와 같이 표현된다.</p>
-
-\[{\partial\mathcal{L}^{(T)}\over\partial W}=\left.\sum\limits^{T}_{t=1}{\partial\mathcal{L}^{(T)}\over\partial W}\right|_{(t)}\]
-
-<h2 id="how-to-do-bptt-">How to do <strong>BPTT</strong> ?</h2>
-<p><img src="/assets/img/RNN%20Note/RNN_overview/RNN_7.png" alt="RNN_7" />
-예를 들어 위와 같이 $S_t=W\cdot S_{t-1}$ 이고 $\mathcal{L}=W\cdot S_t$ 인 경우<br />
-${\partial\ \mathcal{L}\over\partial\ W}$ 는 아래와 같이 구한다.</p>
-
-\[\begin{align*}
-{\partial\ \mathcal{L}\over\partial\ W}&amp;=
-{\partial\ \mathcal{L}\over\partial\ S_t}\cdot{\partial\ S_t\over\partial\ W}\\ \\
-{\partial\ S_t\over\partial\ W}&amp;=
-\underbrace{\partial^+\ S_t\over\partial\ W}_{\mathsf{explicit}}+
-\underbrace{\dfrac{\partial\ S_t}{\partial\ S_{t-1}}\cdot{\partial\ S_{t-1}\over\partial\ W}}_{\mathsf{implicit}}\\ \\
-&amp;=
-{\partial^+\ S_t\over\partial\ W}+{\partial\ S_t\over\partial\ S_{t-1}}\left[\underbrace{\partial^+\ S_{t-1}\over\partial\ W}_{\mathsf{explicit}}+\underbrace{\dfrac{\partial\ S_{t-1}}{\partial\ S_{t-2}}\cdot{\partial\ S_{t-2}\over\partial\ W}}_{\mathsf{implicit}}\right]=\dots\\ \\
-&amp;=
-{\partial\ S_t\over\partial\ S_t}\ {\partial^+\ S_t\over\partial\ W}+
-{\partial\ S_t\over\partial\ S_{t-1}}\ {\partial^+\ S_{t-1}\over\partial\ W}+
-{\partial\ S_t\over\partial\ S_{t-1}}\ {\partial\ S_{t-1}\over\partial\ S_{t-2}}\ {\partial^+\ S_{t-2}\over\partial\ W}+\dots+{\partial\ S_t\over\partial\ S_{t-1}}\dots{\partial^+\ S_1\over\partial\ W}\\ \\
-&amp;=\sum\limits^t_{k=1}{\partial\ S_t\over\partial\ S_k}\ {\partial^+\ S_k\over\partial\ W}\\ \\
-\therefore\dfrac{\partial\ \mathcal{L^{&lt;t&gt;}}}{\partial\ W}&amp;=
-\dfrac{\partial\ \mathcal{L^{&lt;t&gt;}}}{\partial\ S_t}\ 
-\sum\limits^t_{k=1}{\partial\ S_t\over\partial\ S_k}\ {\partial^+\ S_k\over\partial\ W}
-\end{align*}\]
-
-<p>위와 같은 개념으로 BPTT 진행하여 RNN이 학습을 한다.</p>
-
-<p>\(\begin{align*}\end{align*}\)
-\(\begin{align*}\end{align*}\)</p>
-
-<h3 id="참고자료">참고자료:</h3>
-<h4 id="michigan-online"><a href="https://www.youtube.com/watch?v=dUzLD91Sj-o&amp;list=PL5-TkQAfAZFbzxjBHtzdVCWE0Zbhomg7r&amp;index=12">Michigan Online</a>,</h4>
-<h4 id="cs-230"><a href="https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-recurrent-neural-networks">CS 230</a>,</h4>
-<h4 id="wiki-docs"><a href="https://wikidocs.net/22886">Wiki Docs</a></h4>
-<h4 id="nptel-noc-iitm"><a href="https://www.youtube.com/watch?v=Xeb6OjnVn8g">NPTEL-NOC IITM</a></h4>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;RNN Note&quot;]" /><summary type="html"><![CDATA[Architecture of a traditional RNN RNN에서는 은닉층에서 활성화 함수를 통해 결과를 내보내는 역할을 하는 노드를 cell(메모리 셀, RNN 셀) 이라고 한다.]]></summary></entry></feed>
+<h4 id="pytorch-gru"><a href="https://pytorch.org/docs/stable/generated/torch.nn.GRU.html?highlight=gru#torch.nn.GRU">pytorch GRU</a></h4>]]></content><author><name>Chang Hun Kang</name></author><category term="[&quot;RNN Note&quot;]" /><summary type="html"><![CDATA[Vanilla RNN의 한계 아래 Vanilla RNN 의 구조를 보자. 각 timestep별로 결과에 얼마나 영향을 주는지 색으로 표현했을때 색이 짙을 수록 역전파 과정에서 피드백 크기가 점점 작아져서 결과에 영향을 거의 안주게 된다. 만약 앞에 입력이 결과에 영향을 줘야하는 경우라면 현재 timestep으로부터 먼 앞에 입력을 기억하고 있지 않다면 Long Term Dependencies problem 이 발생하게 된다.]]></summary></entry></feed>
